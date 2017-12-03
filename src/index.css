@@ -1,9 +1,11 @@
 html {
 	font-size: 62.5%;
+	/* -webkit-font-smoothing: antialiased; */
+	box-sizing: border-box;
 }
 
 body {	
-	font-family: Helvetica, 'Sans Serif', Arial;
+	font-family: Helvetica, 'Sans Serif', 'Helvetica Neue', Arial, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto';
 	font-weight: 300;
 	font-size: 15px;
 	margin: 0;
