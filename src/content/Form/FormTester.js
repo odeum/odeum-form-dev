@@ -9,14 +9,18 @@ class FormTester extends Component {
 
 	constructor(props) {
 		super(props)
-		
+
 		this.state = {
 			values: {
-				email: ''
-			}
+				email: '',
+				name: '',
+				password: '',
+				phone: '',
+				address: ''
+			},
 		}
 
-	}	
+	}
 
 	handleSubmit = () => {
 		console.log('Submitting data ...', this.state.values.email)
@@ -35,26 +39,34 @@ class FormTester extends Component {
 				<h1>Form component test</h1>
 				<p>Please fill out the following form fields:</p>
 
-				<Form 
-					focusField={'email'} 
+				<Form
+					focusField={'email'}
 					data={this.state}
 					onSubmit={this.handleSubmit} // Use internal Buttons for submit
-				> 
-					<Email 
+				>
+					<Email
 						// validate={this.validateField('email')} 
 						name={'email'}
-						placeholder={'Mail address'} 
-						value={this.state.values['email']}
-						onChange={this.handleChange}
+						placeholder={'Mail address'}
+						// value={this.state.values['email']}
+						// onChange={this.handleChange}
 						isValid={true}
 					/>
-					
-					<Password 
+					<Email
+						// validate={this.validateField('email')} 
+						name={'email3'}
+						placeholder={'Mail address'}
+						// value={this.state.values['email']}
+						// onChange={this.handleChange}
+						isValid={true}
+					/>
+
+					<Password
 						name={'password'}
 						// validate={this.validateField('password')} 
-						placeholder={'Password'} 
-						value={this.state.values['password']}
-						onChange={this.handleChange}
+						placeholder={'Password'}
+						// value={this.state.values['password']}
+						// onChange={this.handleChange}
 						isValid={true}
 					/>
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { ButtonPanel, Button } from 'odeum-ui'
+import { Password, Email } from 'content/Form/FormComponent/FormStyles';
 
 class Form extends Component {
 
@@ -72,7 +73,7 @@ class Form extends Component {
 		const name = e.target.name
 		const value = e.target.value
 		this.setState({ [name]: value },
-			() => { this.validateField(name, value) })
+			/* () => { this.validateField(name, value) } */)
 	}
 
 	handleSubmit = (e) => {
@@ -109,7 +110,18 @@ class Form extends Component {
 		if (fieldsArray.length > 1) {
 		}
 	}
-
+	valueSetter = (child) => {
+		switch (child.type) {
+			case Email: {
+				return this.state.email
+			}
+			case Password: {
+				return this.state.password
+			}
+			default:
+				return null
+		}
+	}
 	// FORM RENDER
 	render() {
 		// let fieldsArray = this.props.children
@@ -130,7 +142,9 @@ class Form extends Component {
 						{React.Children.toArray(this.props.children).map((child, index) => {
 							return React.cloneElement(child, {
 								key: index,
-								createInputRef: this.createInputRef
+								// value: this.valueSetter(child),
+								createInputRef: this.createInputRef,
+								handleChange: this.handleChange
 							})
 						})}
 
@@ -150,7 +164,7 @@ class Form extends Component {
 								label={'Reset'}
 								icon={'close'}
 								// type={'reset'}
-								// onClick={this.handleResetInput}
+								onClick={this.handleResetInput}
 								color={'#BE4F44'}
 							/>
 						</ButtonPanel>
