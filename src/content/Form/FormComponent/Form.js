@@ -21,11 +21,12 @@ class Form extends Component {
 	}
 
 	componentDidMount() {
-		// const { focus } = this.props
-		// if (focus) {
-		// 	this.focusInputRef(focus) // 'email'
-		// }
-		// document.addEventListener('keydown', this.onKeydown)
+		console.log(this.inputRefs)
+		const { focus } = this.props
+		if (focus) {
+			this.focusInputRef(focus) // 'email'
+		}
+		document.addEventListener('keydown', this.onKeydown)
 	}
 
 	componentWillUnmount() {
@@ -79,7 +80,10 @@ class Form extends Component {
 		this.props.onSubmit()
 	}
 
-	createInputRef = (name) => (input) => {
+	createInputRef = (name, input) => {
+		// console.log(name, input)
+		console.log('AndreiName', name)
+		console.log('AndreiTest', input)
 		return this.inputRefs[name] = input
 	}
 
@@ -96,21 +100,26 @@ class Form extends Component {
 	// FORM RENDER
 	render() {
 		let fieldsArray = this.props.children
-		if (fieldsArray.length > 1) {			
-			if (fieldsArray[0].type.name === 'Email') {  
+		if (fieldsArray.length > 1) {
+			if (fieldsArray[0].type.name === 'Email') {
 				console.log('Email field detected ... ')
 			}
 		}
 		else if (fieldsArray.type.name === 'Email') {
 			console.log('Email field detected ... ')
 		}
-		
+
 		return (
 			<div>
 				{this.props.onSubmit ?
 					<form onSubmit={this.handleSubmit}
 						{...this.props}>
-						{this.props.children}
+						{React.Children.toArray(this.props.children).map((child, index) => {
+							return React.cloneElement(child, {
+								key: index,
+								innerRef: this.createInputRef(child.props.name, child)
+							})
+						})}
 
 						<ButtonPanel justify={'left'} >
 							<Button

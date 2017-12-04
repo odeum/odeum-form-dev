@@ -5,13 +5,13 @@ import { Email, Password } from './FormStyles'
 import FormErrors from './FormErrors'
 
 class FormNew extends Component {
-	
-	
+
+
 	constructor(props) {
 		super(props)
-		
+
 		this.inputRefs = {}
-		
+
 		this.state = {
 			email: '',
 			password: '',
@@ -46,7 +46,7 @@ class FormNew extends Component {
 				}
 				else if (document.activeElement.name === 'password') {
 					this.focusInputRef('email')
-				}				
+				}
 				// this.setState({ id: this.state.id < this.inputs.length - 1 ? (this.state.id + 1) : 0 })
 				break
 			default:
@@ -72,7 +72,7 @@ class FormNew extends Component {
 		this.props.onSubmit(this.state)
 		console.log('Submitting data ...')
 	}
-	
+
 	handleChange = (e) => {
 		const name = e.target.name
 		const value = e.target.value
@@ -104,7 +104,7 @@ class FormNew extends Component {
 			passwordValid: passwordValid
 		}, this.validateForm)
 	}
-
+	
 	validateForm() {
 		this.setState({ formValid: this.state.emailValid && this.state.passwordValid })
 	}
@@ -119,9 +119,9 @@ class FormNew extends Component {
 	}
 
 	// THE NEW KIDS ON THE BLOCK ... 
-	createInnerRef = (name) => (input) => {				
+	createInnerRef = (name) => (input) => {
 		return this.inputRefs[name] = input
-	}	
+	}
 
 	focusInputRef = (name) => {
 		this.inputRefs[name].focus()
@@ -150,7 +150,7 @@ class FormNew extends Component {
 		console.log(inFocus)
 		this.setState({ inFocus: inFocus })
 
-		console.log('InnerRef: ', this.inputRefs[inFocus].name)		
+		console.log('InnerRef: ', this.inputRefs[inFocus].name)
 		console.log(refCount)
 	}
 
@@ -216,7 +216,7 @@ class FormNew extends Component {
 						disabled={!this.state.formValid}
 						isDisabled={!this.state.formValid}
 						color={this.state.formValid ? '#13A085' : ''}
-						// onSubmit={this.handleOnSubmit}
+					// onSubmit={this.handleOnSubmit}
 					/>
 
 					<Button

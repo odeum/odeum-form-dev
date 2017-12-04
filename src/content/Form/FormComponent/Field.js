@@ -4,26 +4,26 @@ import { StyledInput } from './FormStyles'
 // Called by Common Field Component
 class Field extends PureComponent {
 
-	inputRefs = {}
+	// inputRefs = {}
 
-	createInputRef = (name) => (input) => {
-		return this.inputRefs[name] = input
-	}
+	// createInputRef = (name) => (input) => {
+	// 	return this.inputRefs[name] = input
+	// }
 	
-	focusInputRef = (name) => {
-		this.inputRefs[name].focus()
-	}
+	// focusInputRef = (name) => {
+	// 	this.inputRefs[name].focus()
+	// }
 	
-	componentDidMount() {
-		console.log(this.inputRefs)
-		// this.props.getRefs()
-	}
+	// componentDidMount() {
+	// 	console.log(this.inputRefs)
+	// 	// this.props.getRefs()
+	// }
 
 	render() {		
 		return (
 			<div>
 				<StyledInput 
-					innerRef={this.createInputRef(this.props.name)}
+					// innerRef={this.createInputRef(this.props.name)}
 					{...this.props} 
 				/>				
 			</div>

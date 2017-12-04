@@ -42,6 +42,7 @@ class FormTester extends Component {
 				> 
 					<Email 
 						// validate={this.validateField('email')} 
+						name={'email'}
 						placeholder={'Mail address'} 
 						value={this.state.values['email']}
 						onChange={this.handleChange}
@@ -49,6 +50,7 @@ class FormTester extends Component {
 					/>
 					
 					<Password 
+						name={'password'}
 						// validate={this.validateField('password')} 
 						placeholder={'Password'} 
 						value={this.state.values['password']}
