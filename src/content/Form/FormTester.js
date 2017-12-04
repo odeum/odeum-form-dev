@@ -40,26 +40,18 @@ class FormTester extends Component {
 				<p>Please fill out the following form fields:</p>
 
 				<Form
-					focusField={'email'}
-					data={this.state}
+					focusfield={'email'}					
 					onSubmit={this.handleSubmit} // Use internal Buttons for submit
 				>
 					<Email
 						// validate={this.validateField('email')} 
 						name={'email'}
-						placeholder={'Mail address'}
+						placeholder={'Mail 1'}
 						// value={this.state.values['email']}
 						// onChange={this.handleChange}
 						isValid={true}
 					/>
-					<Email
-						// validate={this.validateField('email')} 
-						name={'email3'}
-						placeholder={'Mail address'}
-						// value={this.state.values['email']}
-						// onChange={this.handleChange}
-						isValid={true}
-					/>
+
 
 					<Password
 						name={'password'}
@@ -69,6 +61,15 @@ class FormTester extends Component {
 						// onChange={this.handleChange}
 						isValid={true}
 					/>
+
+					{/* <Email
+						// validate={this.validateField('email')} 
+						name={'email2'}
+						placeholder={'Mail 2'}
+						// value={this.state.values['email']}
+						// onChange={this.handleChange}
+						isValid={false}
+					/> */}
 
 				</Form>
 

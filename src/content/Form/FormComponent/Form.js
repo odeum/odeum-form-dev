@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ButtonPanel, Button } from 'odeum-ui'
-import { Password, Email } from 'content/Form/FormComponent/FormStyles';
+// import { Password, Email } from 'content/Form/FormComponent/FormStyles'
+import { Email, Password } from './Fields'
 
 class Form extends Component {
 
@@ -22,10 +23,9 @@ class Form extends Component {
 	}
 
 	componentDidMount() {
-		// console.log(this.props)
-		const { focusField } = this.props
-		if (focusField) {
-			this.focusInputRef(focusField) // 'email'
+		const { focusfield } = this.props
+		if (focusfield) {
+			this.focusInputRef(focusfield)
 		}
 		document.addEventListener('keydown', this.onKeydown)
 	}
@@ -39,9 +39,11 @@ class Form extends Component {
 		switch (keyCode) {
 			case 27: // ESCAPE
 				this.handleResetInput()
+				console.log('ESC')
 				break
-			case 13: // ENTER
+			case 13: // ENTER				
 				if (this.state.formValid) {
+					console.log('ENTER on valid')
 					this.props.onSubmit(this.state)
 				}
 				else if (document.activeElement.name === 'email') {
@@ -56,16 +58,19 @@ class Form extends Component {
 		}
 	}
 
-	handleResetInput = (fields) => {
+	handleResetInput = () => {
 		// if arg(fields) { this.setState({ fields, ... }) }
-		this.setState({
-			email: '',
-			password: '',
-			formErrors: { email: '', password: '' },
-			emailValid: false,
-			passwordValid: false,
-			formValid: false
-		})
+		// this.setState({
+		// 	email: '',
+		// 	password: '',
+		// 	formErrors: { email: '', password: '' },
+		// 	emailValid: false,
+		// 	passwordValid: false,
+		// 	formValid: false,
+		// 	inFocus: '',
+		// 	refCount: null
+		// })
+		this.setState({})
 		this.focusInputRef('email')
 	}
 
@@ -82,9 +87,6 @@ class Form extends Component {
 	}
 
 	createInputRef = (name) => (input) => {
-		// console.log(name, input)
-		console.log('AndreiName', name)
-		console.log('AndreiTest', input)
 		return this.inputRefs[name] = input
 	}
 
@@ -98,18 +100,6 @@ class Form extends Component {
 		this.setState({ inFocus: inFocus, refCount: refCount })
 	}
 
-	// renderWidgets(selected) {
-	// 	return selected.map(e => {
-	// 		let Widget = widgets[this.props.widgetsToRender[e - 1]];
-	// 		return <Widget key={e} />
-	// 	})
-	// }
-
-	renderFields = (children) => {
-		let fieldsArray = this.props.children
-		if (fieldsArray.length > 1) {
-		}
-	}
 	valueSetter = (child) => {
 		switch (child.type) {
 			case Email: {
@@ -123,26 +113,17 @@ class Form extends Component {
 		}
 	}
 	// FORM RENDER
-	render() {
-		// let fieldsArray = this.props.children
-		// if (fieldsArray.length > 1) {			
-		// 	if (fieldsArray[0].type.name === 'Email') {  
-		// 		console.log('Email field detected ... ')
-		// 	}
-		// }
-		// else if (fieldsArray.type.name === 'Email') {
-		// 	console.log('Email field detected ... ')
-		// }
-
+	render() {		
 		return (
 			<div>
 				{this.props.onSubmit ?
 					<form onSubmit={this.handleSubmit}
 						{...this.props}>
+						
 						{React.Children.toArray(this.props.children).map((child, index) => {
 							return React.cloneElement(child, {
 								key: index,
-								// value: this.valueSetter(child),
+								value: this.valueSetter(child),
 								createInputRef: this.createInputRef,
 								handleChange: this.handleChange
 							})

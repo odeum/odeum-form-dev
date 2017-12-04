@@ -1,20 +1,30 @@
 import React, { Component } from 'react'
 import Field from './Field'
 
-
 /* 
 Common Field Components wrapping all the generic props and methods from the Generic Field Component.
-
+Email
+Password
+FirstName
+LastName
+Address
+Zip
+Country
+Phone
+Company
+Birthday
+Gender
+Date
 */
-export class Email extends Component {
 
+export class Email extends Component {
 	render() {
 		const fieldId = 'email'
 		return (
 			<div>
 				<Field
 					type={fieldId}
-					name={fieldId}
+					// name={fieldId}
 					value={this.props.value}
 					innerRef={this.props.createInputRef ? this.props.createInputRef(fieldId) : null}
 					onChange={this.props.handleChange}
