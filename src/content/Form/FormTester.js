@@ -36,7 +36,7 @@ class FormTester extends Component {
 				<p>Please fill out the following form fields:</p>
 
 				<Form 
-					focus={'email'} 
+					focusField={'email'} 
 					data={this.state}
 					onSubmit={this.handleSubmit} // Use internal Buttons for submit
 				> 

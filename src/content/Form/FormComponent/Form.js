@@ -21,17 +21,17 @@ class Form extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this.inputRefs)
-		const { focus } = this.props
-		if (focus) {
-			this.focusInputRef(focus) // 'email'
+		// console.log(this.props)
+		const { focusField } = this.props
+		if (focusField) {
+			this.focusInputRef(focusField) // 'email'
 		}
 		document.addEventListener('keydown', this.onKeydown)
 	}
 
 	componentWillUnmount() {
-		// document.removeEventListener('keydown', this.onKeydown)
-		// this.inputRefs = {} // Reset input refs
+		document.removeEventListener('keydown', this.onKeydown)
+		this.inputRefs = {} // Reset input refs
 	}
 
 	onKeydown = ({ keyCode }) => {
@@ -80,7 +80,7 @@ class Form extends Component {
 		this.props.onSubmit()
 	}
 
-	createInputRef = (name, input) => {
+	createInputRef = (name) => (input) => {
 		// console.log(name, input)
 		console.log('AndreiName', name)
 		console.log('AndreiTest', input)
@@ -97,17 +97,30 @@ class Form extends Component {
 		this.setState({ inFocus: inFocus, refCount: refCount })
 	}
 
-	// FORM RENDER
-	render() {
+	// renderWidgets(selected) {
+	// 	return selected.map(e => {
+	// 		let Widget = widgets[this.props.widgetsToRender[e - 1]];
+	// 		return <Widget key={e} />
+	// 	})
+	// }
+
+	renderFields = (children) => {
 		let fieldsArray = this.props.children
 		if (fieldsArray.length > 1) {
-			if (fieldsArray[0].type.name === 'Email') {
-				console.log('Email field detected ... ')
-			}
 		}
-		else if (fieldsArray.type.name === 'Email') {
-			console.log('Email field detected ... ')
-		}
+	}
+
+	// FORM RENDER
+	render() {
+		// let fieldsArray = this.props.children
+		// if (fieldsArray.length > 1) {			
+		// 	if (fieldsArray[0].type.name === 'Email') {  
+		// 		console.log('Email field detected ... ')
+		// 	}
+		// }
+		// else if (fieldsArray.type.name === 'Email') {
+		// 	console.log('Email field detected ... ')
+		// }
 
 		return (
 			<div>
@@ -117,7 +130,7 @@ class Form extends Component {
 						{React.Children.toArray(this.props.children).map((child, index) => {
 							return React.cloneElement(child, {
 								key: index,
-								innerRef: this.createInputRef(child.props.name, child)
+								createInputRef: this.createInputRef
 							})
 						})}
 

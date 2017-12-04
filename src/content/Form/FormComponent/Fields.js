@@ -16,7 +16,7 @@ export class Email extends Component {
 					type={fieldId}
 					name={fieldId}
 					value={this.props.value}
-					// innerRef={this.props.createInputRef(fieldId)}
+					innerRef={this.props.createInputRef ? this.props.createInputRef(fieldId) : null}
 					onChange={this.props.handleChange}
 					// onChange={this.handleChange}
 
@@ -44,7 +44,7 @@ export const Password = (props) => {
 			type={fieldId}
 			name={fieldId}
 			value={props.value}
-			// innerRef={this.props.createInputRef(fieldId)}
+			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
 			// onChange={this.handleChange}
 
