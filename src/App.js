@@ -17,9 +17,10 @@ import { Page/* , Login , LoginTester */ } from './framework/TestComponents'
 // Content imports
 import Homepage from './content/Homepage/Homepage'
 import FormPage from './content/Form/FormPage'
-import TutorialPage from './content/Tutorial/TutorialPage'
 import LoginPage from './content/Login/LoginPage'
 
+// Component tester
+import FormTester from './content/Form/FormTester'
 
 
 class App extends Component {
@@ -56,8 +57,8 @@ class App extends Component {
 						<Tab icon={'assignment'} label={'Form List'} route={'/formlist'}>
 							<FormPage />
 						</Tab>
-						<Tab icon={'code'} label={'Tutorial'} route={'/tutorial'}>
-							Tutorial ...
+						<Tab icon={'code'} label={'Component test'} route={'/component'}>
+							<FormTester />
 						</Tab>
 					</Menu>
 

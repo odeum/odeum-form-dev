@@ -1,8 +1,8 @@
 {
-  "name": "create-odeum-project",
+  "name": "odeum-form-dev",
   "version": "0.1.0",
-  "description": "Create a new GitHub project template and repository for an ODEUM Code Web App.",
-  "private": true,
+  "description": "Development preoject for ODEUM Form Component.",
+  "private": false,
   "author": "Christian Broberg",
   "license": "MIT",
   "dependencies": {

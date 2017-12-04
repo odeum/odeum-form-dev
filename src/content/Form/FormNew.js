@@ -68,8 +68,9 @@ class FormNew extends Component {
 	}
 
 	handleSubmit = (e) => {
-		e.preventDefault()
+		// e.preventDefault()
 		this.props.onSubmit(this.state)
+		console.log('Submitting data ...')
 	}
 	
 	handleChange = (e) => {
@@ -210,18 +211,18 @@ class FormNew extends Component {
 					<Button
 						label={'Save'}
 						icon={'check'}
-						type={'submit'}
+						// type={'submit'}
 						onClick={this.handleSubmit}
 						disabled={!this.state.formValid}
 						isDisabled={!this.state.formValid}
 						color={this.state.formValid ? '#13A085' : ''}
-						onSubmit={this.handleOnSubmit}
+						// onSubmit={this.handleOnSubmit}
 					/>
 
 					<Button
 						label={'Reset'}
 						icon={'close'}
-						type={'reset'}
+						// type={'reset'}
 						onClick={this.handleResetInput}
 						color={'#BE4F44'}
 					/>
