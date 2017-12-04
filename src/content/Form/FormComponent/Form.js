@@ -21,16 +21,17 @@ class Form extends Component {
 	}
 
 	componentDidMount() {
-		// const { focus } = this.props
-		// if (focus) {
-		// 	this.focusInputRef(focus) // 'email'
-		// }
-		// document.addEventListener('keydown', this.onKeydown)
+		console.log(this.props)
+		const { focusField } = this.props
+		if (focusField) {
+			this.focusInputRef(focusField) // 'email'
+		}
+		document.addEventListener('keydown', this.onKeydown)
 	}
 
 	componentWillUnmount() {
-		// document.removeEventListener('keydown', this.onKeydown)
-		// this.inputRefs = {} // Reset input refs
+		document.removeEventListener('keydown', this.onKeydown)
+		this.inputRefs = {} // Reset input refs
 	}
 
 	onKeydown = ({ keyCode }) => {
@@ -93,24 +94,45 @@ class Form extends Component {
 		this.setState({ inFocus: inFocus, refCount: refCount })
 	}
 
+	// renderWidgets(selected) {
+	// 	return selected.map(e => {
+	// 		let Widget = widgets[this.props.widgetsToRender[e - 1]];
+	// 		return <Widget key={e} />
+	// 	})
+	// }
+
+	renderFields = (children) => {
+		let fieldsArray = this.props.children
+		if (fieldsArray.length > 1) {
+		}
+	}
+
 	// FORM RENDER
 	render() {
-		let fieldsArray = this.props.children
-		if (fieldsArray.length > 1) {			
-			if (fieldsArray[0].type.name === 'Email') {  
-				console.log('Email field detected ... ')
-			}
-		}
-		else if (fieldsArray.type.name === 'Email') {
-			console.log('Email field detected ... ')
-		}
+		// let fieldsArray = this.props.children
+		// if (fieldsArray.length > 1) {			
+		// 	if (fieldsArray[0].type.name === 'Email') {  
+		// 		console.log('Email field detected ... ')
+		// 	}
+		// }
+		// else if (fieldsArray.type.name === 'Email') {
+		// 	console.log('Email field detected ... ')
+		// }
 		
 		return (
 			<div>
 				{this.props.onSubmit ?
 					<form onSubmit={this.handleSubmit}
 						{...this.props}>
-						{this.props.children}
+						
+						{/* {this.props.children} */}
+
+						{React.Children.toArray(this.props.children).map((child, index) => {
+							return React.cloneElement(child, { 
+								key: index, 
+								innerRef: this.createInputRef(child.name) })
+						})
+						}
 
 						<ButtonPanel justify={'left'} >
 							<Button
