@@ -15,4 +15,3 @@ class Field extends PureComponent {
 }
 
 export default Field
-

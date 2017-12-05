@@ -44,3 +44,15 @@ getValueFromChild = (child) => {
 					/>
 
 				</ButtonPanel> */}
+
+				
+nextField = () => {
+	console.log(document.querySelectorAll("input"))
+	console.log(this.inputRefs)
+
+	const inputs = Array.prototype.slice.call(document.querySelectorAll("input"))
+	const index = (inputs.indexOf(document.activeElement) + 1) % inputs.length
+	const input = inputs[index]
+	input.focus()
+	input.select()
+}

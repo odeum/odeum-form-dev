@@ -24,7 +24,7 @@ const Homepage = () => {
 
 						<LinkButton label={'Form demo'} icon={'assignment'} route={'/form/formlist'}/>
 						<HomepageButtonSpacer />
-						<LinkButton label={'Component test'} icon={'code'} route={'/form/component'} />
+						<LinkButton label={'Component'} icon={'code'} route={'/form/component'} />
 
 					</ButtonPanel>
 				</HomepageButonsContainer>

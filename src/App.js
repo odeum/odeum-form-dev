@@ -57,7 +57,7 @@ class App extends Component {
 						<Tab icon={'assignment'} label={'Form List'} route={'/formlist'}>
 							<FormPage />
 						</Tab>
-						<Tab icon={'code'} label={'Component test'} route={'/component'}>
+						<Tab icon={'code'} label={'Component'} route={'/component'}>
 							<FormTester />
 						</Tab>
 					</Menu>

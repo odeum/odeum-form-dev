@@ -26,18 +26,15 @@ export class Email extends Component {
 				<StyledInput
 					type={fieldId}
 					// name={fieldId}
-					value={this.props.value}
+					// value={this.props.value}
 					innerRef={this.props.createInputRef ? this.props.createInputRef(fieldId) : null}
 					onChange={this.props.handleChange}
-					// onChange={this.handleChange}
-
-					// color={!this.state.emailValid ? '#BE4F44' : undefined}
 					color={!this.props.isValid ? '#BE4F44' : undefined}
-					// focusColor={!this.state.emailValid ? '#BE4F44' : undefined}
 					focusColor={!this.props.isValid ? '#BE4F44' : undefined}
 					onFocus={this.props.handleFocus}
 
 					{...this.props}
+
 				// onBlur={this.handleChange}
 				// onMouseEnter={this.handleMouse('Enter')}
 				// onMouseLeave={this.handleMouse('Leave')}
@@ -54,19 +51,32 @@ export const Password = (props) => {
 		<StyledInput
 			type={fieldId}
 			// name={fieldId}
-			value={props.value}
+			// value={props.value}
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
-			// onChange={this.handleChange}
-
-			// color={!this.state.emailValid ? '#BE4F44' : undefined}
 			color={!props.isValid ? '#BE4F44' : undefined}
-			// focusColor={!this.state.emailValid ? '#BE4F44' : undefined}
 			focusColor={!props.isValid ? '#BE4F44' : undefined}
 			onFocus={props.handleFocus}
 
 			{...props}
 		/>
+	)
+}
 
+export const Phone = (props) => {
+	const fieldId = 'phone'
+	return (
+		<StyledInput
+			type={'tel'}
+			// name={fieldId}
+			// value={props.value}
+			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
+			onChange={props.handleChange}
+			color={!props.isValid ? '#BE4F44' : undefined}
+			focusColor={!props.isValid ? '#BE4F44' : undefined}
+			onFocus={props.handleFocus}
+
+			{...props}
+		/>
 	)
 }
