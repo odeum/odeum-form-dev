@@ -10,26 +10,19 @@ class FormTester extends Component {
 	constructor(props) {
 		super(props)
 
-		this.state = {
+		this.model = {
 			values: {
 				email: '',
 				name: '',
 				password: '',
 				phone: '',
 				address: ''
-			},
+			}
 		}
-
 	}
 
-	handleSubmit = () => {
-		console.log('Submitting data ...', this.state.values.email)
-	}
-
-	handleChange = (e) => {
-		const name = e.target.name
-		const value = e.target.value
-		this.setState({ values: { ...this.state.values, [name]: value } })
+	handleSubmit = (data) => {
+		console.log('Submitting data ...', data)
 	}
 
 	render() {
@@ -41,115 +34,32 @@ class FormTester extends Component {
 
 				<Form
 					focusfield={'email'}					
-					onSubmit={this.handleSubmit} // Use internal Buttons for submit
+					onSubmit={this.handleSubmit}
+					model={this.model.values}
 				>
 					<Email
-						// validate={this.validateField('email')} 
 						name={'email'}
-						placeholder={'Mail 1'}
+						placeholder={'Enter your mail address ... '}
+						// isValid={true}
+						// validate={this.validateField('email')} 
 						// value={this.state.values['email']}
 						// onChange={this.handleChange}
-						isValid={true}
 					/>
 
 
 					<Password
 						name={'password'}
+						placeholder={'Enter your password ... '}
+						// isValid={true}
 						// validate={this.validateField('password')} 
-						placeholder={'Password'}
 						// value={this.state.values['password']}
 						// onChange={this.handleChange}
-						isValid={true}
 					/>
-
-					{/* <Email
-						// validate={this.validateField('email')} 
-						name={'email2'}
-						placeholder={'Mail 2'}
-						// value={this.state.values['email']}
-						// onChange={this.handleChange}
-						isValid={false}
-					/> */}
 
 				</Form>
-
-				{/* <ButtonPanel justify={'left'} >
-
-					<Button
-						label={'Save'}
-						icon={'check'}
-						type={'submit'}
-						onClick={this.handleSubmit}
-						// disabled={!this.state.formValid}
-						// isDisabled={!this.state.formValid}
-						color={'#13A085'}
-						// color={this.state.formValid ? '#13A085' : ''}
-					// onSubmit={this.handleSubmit}
-					/>
-
-					<Button
-						label={'Reset'}
-						icon={'close'}
-						// type={'reset'}
-						onClick={this.handleResetInput}
-						color={'#BE4F44'}
-					/>
-
-				</ButtonPanel> */}
-
 			</div>
 		)
 	}
 }
 
 export default FormTester
-
-this.oldstate = {
-	email: '',
-	password: '',
-	formErrors: { email: '', password: '' },
-	emailValid: false,
-	passwordValid: false,
-	formValid: false,
-	inFocus: '',
-	refCount: null
-}
-
-this.state1 = {
-	values: {
-		email: '',
-		name: '',
-		password: '',
-		phone: '',
-		address: ''
-	},
-
-	errors: {
-		email: '',
-		name: '',
-		password: '',
-		phone: '',
-		address: ''
-	},
-
-	validation: {
-		email: false,
-		name: false,
-		password: false,
-		phone: false,
-		address: false
-	},
-
-	formValid: false,
-	inFocus: '',
-	refCount: null
-}
-
-this.state2 = {
-	email: {
-		value: '',
-		error: '',
-		valid: false,
-	}
-}
-

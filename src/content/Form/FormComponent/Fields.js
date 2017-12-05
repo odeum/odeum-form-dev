@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import Field from './Field'
+// import Field from './Field'
+import { StyledInput } from './FormStyles'
 
 /* 
 Common Field Components wrapping all the generic props and methods from the Generic Field Component.
@@ -22,7 +23,7 @@ export class Email extends Component {
 		const fieldId = 'email'
 		return (
 			<div>
-				<Field
+				<StyledInput
 					type={fieldId}
 					// name={fieldId}
 					value={this.props.value}
@@ -34,7 +35,7 @@ export class Email extends Component {
 					color={!this.props.isValid ? '#BE4F44' : undefined}
 					// focusColor={!this.state.emailValid ? '#BE4F44' : undefined}
 					focusColor={!this.props.isValid ? '#BE4F44' : undefined}
-					// onFocus={this.props.handleFocus}
+					onFocus={this.props.handleFocus}
 
 					{...this.props}
 				// onBlur={this.handleChange}
@@ -50,9 +51,9 @@ export class Email extends Component {
 export const Password = (props) => {
 	const fieldId = 'password'
 	return (
-		<Field
+		<StyledInput
 			type={fieldId}
-			name={fieldId}
+			// name={fieldId}
 			value={props.value}
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
@@ -62,7 +63,7 @@ export const Password = (props) => {
 			color={!props.isValid ? '#BE4F44' : undefined}
 			// focusColor={!this.state.emailValid ? '#BE4F44' : undefined}
 			focusColor={!props.isValid ? '#BE4F44' : undefined}
-			// onFocus={this.props.handleFocus}
+			onFocus={props.handleFocus}
 
 			{...props}
 		/>

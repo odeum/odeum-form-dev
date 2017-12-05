@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { ButtonPanel, Button } from 'odeum-ui'
-// import { Password, Email } from 'content/Form/FormComponent/FormStyles'
-import { Email, Password } from './Fields'
+import { DisplayState } from './DisplayStateProps'
 
 class Form extends Component {
 
@@ -11,18 +10,18 @@ class Form extends Component {
 		this.inputRefs = {}
 
 		this.state = {
-			email: '',
-			password: '',
+			values: {},
 			formErrors: { email: '', password: '' },
 			emailValid: false,
 			passwordValid: false,
 			formValid: false,
 			inFocus: '',
-			refCount: null
+			refCount: ''
 		}
 	}
 
 	componentDidMount() {
+		this.setState({ values: this.props.model })
 		const { focusfield } = this.props
 		if (focusfield) {
 			this.focusInputRef(focusfield)
@@ -39,7 +38,6 @@ class Form extends Component {
 		switch (keyCode) {
 			case 27: // ESCAPE
 				this.handleResetInput()
-				console.log('ESC')
 				break
 			case 13: // ENTER				
 				if (this.state.formValid) {
@@ -50,7 +48,7 @@ class Form extends Component {
 					this.focusInputRef('password')
 				}
 				else if (document.activeElement.name === 'password') {
-					this.focusInputRef('email')
+					this.focusInputRef(this.props.focusfield)
 				}
 				break
 			default:
@@ -61,29 +59,27 @@ class Form extends Component {
 	handleResetInput = () => {
 		// if arg(fields) { this.setState({ fields, ... }) }
 		// this.setState({
-		// 	email: '',
-		// 	password: '',
+		// 	values: this.props.model,
 		// 	formErrors: { email: '', password: '' },
 		// 	emailValid: false,
 		// 	passwordValid: false,
 		// 	formValid: false,
-		// 	inFocus: '',
-		// 	refCount: null
 		// })
-		this.setState({})
-		this.focusInputRef('email')
+		this.setState({ values: this.props.model })		
+		this.focusInputRef(this.props.focusfield)
 	}
 
 	handleChange = (e) => {
 		const name = e.target.name
 		const value = e.target.value
-		this.setState({ [name]: value },
-			/* () => { this.validateField(name, value) } */)
+		this.setState({ values: { ...this.state.values, [name]: value } })
+		// this.setState({ [name]: value },
+		// 	/* () => { this.validateField(name, value) } */)
 	}
 
 	handleSubmit = (e) => {
 		e.preventDefault()
-		this.props.onSubmit()
+		this.props.onSubmit(this.state.values)
 	}
 
 	createInputRef = (name) => (input) => {
@@ -96,71 +92,54 @@ class Form extends Component {
 
 	handleFocus = () => {
 		let refCount = Object.keys(this.inputRefs).length
-		let inFocus = document.activeElement.name
-		this.setState({ inFocus: inFocus, refCount: refCount })
+		let currentFocus = document.activeElement.name
+		this.setState({ inFocus: currentFocus, refCount: refCount })
 	}
 
-	valueSetter = (child) => {
-		switch (child.type) {
-			case Email: {
-				return this.state.email
-			}
-			case Password: {
-				return this.state.password
-			}
-			default:
-				return null
-		}
-	}
 	// FORM RENDER
-	render() {		
+	render() {
 		return (
-			<div>
-				{this.props.onSubmit ?
-					<form onSubmit={this.handleSubmit}
-						{...this.props}>
-						
-						{React.Children.toArray(this.props.children).map((child, index) => {
-							return React.cloneElement(child, {
-								key: index,
-								value: this.valueSetter(child),
-								createInputRef: this.createInputRef,
-								handleChange: this.handleChange
-							})
-						})}
+			<div>			
+				<form // onSubmit={this.handleSubmit }					
+					{...this.props}>
 
-						<ButtonPanel justify={'left'} >
-							<Button
-								label={'Save'}
-								icon={'check'}
-								type={'submit'}
-								onClick={this.handleSubmit}
-								// disabled={!this.state.formValid}
-								// isDisabled={!this.state.formValid}
-								color={'#13A085'}
-								// color={this.state.formValid ? '#13A085' : ''}
-								onSubmit={this.handleSubmit}
-							/>
-							<Button
-								label={'Reset'}
-								icon={'close'}
-								// type={'reset'}
-								onClick={this.handleResetInput}
-								color={'#BE4F44'}
-							/>
-						</ButtonPanel>
+					{React.Children.toArray(this.props.children).map((child, index) => {
+						let currentChild = child.type.name.toLowerCase()
+						return React.cloneElement(child, {
+							key: index,
+							// value: this.getValueFromChild(currentChild),
+							value: this.state.values[currentChild],
+							createInputRef: this.createInputRef,
+							handleChange: this.handleChange,
+							handleFocus: this.handleFocus,
+						})
+					})}
 
-					</form>
-					:
-					<form onSubmit={this.props.handleSubmit}
-						{...this.props}>
-						{this.props.children}
-					</form>
-				}
+					<ButtonPanel justify={'left'} >
+						<Button
+							label={'Save'}
+							icon={'check'}
+							// type={'submit'}
+							onClick={this.handleSubmit}
+							disabled={!this.state.formValid}
+							isDisabled={!this.state.formValid}							
+							color={this.state.formValid ? '#13A085' : ''}
+							// onSubmit={this.handleSubmit} 
+						/>
+						<Button
+							label={'Reset'}
+							icon={'close'}
+							type={'reset'}
+							onClick={this.handleResetInput}
+							color={'#BE4F44'}
+						/>						
+					</ButtonPanel>
+				</form>
+				<p>{' '}</p>
+				<DisplayState {...this.state} title={'Form'} />
 			</div>
 		)
 	}
 }
-
 
 export default Form

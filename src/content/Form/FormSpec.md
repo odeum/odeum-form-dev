@@ -107,3 +107,57 @@ import { Form, Input, Select, Textarea, Label, Validator } from 'odeum-form'
 </Form>
 
 ```
+
+## Model considerations
+
+```js
+this.oldstate = {
+	email: '',
+	password: '',
+	formErrors: { email: '', password: '' },
+	emailValid: false,
+	passwordValid: false,
+	formValid: false,
+	inFocus: '',
+	refCount: null
+}
+
+this.state1 = {
+	values: {
+		email: '',
+		name: '',
+		password: '',
+		phone: '',
+		address: ''
+	},
+
+	errors: {
+		email: '',
+		name: '',
+		password: '',
+		phone: '',
+		address: ''
+	},
+
+	validation: {
+		email: false,
+		name: false,
+		password: false,
+		phone: false,
+		address: false
+	},
+
+	formValid: false,
+	inFocus: '',
+	refCount: null
+}
+
+this.state2 = {
+	email: {
+		value: '',
+		error: '',
+		valid: false,
+	}
+}
+
+```

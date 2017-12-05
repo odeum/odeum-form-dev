@@ -6,7 +6,7 @@ class Field extends PureComponent {
 	render() {		
 		return (
 			<div>
-				<StyledInput 					
+				<StyledInput 
 					{...this.props} 
 				/>				
 			</div>
