@@ -17,6 +17,7 @@ class FormTester extends Component {
 				email: '',
 				password: '',
 				phone: '',
+				phone2: '',
 			}
 		}
 	}
@@ -52,6 +53,12 @@ class FormTester extends Component {
 						placeholder={'Enter your phone number ... '}
 						// validate={this.validateField('password')} 
 					/>
+					<Phone
+						name={'phone2'}
+						placeholder={'Enter your phone number ... '}
+						// validate={this.validateField('password')} 
+					/>
+
 				</Form>
 			</div>
 		)

@@ -7,8 +7,8 @@ class Form extends Component {
 	constructor(props) {
 		super(props)
 
-		this.inputRefs = {}
-		this.inputRefsArray = []
+		this.inputs = {}
+		this.inputsArray = []
 
 		this.state = {
 			values: '',
@@ -32,24 +32,24 @@ class Form extends Component {
 		this.setState({ values: model, validation: model, errors: model })
 		
 		if (focusfield) {
-			this.focusInputRef(focusfield)
+			this.focusInput(focusfield)
 		}
 
-		this.inputRefsArray = Array.prototype.slice.call(document.querySelectorAll("input"))
+		this.inputsArray = Array.prototype.slice.call(document.querySelectorAll("input"))
 
 		document.addEventListener('keydown', this.onKeydown)
 	}
 	
 	componentWillUnmount() {
 		document.removeEventListener('keydown', this.onKeydown)
-		this.inputRefs = {} // Reset input refs
-		this.inputRefsArray = [] // Reset input refs array
+		this.inputs = {} // Reset input refs
+		this.inputsArray = [] // Reset input refs array
 	}
 
 
 	nextField = () => {
-		const index = (this.inputRefsArray.indexOf(document.activeElement) + 1) % this.state.refCount
-		const input = this.inputRefsArray[index]
+		const index = (this.inputsArray.indexOf(document.activeElement) + 1) % this.inputsArray.length 
+		const input = this.inputsArray[index]
 		input.focus()
 		input.select()
 	}
@@ -82,7 +82,7 @@ class Form extends Component {
 		// 	isFormValid: false,
 		// })
 		this.setState({ values: model, validation: model, errors: model })		
-		this.focusInputRef(focusfield)
+		this.focusInput(focusfield)
 	}
 
 	handleChange = (e) => {
@@ -99,15 +99,15 @@ class Form extends Component {
 	}
 
 	createInputRef = (name) => (input) => {
-		return this.inputRefs[name] = input
+		return this.inputs[name] = input
 	}
 
-	focusInputRef = (name) => {
-		this.inputRefs[name].focus()
+	focusInput = (name) => {
+		this.inputs[name].focus()
 	}
 
 	handleFocus = () => {
-		let refCount = Object.keys(this.inputRefs).length
+		let refCount = Object.keys(this.inputs).length
 		let currentFocus = document.activeElement.name
 		document.activeElement.select()
 		this.setState({ inFocus: currentFocus, refCount: refCount })
@@ -126,7 +126,7 @@ class Form extends Component {
 					handleFocus: this.handleFocus,
 					color: (!validation[currentChild] ? '#BE4F44' : undefined),
 					focusColor: (!validation[currentChild] ? '#BE4F44' : undefined),
-					value: (values[currentChild] !== undefined ? values[currentChild] : '')
+					value: (values[currentChild] !== undefined ? values[currentChild] : ''),
 				})
 			})
 		)
