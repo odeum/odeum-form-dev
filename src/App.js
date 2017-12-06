@@ -41,29 +41,29 @@ class App extends Component {
 	render() {
 		return (
 			<AppContainer>
-				<Header logo={''}/>
+				<Header/>
 				<MenuPanel>
 
-					<Menu route={'/'} exact>
-						<Homepage />
+					<Menu route={'/'}>
+						<Homepage/>
 					</Menu>
 
 					<Page route={'/login'}>
 						{/* <LoginTester /> */}
-						<LoginPage onLogin={this.handleLogin} loggedIn={this.state.isLoggedIn} />
+						<LoginPage onLogin={this.handleLogin} loggedIn={this.state.isLoggedIn}/>
 					</Page>
 
 					<Menu icon={'assignment'} label={'Form'} route={'/form'}>
 						<Tab icon={'assignment'} label={'Form List'} route={'/formlist'}>
-							<FormPage />
+							<FormPage/>
 						</Tab>
 						<Tab icon={'code'} label={'Component'} route={'/component'}>
-							<FormTester />
+							<FormTester/>
 						</Tab>
 					</Menu>
 
 				</MenuPanel>
-				<Footer label={FooterLabel} labelLink={handleLink()} helpID={'Logged in: ' + this.state.isLoggedIn} />
+				<Footer label={FooterLabel} labelLink={handleLink()} helpID={'Logged in: ' + this.state.isLoggedIn}/>
 			</AppContainer>
 		)
 	}

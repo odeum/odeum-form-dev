@@ -21,7 +21,7 @@ class Form extends Component {
 
 			isFormValid: false,
 			inFocus: '',
-			refCount: ''
+			inputCount: ''
 		}
 	}
 
@@ -29,13 +29,19 @@ class Form extends Component {
 		const { model } = this.props
 		const { focusfield } = this.props
 		
-		this.setState({ values: model, validation: model, errors: model })
+		this.inputsArray = Array.prototype.slice.call(document.querySelectorAll('input'))
+		let inputCount = this.inputsArray.length
+		
+		this.setState({ values: model, validation: model, errors: model, inputCount: inputCount })
 		
 		if (focusfield) {
 			this.focusInput(focusfield)
 		}
 
-		this.inputsArray = Array.prototype.slice.call(document.querySelectorAll("input"))
+		
+		// console.log(this.inputsArray[3].name) // phone2
+		// console.log(this.inputsArray.indexOf('phone'))
+		// console.log(this.inputsArray.indexOf(document.activeElement.name) + 1)
 
 		document.addEventListener('keydown', this.onKeydown)
 	}
@@ -47,9 +53,10 @@ class Form extends Component {
 	}
 
 
-	nextField = () => {
+	nextInput = () => {
 		const index = (this.inputsArray.indexOf(document.activeElement) + 1) % this.inputsArray.length 
 		const input = this.inputsArray[index]
+		// console.log(input)
 		input.focus()
 		input.select()
 	}
@@ -62,9 +69,9 @@ class Form extends Component {
 			case 13: // ENTER				
 				if (this.state.isFormValid) {
 					console.log('ENTER on valid')
-					this.props.onSubmit(this.state)
+					this.props.onSubmit(this.state.values)
 				}
-				else this.nextField()
+				else this.nextInput()
 				break
 			default:
 				break
@@ -98,24 +105,30 @@ class Form extends Component {
 		this.props.onSubmit(this.state.values)
 	}
 
+	handleToggleValidate = () => {
+		this.setState({ isFormValid: !this.state.isFormValid })
+		this.focusInput('email')
+	}
+
 	createInputRef = (name) => (input) => {
 		return this.inputs[name] = input
 	}
 
 	focusInput = (name) => {
 		this.inputs[name].focus()
+		// this.inputsArray[].focus()
 	}
 
 	handleFocus = () => {
-		let refCount = Object.keys(this.inputs).length
+		// let inputCount = this.inputsArray.length
 		let currentFocus = document.activeElement.name
 		document.activeElement.select()
-		this.setState({ inFocus: currentFocus, refCount: refCount })
+		this.setState({ inFocus: currentFocus })
 	}
 
 	RenderFormField = () => {
 		const { children } = this.props
-		const { values, validation } = this.state
+		const { values, /* validation */ } = this.state
 		return (
 			React.Children.toArray(children).map((child, index) => {
 				// let currentChild = child.type.name.toLowerCase()
@@ -126,12 +139,14 @@ class Form extends Component {
 						createInputRef: this.createInputRef,
 						handleChange: this.handleChange,
 						handleFocus: this.handleFocus,
-						color: (!validation[name] ? '#BE4F44' : undefined),
-						focusColor: (!validation[name] ? '#BE4F44' : undefined),
+						// color: (!validation[name] ? '#BE4F44' : undefined),
+						// focusColor: (!validation[name] ? '#BE4F44' : undefined),
+						color: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp
+						focusColor: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp
 						value: (values[name] !== undefined ? values[name] : ''),
 					})				
 				} 
-				else return null
+				else return React.cloneElement(child)
 			})
 		)
 	}
@@ -154,6 +169,13 @@ class Form extends Component {
 					type={'reset'}
 					onClick={this.handleResetInput}
 					color={'#BE4F44'}
+				/>
+				<Button
+					label={!isFormValid ? 'Validate' : 'Invalidate'}
+					icon={!isFormValid ? 'check_circle' : 'cancel'}
+					type={'reset'}
+					onClick={this.handleToggleValidate}
+					color={!isFormValid ? '#13A085' : '#BE4F44'}
 				/>
 			</ButtonPanel>
 		)

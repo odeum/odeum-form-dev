@@ -7,12 +7,12 @@
   "license": "MIT",
   "dependencies": {
     "grid-styled": "^2.0.0-11",
-    "odeum-app": "^0.2.40",
-    "odeum-ui": "^0.1.32",
-    "react": "^16.1.0",
-    "react-dom": "^16.1.0",
+    "odeum-app": "^0.2.46",
+    "odeum-ui": "^0.1.34",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.17",
+    "react-scripts": "^1.0.17",
     "styled-components": "^2.2.3"
   },
   "devDependencies": {

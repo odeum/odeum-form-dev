@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // import { ButtonPanel, Button } from 'odeum-ui'
-import Form from './FormComponent/Form'
+import Form from './FormComponent/Form2'
 import { Email, Password, Phone } from './FormComponent/Fields'
 
 
@@ -55,9 +55,10 @@ class FormTester extends Component {
 					/>
 					<Phone
 						name={'phone2'}
-						placeholder={'Enter your phone number ... '}
+						placeholder={'Enter your phone number 2 ... '}
 						// validate={this.validateField('password')} 
 					/>
+					<div name={'div'}>Hello World I am an unwanted DOM child</div>
 
 				</Form>
 			</div>
