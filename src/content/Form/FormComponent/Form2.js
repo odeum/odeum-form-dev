@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ButtonPanel, Button } from 'odeum-ui'
 import { DisplayState } from './DisplayStateProps'
+import clearConsole from './consoleAPI'
 
 class Form extends Component {
 
@@ -21,27 +22,34 @@ class Form extends Component {
 
 			isFormValid: false,
 			inFocus: '',
-			inputCount: ''
-		}
-	}
+			inputCount: '',
+			fieldProps: {},
 
+		}
+		
+		clearConsole()
+	}
 	componentDidMount() {
+		
 		const { model } = this.props
 		const { focusfield } = this.props
 		
 		this.inputsArray = Array.prototype.slice.call(document.querySelectorAll('input'))
 		let inputCount = this.inputsArray.length
+				
+		let fieldProps = this.mapFieldPropsToState()
 		
-		this.setState({ values: model, validation: model, errors: model, inputCount: inputCount })
+		this.setState({ 
+			values: model, 
+			validation: model, 
+			errors: model, 
+			inputCount: inputCount,
+			fieldProps: fieldProps,
+		})
 		
 		if (focusfield) {
 			this.focusInput(focusfield)
 		}
-
-		
-		// console.log(this.inputsArray[3].name) // phone2
-		// console.log(this.inputsArray.indexOf('phone'))
-		// console.log(this.inputsArray.indexOf(document.activeElement.name) + 1)
 
 		document.addEventListener('keydown', this.onKeydown)
 	}
@@ -52,13 +60,39 @@ class Form extends Component {
 		this.inputsArray = [] // Reset input refs array
 	}
 
+	mapFieldPropsToState = () => {
+		const { children } = this.props
+		let propsObject = {}
+
+		let values = Object.values(React.Children.toArray(children))
+		// console.log(keys)
+		// console.log(values)
+
+		React.Children.toArray(children).map((child, index) => {
+			const { name } = child.props
+			
+			if (child.type.name !== undefined) { }
+
+			if (name !== undefined) { 
+				propsObject[name] = values[index].props
+			}
+			
+			return propsObject
+		})
+		return propsObject
+	}
 
 	nextInput = () => {
 		const index = (this.inputsArray.indexOf(document.activeElement) + 1) % this.inputsArray.length 
+		
 		const input = this.inputsArray[index]
-		// console.log(input)
 		input.focus()
 		input.select()
+
+		console.log(document.activeElement.name)
+		if (!this.state.fieldProps[document.activeElement.name].readOnly) { 
+			console.log('Not read only') 
+		} else console.log('Read only')
 	}
 
 	onKeydown = ({ keyCode }) => {
@@ -72,6 +106,9 @@ class Form extends Component {
 					this.props.onSubmit(this.state.values)
 				}
 				else this.nextInput()
+				break
+			case 116: // F5
+				this.handleToggleValidate()
 				break
 			default:
 				break
@@ -116,7 +153,6 @@ class Form extends Component {
 
 	focusInput = (name) => {
 		this.inputs[name].focus()
-		// this.inputsArray[].focus()
 	}
 
 	handleFocus = () => {
@@ -131,8 +167,7 @@ class Form extends Component {
 		const { values, /* validation */ } = this.state
 		return (
 			React.Children.toArray(children).map((child, index) => {
-				// let currentChild = child.type.name.toLowerCase()
-				let name = child.props.name				
+				const { name } = child.props
 				if (child.type.name !== undefined) { 
 					return React.cloneElement(child, {
 						key: index,
@@ -182,7 +217,10 @@ class Form extends Component {
 	}
 
 	// FORM RENDER
-	render() {		
+	render() {
+		// if (this.state.fieldProps['phone2'] !== undefined) {
+		// 	console.log(this.state.fieldProps['phone2'].readOnly)
+		// }
 		return (
 			<div>			
 				<form {...this.props}>
@@ -196,5 +234,3 @@ class Form extends Component {
 }
 
 export default Form
-
-// this.inputObject = { email: input.sc - frDJqD.cFXjom, password: input.sc - frDJqD.cFXjom, phone: input.sc - frDJqD.cFXjom }

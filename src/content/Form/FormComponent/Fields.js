@@ -32,13 +32,14 @@ export class Email extends Component {
 					color={!this.props.isValid ? '#BE4F44' : undefined}
 					focusColor={!this.props.isValid ? '#BE4F44' : undefined}
 					onFocus={this.props.handleFocus}
-
+					autoComplete={this.props.autoComplete}
+					onBlur={this.props.handleBlur}
+					onMouseEnter={this.props.handleMouseEnter}
+					onMouseLeave={this.props.handleMouseLeave}
+					required={this.props.required}
+					disabled={this.props.disabled} 
+					readOnly={this.props.readOnly}
 					{...this.props}
-
-				// onBlur={this.handleChange}
-				// onMouseEnter={this.handleMouse('Enter')}
-				// onMouseLeave={this.handleMouse('Leave')}
-				// required, placeholder, disabled, defaultValue, readOnly
 				/>
 			</div>
 		)
@@ -57,6 +58,7 @@ export const Password = (props) => {
 			color={!props.isValid ? '#BE4F44' : undefined}
 			focusColor={!props.isValid ? '#BE4F44' : undefined}
 			onFocus={props.handleFocus}
+			autoComplete={props.autoComplete}
 
 			{...props}
 		/>
@@ -75,6 +77,7 @@ export const Phone = (props) => {
 			color={!props.isValid ? '#BE4F44' : undefined}
 			focusColor={!props.isValid ? '#BE4F44' : undefined}
 			onFocus={props.handleFocus}
+			autoComplete={props.autoComplete}
 
 			{...props}
 		/>

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 // import { ButtonPanel, Button } from 'odeum-ui'
 import Form from './FormComponent/Form2'
 import { Email, Password, Phone } from './FormComponent/Fields'
+// import RenderButtons from './FormComponent/RenderButtons'
 
 
 // App or other higher level component composing the form and issues the form state and utility methods for submit ...
@@ -36,12 +37,14 @@ class FormTester extends Component {
 					focusfield={'email'}					
 					onSubmit={this.handleSubmit}
 					model={this.model.values}
+					styles={''}
 					debug={'on'}
+					// autoComplete={'off'}
 				>
 					<Email
 						name={'email'}
 						placeholder={'Enter your mail address ... '}
-						// validate={this.validateField('email')} 
+						// validate={this.validateField('email')} 												
 					/>
 					<Password
 						name={'password'}
@@ -57,6 +60,7 @@ class FormTester extends Component {
 						name={'phone2'}
 						placeholder={'Enter your phone number 2 ... '}
 						// validate={this.validateField('password')} 
+						readOnly={true}
 					/>
 					<div name={'div'}>Hello World I am an unwanted DOM child</div>
 
