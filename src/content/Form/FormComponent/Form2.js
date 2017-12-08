@@ -26,9 +26,8 @@ class Form extends Component {
 			fieldProps: {},
 
 		}
-		
-		clearConsole()
 	}
+
 	componentDidMount() {
 		
 		const { model } = this.props
@@ -110,6 +109,9 @@ class Form extends Component {
 			case 116: // F5
 				this.handleToggleValidate()
 				break
+			case 117: // F6
+				clearConsole()
+				break
 			default:
 				break
 		}
@@ -132,9 +134,9 @@ class Form extends Component {
 	handleChange = (e) => {
 		const name = e.target.name
 		const value = e.target.value
-		this.setState({ values: { ...this.state.values, [name]: value } })
-		// this.setState({ [name]: value },
-		// 	/* () => { this.validateField(name, value) } */)
+		this.setState({ values: { ...this.state.values, [name]: value }, /* Insert validate calback here */})
+	
+		/* () => { this.validateField(name, value) } */
 	}
 
 	handleSubmit = (e) => {
@@ -223,10 +225,10 @@ class Form extends Component {
 		// }
 		return (
 			<div>			
-				<form {...this.props}>
+				<form /* {...this.props} */> 
 					{this.RenderFormField()}
 					{this.RenderButtons()}
-					{this.props.debug === 'on' ? <DisplayState {...this.state} /> : null}
+					{this.props.debug ? <DisplayState {...this.state} /> : null}
 				</form>
 			</div>
 		)

@@ -10,7 +10,7 @@ export const DisplayState = props =>
 			}}
 		>
 			<strong>{props.title ? `State for ${props.title}` : 'State'}</strong> ={' '}
-			{JSON.stringify(props, null, 2)}
+			{JSON.stringify(props, 0, 2)}
 		</pre>
 	</div>
 

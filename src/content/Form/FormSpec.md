@@ -131,6 +131,7 @@ this.model = {
 
 ```
 
+## Input field types
 | Value         | Description           | 
 |:------------- |:---------------------| 
 | button | Defines a clickable button (mostly used with a JavaScript to activate a script) | 
@@ -156,4 +157,13 @@ this.model = {
 | url |	Defines a field for entering a URL |
 | week | Defines a week and year control (no time zone) |
 
+## Keydown
+http://unixpapa.com/js/testkey.html
 
+## TODO:
+
+- Validation
+- Value update based upon other input value (through state change)
+- Buttons + style
+- Select Field
+- CoppyToClipboard (Form prop)

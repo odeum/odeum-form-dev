@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Form from './FormComponent/Form2'
 import { Email, Password, Phone } from './FormComponent/Fields'
 // import RenderButtons from './FormComponent/RenderButtons'
-
+// import { composeValidators, required, minChars, mustBeNumber } from './Validators'
 
 // App or other higher level component composing the form and issues the form state and utility methods for submit ...
 class FormTester extends Component {
@@ -38,8 +38,7 @@ class FormTester extends Component {
 					onSubmit={this.handleSubmit}
 					model={this.model.values}
 					styles={''}
-					debug={'on'}
-					// autoComplete={'off'}
+					debug
 				>
 					<Email
 						name={'email'}
@@ -54,13 +53,13 @@ class FormTester extends Component {
 					<Phone
 						name={'phone'}
 						placeholder={'Enter your phone number ... '}
-						// validate={this.validateField('password')} 
+						// validate={composeValidators(required, mustBeNumber, minChars(8))} 
 					/>
 					<Phone
 						name={'phone2'}
 						placeholder={'Enter your phone number 2 ... '}
 						// validate={this.validateField('password')} 
-						readOnly={true}
+						readOnly
 					/>
 					<div name={'div'}>Hello World I am an unwanted DOM child</div>
 
