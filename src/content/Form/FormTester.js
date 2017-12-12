@@ -49,7 +49,7 @@ class FormTester extends Component {
 						name={'email'}
 						placeholder={'Enter your mail address ... '}
 						// validate={this.validateField('email')} 	
-						// validate={isEmail}											
+						validate={isEmail}											
 					/>
 					<Password
 						name={'password'}
