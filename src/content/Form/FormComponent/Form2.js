@@ -84,8 +84,11 @@ class Form extends Component {
 		const index = (this.inputsArray.indexOf(document.activeElement) + 1) % this.inputsArray.length
 
 		const input = this.inputsArray[index]
-		input.focus()
-		input.select()
+		if (!input.readOnly) {
+			input.focus()
+			input.select()
+		}
+		
 
 		console.log(document.activeElement.name)
 		if (!this.state.fieldProps[document.activeElement.name].readOnly) {
@@ -130,23 +133,23 @@ class Form extends Component {
 		this.focusInput(focusfield)
 	}
 
-	handleChange = (e) => {
-		const name = e.target.name
-		const value = e.target.value
-		const validator = e.target.validate
-		console.log(e.target)
-		this.setState({ values: { ...this.state.values, [name]: value }, /* Insert validate calback here */ })
-		if (validator) {
-			this.setState({
-				errors: {
-					...this.state.errors,
-					[name]: validator(value)
-				}
-			})
-		}
-		/* () => { this.validateField(name, value) } */
-	}
-	handleChangeA = (child) => (e) => {
+	// handleChange = (e) => {
+	// 	const name = e.target.name
+	// 	const value = e.target.value
+	// 	const validator = e.target.validate
+	// 	console.log(e.target)
+	// 	this.setState({ values: { ...this.state.values, [name]: value }, /* Insert validate calback here */ })
+	// 	if (validator) {
+	// 		this.setState({
+	// 			errors: {
+	// 				...this.state.errors,
+	// 				[name]: validator(value)
+	// 			}
+	// 		})
+	// 	}
+	// 	/* () => { this.validateField(name, value) } */
+	// }
+	handleChange = (child) => (e) => {
 		e.preventDefault()
 		const name = child.props.name
 		const value = e.target.value
@@ -175,44 +178,8 @@ class Form extends Component {
 		}
 		/* () => { this.validateField(name, value) } */
 	}
-	validateField = (fieldName, value, validator) => {
-		// const { errors, /* validation */ } = this.state
-		// let validationErrors = errors
-		// let validation = validation
 
-		// // OLD
-		// let emailValid = this.state.emailValid
-		// let passwordValid = this.state.passwordValid
 
-		this.setState({
-			errors: {
-				...this.state.errors,
-				[fieldName]: validator(value)
-			}
-		})
-		// switch (fieldName) {
-		// 	case 'email':
-		// 		emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
-		// 		validationErrors.email = emailValid ? '' : ' is invalid'
-		// 		break
-		// 	case 'password':
-		// 		passwordValid = value.length >= 8
-		// 		validationErrors.password = passwordValid ? '' : ' is too short'
-		// 		break
-		// 	default:
-		// 		break
-		// }
-
-		// this.setState({
-		// 	formErrors: validationErrors,
-		// 	emailValid: emailValid,
-		// 	passwordValid: passwordValid
-		// }, this.validateForm)
-	}
-
-	validate = (name) => {
-		console.log(`Inside Form to validate ${name}`)
-	}
 
 	validateForm = () => {
 		this.setState({ isFormValid: this.state.emailValid && this.state.passwordValid })
@@ -254,7 +221,7 @@ class Form extends Component {
 					return React.cloneElement(child, {
 						key: index,
 						createInputRef: this.createInputRef,
-						handleChange: this.handleChangeA(child),
+						handleChange: this.handleChange(child),
 						handleFocus: this.handleFocus,
 						validate: child.props.validate ? child.props.validate : null /* child.props.validate */,
 						// color: (!validation[name] ? '#BE4F44' : undefined),
