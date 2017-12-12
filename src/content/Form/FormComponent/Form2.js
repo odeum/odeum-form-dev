@@ -154,7 +154,7 @@ class Form extends Component {
 		this.setState({ values: { ...this.state.values, [name]: value } })
 
 		if (validator) {
-			console.log(validator(value))
+			// console.log(validator(value))
 			if (validator(value)) {
 				this.setState({
 					errors: {
@@ -177,15 +177,15 @@ class Form extends Component {
 						...this.state.validation,
 						[name]: true
 					}
-				})
+				}, this.validateForm)
 			}
 		}
 	}
 
-
-
 	validateForm = () => {
-		this.setState({ isFormValid: this.state.emailValid && this.state.passwordValid })
+		// Need to map model to check if each field validation === true
+		// this.setState({ isFormValid: this.state.emailValid && this.state.passwordValid })
+		console.log('Validating form ... ')
 	}
 
 	handleSubmit = (e) => {
@@ -215,7 +215,7 @@ class Form extends Component {
 
 	RenderFormField = () => {
 		const { children } = this.props
-		const { values, /* validation */ } = this.state
+		const { values, validation } = this.state
 		return (
 			React.Children.toArray(children).map((child, index) => {
 				const { name } = child.props
@@ -227,10 +227,10 @@ class Form extends Component {
 						handleChange: this.handleChange(child),
 						handleFocus: this.handleFocus,
 						validate: child.props.validate ? child.props.validate : null,
-						// color: (!validation[name] ? '#BE4F44' : undefined),
-						// focusColor: (!validation[name] ? '#BE4F44' : undefined),
-						color: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp
-						focusColor: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp
+						color: (!validation[name] ? '#BE4F44' : undefined),
+						focusColor: (!validation[name] ? '#BE4F44' : undefined),
+						// color: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp
+						// focusColor: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp
 						value: (values[name] !== undefined ? values[name] : ''),
 					})
 				}
