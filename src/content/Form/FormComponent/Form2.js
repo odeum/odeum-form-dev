@@ -30,9 +30,8 @@ class Form extends Component {
 
 	componentDidMount() {
 		
-		const { model } = this.props
-		const { focusfield } = this.props
-		
+		const { model, focusfield } = this.props
+				
 		this.inputsArray = Array.prototype.slice.call(document.querySelectorAll('input'))
 		let inputCount = this.inputsArray.length
 				
@@ -139,6 +138,43 @@ class Form extends Component {
 		/* () => { this.validateField(name, value) } */
 	}
 
+	validateField = (fieldName, value) => {
+		const { errors, /* validation */ } = this.state
+		let validationErrors = errors
+		// let validation = validation
+
+		// OLD
+		let emailValid = this.state.emailValid
+		let passwordValid = this.state.passwordValid
+
+		switch (fieldName) {
+			case 'email':
+				emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
+				validationErrors.email = emailValid ? '' : ' is invalid'
+				break
+			case 'password':
+				passwordValid = value.length >= 8
+				validationErrors.password = passwordValid ? '' : ' is too short'
+				break
+			default:
+				break
+		}
+
+		this.setState({
+			formErrors: validationErrors,
+			emailValid: emailValid,
+			passwordValid: passwordValid
+		}, this.validateForm)
+	}
+
+	validate = (name) => {
+		console.log(`Inside Form to validate ${name}`)
+	}
+
+	validateForm = () => {
+		this.setState({ isFormValid: this.state.emailValid && this.state.passwordValid })
+	}
+
 	handleSubmit = (e) => {
 		e.preventDefault()
 		this.props.onSubmit(this.state.values)
@@ -176,6 +212,7 @@ class Form extends Component {
 						createInputRef: this.createInputRef,
 						handleChange: this.handleChange,
 						handleFocus: this.handleFocus,
+						// validate: child.props.validate('Hello'),
 						// color: (!validation[name] ? '#BE4F44' : undefined),
 						// focusColor: (!validation[name] ? '#BE4F44' : undefined),
 						color: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp
@@ -223,6 +260,8 @@ class Form extends Component {
 		// if (this.state.fieldProps['phone2'] !== undefined) {
 		// 	console.log(this.state.fieldProps['phone2'].readOnly)
 		// }
+		
+
 		return (
 			<div>			
 				<form /* {...this.props} */> 

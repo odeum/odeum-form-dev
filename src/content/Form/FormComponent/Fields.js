@@ -29,6 +29,7 @@ export class Email extends Component {
 					// value={this.props.value}
 					innerRef={this.props.createInputRef ? this.props.createInputRef(fieldId) : null}
 					onChange={this.props.handleChange}
+					validate={this.props.validate} // New Kid
 					color={!this.props.isValid ? '#BE4F44' : undefined}
 					focusColor={!this.props.isValid ? '#BE4F44' : undefined}
 					onFocus={this.props.handleFocus}

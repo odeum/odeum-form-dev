@@ -4,6 +4,11 @@ import Form from './FormComponent/Form2'
 import { Email, Password, Phone } from './FormComponent/Fields'
 // import RenderButtons from './FormComponent/RenderButtons'
 // import { composeValidators, required, minChars, mustBeNumber } from './Validators'
+// import { isEmail } from './Validators'
+
+const isEmail = (value) => {
+	if (value) return `We have a value: ${value}`
+}
 
 // App or other higher level component composing the form and issues the form state and utility methods for submit ...
 class FormTester extends Component {
@@ -43,12 +48,13 @@ class FormTester extends Component {
 					<Email
 						name={'email'}
 						placeholder={'Enter your mail address ... '}
-						// validate={this.validateField('email')} 												
+						// validate={this.validateField('email')} 	
+						// validate={isEmail}											
 					/>
 					<Password
 						name={'password'}
 						placeholder={'Enter your password ... '}
-						// validate={this.validateField('password')} 
+						// validate={'Please validate this'} 
 					/>
 					<Phone
 						name={'phone'}
