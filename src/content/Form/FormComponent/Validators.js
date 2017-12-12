@@ -1,66 +1,49 @@
+/* 
 
+Module with multiple custom validators. All validator functions can be passed as a single prop
+through validate={customValidator} or composed of multiple validators through composeValidators(validator1, validator2 ... validatorN)
 
-export const required = (value) => {
-	return (value ? undefined : 'Required')
-}
+*/
 
-export const required2 = (value) => (value ? undefined : 'Required')
-
-export const mustBeNumber = (value) => {
-	return (isNaN(value) ? 'Must be a number' : undefined)
-}
-
-export const isEmail = (value) => (value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? undefined : 'Invalid e-mail')
-
-export const mustBeNumber2 = (value) => (isNaN(value) ? 'Must be a number' : undefined)
-
-export const minValue = (min) => (value) =>
-	isNaN(value) || value >= min ? undefined : `Should be greater than ${min}`
-
-
-export const minChars = (min) => (value) => {
-	return value.length >= min ? undefined : `Should be longer than ${min} characters`
-}
-
+// Composes multiple custom validator functions into one passable function
 export const composeValidators = (...validators) => (value) =>
 	validators.reduce((error, validator) => error || validator(value), undefined)
 
+// Field is required
+export const required = (value) => 
+	(value ? undefined : 'Required')
 
-export const validateField = (fieldName, value) => {
-	const { errors, /* validation */ } = this.state
-	let validationErrors = errors
-	// let validation = validation
+// Field must be a number
+export const mustBeNumber = value => 
+	(isNaN(value) ? "Must be a number" : undefined)
 
-	// OLD
-	let emailValid = this.state.emailValid
-	let passwordValid = this.state.passwordValid
+// Field must be a valid e-mail address
+export const isEmail = (value) => 
+	(value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? undefined : 'Invalid e-mail')
 
-	switch (fieldName) {
-		case 'email':
-			emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
-			validationErrors.email = emailValid ? '' : ' is invalid'
-			break
-		case 'password':
-			passwordValid = value.length >= 8
-			validationErrors.password = passwordValid ? '' : ' is too short'
-			break
-		default:
-			break
-	}
+// Field must have a minimum value
+export const minValue = (min) => (value) =>
+	isNaN(value) || value >= min ? undefined : `Should be greater than ${min}`
 
-	this.setState({
-		formErrors: validationErrors,
-		emailValid: emailValid,
-		passwordValid: passwordValid
-	}, this.validateForm)
-}
+// Field must be less than a maximum value
+export const maxValue = (max) => (value) =>
+	isNaN(value) || value <= max ? undefined : `Should be less than ${max + 1}`
+
+// Field should be longer than a minimum number of characters
+export const minChars = (min) => (value) => 
+	value.length >= min ? undefined : `Should be minimum ${min} characters`
+
+// Field should be less than a maximum number of characters
+export const maxChars = (max) => (value) => 
+	value.length <= max ? undefined : `Should be less than ${max + 1} characters`
+
+// Doesn't work
+export const formattedDate = (value) =>
+	(value.match(/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/) ? undefined : 'Incorrect formatted date')
 
 
-// // Date / Birthday
+// Date / Birthday
 // var input = '29-02-1847'
 
 // var pattern = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/
 
-// // alert(pattern.test(input))
-
-// // alert('Hello')

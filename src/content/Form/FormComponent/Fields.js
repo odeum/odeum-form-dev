@@ -29,7 +29,7 @@ export class Email extends Component {
 					// value={this.props.value}
 					innerRef={this.props.createInputRef ? this.props.createInputRef(fieldId) : null}
 					onChange={this.props.handleChange}
-					validate={this.props.validate} // New Kid
+					// validate={this.props.validate}
 					color={!this.props.isValid ? '#BE4F44' : undefined}
 					focusColor={!this.props.isValid ? '#BE4F44' : undefined}
 					onFocus={this.props.handleFocus}
@@ -57,12 +57,17 @@ export const Password = (props) => {
 			// value={props.value}
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
-			validate={props.validate} // New Kid
+			// validate={props.validate}
 			color={!props.isValid ? '#BE4F44' : undefined}
 			focusColor={!props.isValid ? '#BE4F44' : undefined}
 			onFocus={props.handleFocus}
 			autoComplete={props.autoComplete}
-
+			onBlur={props.handleBlur}
+			onMouseEnter={props.handleMouseEnter}
+			onMouseLeave={props.handleMouseLeave}
+			required={props.required}
+			disabled={props.disabled}
+			readOnly={props.readOnly}
 			{...props}
 		/>
 	)
@@ -77,11 +82,17 @@ export const Phone = (props) => {
 			// value={props.value}
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
+			// validate={props.validate}
 			color={!props.isValid ? '#BE4F44' : undefined}
 			focusColor={!props.isValid ? '#BE4F44' : undefined}
 			onFocus={props.handleFocus}
 			autoComplete={props.autoComplete}
-
+			onBlur={props.handleBlur}
+			onMouseEnter={props.handleMouseEnter}
+			onMouseLeave={props.handleMouseLeave}
+			required={props.required}
+			disabled={props.disabled}
+			readOnly={props.readOnly}
 			{...props}
 		/>
 	)

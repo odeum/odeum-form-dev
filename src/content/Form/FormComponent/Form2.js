@@ -16,10 +16,6 @@ class Form extends Component {
 			validation: '',
 			errors: '',
 
-			// formErrors: { email: '', password: '' },
-			// emailValid: false,
-			// passwordValid: false,
-
 			isFormValid: false,
 			inFocus: '',
 			inputCount: '',
@@ -39,7 +35,7 @@ class Form extends Component {
 
 		this.setState({
 			values: model,
-			validation: model,
+			validation: false,
 			errors: model,
 			inputCount: inputCount,
 			fieldProps: fieldProps,
@@ -63,8 +59,6 @@ class Form extends Component {
 		let propsObject = {}
 
 		let values = Object.values(React.Children.toArray(children))
-		// console.log(keys)
-		// console.log(values)
 
 		React.Children.toArray(children).map((child, index) => {
 			const { name } = child.props
@@ -223,7 +217,7 @@ class Form extends Component {
 						createInputRef: this.createInputRef,
 						handleChange: this.handleChange(child),
 						handleFocus: this.handleFocus,
-						validate: child.props.validate ? child.props.validate : null /* child.props.validate */,
+						validate: child.props.validate ? child.props.validate : null,
 						// color: (!validation[name] ? '#BE4F44' : undefined),
 						// focusColor: (!validation[name] ? '#BE4F44' : undefined),
 						color: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp
@@ -271,8 +265,6 @@ class Form extends Component {
 		// if (this.state.fieldProps['phone2'] !== undefined) {
 		// 	console.log(this.state.fieldProps['phone2'].readOnly)
 		// }
-
-
 		return (
 			<div>
 				<form /* {...this.props} */>

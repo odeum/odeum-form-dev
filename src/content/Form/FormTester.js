@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 // import { ButtonPanel, Button } from 'odeum-ui'
-import Form from './FormComponent/Form2'
-import { Email, Password, Phone } from './FormComponent/Fields'
+import Form from './FormComponent/Form2' // odeum-form
+import { Email, Password, Phone } from './FormComponent/Fields' // odeum-form
 // import RenderButtons from './FormComponent/RenderButtons'
 // import { composeValidators, required, minChars, mustBeNumber } from './Validators'
-import { isEmail, minChars, composeValidators } from './FormComponent/Validators'
+import { composeValidators, isEmail, mustBeNumber, minChars, /* maxChars, */ /* formattedDate */ } from './FormComponent/Validators' // odeum-form
 
 // const isEmail = (value) => {
 // 	console.log('Passed value: ', value)
@@ -56,13 +56,14 @@ class FormTester extends Component {
 					<Password
 						name={'password'}
 						placeholder={'Enter your password ... '}
-						validate={minChars}
+						validate={minChars(8)}
 					/>
 					<Phone
 						name={'phone'}
 						placeholder={'Enter your phone number ... '}
-					// validate={isEmail}
-					// validate={composeValidators(required, mustBeNumber, minChars(8))} 
+						// validate={formattedDate}
+						// validate={maxChars(10)}
+						validate={composeValidators(mustBeNumber, minChars(8))} 
 					/>
 					<Phone
 						name={'phone2'}
