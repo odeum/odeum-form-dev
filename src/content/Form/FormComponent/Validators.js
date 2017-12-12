@@ -17,6 +17,7 @@ export const minValue = (min) => (value) =>
 	isNaN(value) || value >= (min ? undefined : `Should be greater than ${min}`)
 
 export const minChars = (min) => (value) => {
+	console.log(min, value)
 	return value.length >= (min ? undefined : `Should be longer than ${min} characters`)
 }
 

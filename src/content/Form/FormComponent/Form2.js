@@ -207,12 +207,13 @@ class Form extends Component {
 			React.Children.toArray(children).map((child, index) => {
 				const { name } = child.props
 				if (child.type.name !== undefined) { 
+					// console.log(child.props)
 					return React.cloneElement(child, {
 						key: index,
 						createInputRef: this.createInputRef,
 						handleChange: this.handleChange,
 						handleFocus: this.handleFocus,
-						// validate: child.props.validate('Hello'),
+						validate: child.props.validate ? child.props.validate(values[name]) : null /* child.props.validate */,
 						// color: (!validation[name] ? '#BE4F44' : undefined),
 						// focusColor: (!validation[name] ? '#BE4F44' : undefined),
 						color: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp

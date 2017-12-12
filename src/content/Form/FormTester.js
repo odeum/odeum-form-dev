@@ -4,9 +4,10 @@ import Form from './FormComponent/Form2'
 import { Email, Password, Phone } from './FormComponent/Fields'
 // import RenderButtons from './FormComponent/RenderButtons'
 // import { composeValidators, required, minChars, mustBeNumber } from './Validators'
-// import { isEmail } from './Validators'
+import { minChars } from './Validators'
 
 const isEmail = (value) => {
+	console.log('Passed value: ', value)
 	if (value) return `We have a value: ${value}`
 }
 
@@ -49,22 +50,23 @@ class FormTester extends Component {
 						name={'email'}
 						placeholder={'Enter your mail address ... '}
 						// validate={this.validateField('email')} 	
-						validate={isEmail}											
+						validate={isEmail}
 					/>
 					<Password
 						name={'password'}
 						placeholder={'Enter your password ... '}
-						// validate={'Please validate this'} 
+						validate={minChars}
 					/>
 					<Phone
 						name={'phone'}
 						placeholder={'Enter your phone number ... '}
+						// validate={isEmail}
 						// validate={composeValidators(required, mustBeNumber, minChars(8))} 
 					/>
 					<Phone
 						name={'phone2'}
 						placeholder={'Enter your phone number 2 ... '}
-						// validate={this.validateField('password')} 
+						// validate={isEmail}
 						readOnly
 					/>
 					<div name={'div'}>Hello World I am an unwanted DOM child</div>

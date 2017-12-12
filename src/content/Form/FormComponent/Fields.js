@@ -56,6 +56,7 @@ export const Password = (props) => {
 			// value={props.value}
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
+			validate={props.validate} // New Kid
 			color={!props.isValid ? '#BE4F44' : undefined}
 			focusColor={!props.isValid ? '#BE4F44' : undefined}
 			onFocus={props.handleFocus}
