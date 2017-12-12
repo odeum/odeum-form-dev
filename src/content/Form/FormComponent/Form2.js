@@ -143,21 +143,27 @@ class Form extends Component {
 	// 	}
 	// 	/* () => { this.validateField(name, value) } */
 	// }
+
 	handleChange = (child) => (e) => {
-		e.preventDefault()
+		// e.preventDefault()
 		const name = child.props.name
 		const value = e.target.value
+		// const name = e.target.name // we should be able to use this
+		// const value = e.target.value // we should be able to use this
 		const validator = child.props.validate
-		// console.log(child.props)
-		this.setState({ values: { ...this.state.values, [name]: value }, /* Insert validate calback here */ })
-		// console.log(validator)
+		this.setState({ values: { ...this.state.values, [name]: value } })
+
 		if (validator) {
-			// console.log(validator(value))
+			console.log(validator(value))
 			if (validator(value)) {
 				this.setState({
 					errors: {
 						...this.state.errors,
 						[name]: validator(value)
+					},
+					validation: {
+						...this.state.validation,
+						[name]: false
 					}
 				})
 			}
@@ -166,11 +172,14 @@ class Form extends Component {
 					errors: {
 						...this.state.errors,
 						[name]: ''
+					},
+					validation: {
+						...this.state.validation,
+						[name]: true
 					}
 				})
 			}
 		}
-		/* () => { this.validateField(name, value) } */
 	}
 
 

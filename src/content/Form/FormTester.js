@@ -71,7 +71,7 @@ class FormTester extends Component {
 						// validate={isEmail}
 						readOnly
 					/>
-					<div name={'div'}>Hello World I am an unwanted DOM child</div>
+					<div name={'div'}>Hello World, I am an unwanted DOM child that eventually will be a styling part.</div>
 
 				</Form>
 			</div>
