@@ -49,6 +49,7 @@ export class Email extends Component {
 
 export const Password = (props) => {
 	const fieldId = 'password'
+	// console.log(props.validate)
 	return (
 		<StyledInput
 			type={fieldId}

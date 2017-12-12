@@ -4,12 +4,13 @@ import Form from './FormComponent/Form2'
 import { Email, Password, Phone } from './FormComponent/Fields'
 // import RenderButtons from './FormComponent/RenderButtons'
 // import { composeValidators, required, minChars, mustBeNumber } from './Validators'
-import { minChars } from './Validators'
+import { isEmail, minChars, composeValidators } from './FormComponent/Validators'
 
-const isEmail = (value) => {
-	console.log('Passed value: ', value)
-	if (value) return `We have a value: ${value}`
-}
+// const isEmail = (value) => {
+// 	console.log('Passed value: ', value)
+// 	// minChars(8)
+// 	if (value) return `We have a value: ${value}`
+// }
 
 // App or other higher level component composing the form and issues the form state and utility methods for submit ...
 class FormTester extends Component {
@@ -40,7 +41,7 @@ class FormTester extends Component {
 				<p>Please fill out the following form fields:</p>
 
 				<Form
-					focusfield={'email'}					
+					focusfield={'email'}
 					onSubmit={this.handleSubmit}
 					model={this.model.values}
 					styles={''}
@@ -50,7 +51,7 @@ class FormTester extends Component {
 						name={'email'}
 						placeholder={'Enter your mail address ... '}
 						// validate={this.validateField('email')} 	
-						validate={isEmail}
+						validate={composeValidators(minChars(8), isEmail)}
 					/>
 					<Password
 						name={'password'}
@@ -60,8 +61,8 @@ class FormTester extends Component {
 					<Phone
 						name={'phone'}
 						placeholder={'Enter your phone number ... '}
-						// validate={isEmail}
-						// validate={composeValidators(required, mustBeNumber, minChars(8))} 
+					// validate={isEmail}
+					// validate={composeValidators(required, mustBeNumber, minChars(8))} 
 					/>
 					<Phone
 						name={'phone2'}

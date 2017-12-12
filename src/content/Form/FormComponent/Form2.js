@@ -29,29 +29,29 @@ class Form extends Component {
 	}
 
 	componentDidMount() {
-		
+
 		const { model, focusfield } = this.props
-				
+
 		this.inputsArray = Array.prototype.slice.call(document.querySelectorAll('input'))
 		let inputCount = this.inputsArray.length
-				
+
 		let fieldProps = this.mapFieldPropsToState()
-		
-		this.setState({ 
-			values: model, 
-			validation: model, 
-			errors: model, 
+
+		this.setState({
+			values: model,
+			validation: model,
+			errors: model,
 			inputCount: inputCount,
 			fieldProps: fieldProps,
 		})
-		
+
 		if (focusfield) {
 			this.focusInput(focusfield)
 		}
 
 		document.addEventListener('keydown', this.onKeydown)
 	}
-	
+
 	componentWillUnmount() {
 		document.removeEventListener('keydown', this.onKeydown)
 		this.inputs = {} // Reset input refs
@@ -68,28 +68,28 @@ class Form extends Component {
 
 		React.Children.toArray(children).map((child, index) => {
 			const { name } = child.props
-			
+
 			if (child.type.name !== undefined) { }
 
-			if (name !== undefined) { 
+			if (name !== undefined) {
 				propsObject[name] = values[index].props
 			}
-			
+
 			return propsObject
 		})
 		return propsObject
 	}
 
 	nextInput = () => {
-		const index = (this.inputsArray.indexOf(document.activeElement) + 1) % this.inputsArray.length 
-		
+		const index = (this.inputsArray.indexOf(document.activeElement) + 1) % this.inputsArray.length
+
 		const input = this.inputsArray[index]
 		input.focus()
 		input.select()
 
 		console.log(document.activeElement.name)
-		if (!this.state.fieldProps[document.activeElement.name].readOnly) { 
-			console.log('Not read only') 
+		if (!this.state.fieldProps[document.activeElement.name].readOnly) {
+			console.log('Not read only')
 		} else console.log('Read only')
 	}
 
@@ -126,45 +126,88 @@ class Form extends Component {
 		// 	passwordValid: false,
 		// 	isFormValid: false,
 		// })
-		this.setState({ values: model, validation: model, errors: model })		
+		this.setState({ values: model, validation: model, errors: model })
 		this.focusInput(focusfield)
 	}
 
 	handleChange = (e) => {
 		const name = e.target.name
 		const value = e.target.value
-		this.setState({ values: { ...this.state.values, [name]: value }, /* Insert validate calback here */})
-	
+		const validator = e.target.validate
+		console.log(e.target)
+		this.setState({ values: { ...this.state.values, [name]: value }, /* Insert validate calback here */ })
+		if (validator) {
+			this.setState({
+				errors: {
+					...this.state.errors,
+					[name]: validator(value)
+				}
+			})
+		}
 		/* () => { this.validateField(name, value) } */
 	}
-
-	validateField = (fieldName, value) => {
-		const { errors, /* validation */ } = this.state
-		let validationErrors = errors
+	handleChangeA = (child) => (e) => {
+		e.preventDefault()
+		const name = child.props.name
+		const value = e.target.value
+		const validator = child.props.validate
+		// console.log(child.props)
+		this.setState({ values: { ...this.state.values, [name]: value }, /* Insert validate calback here */ })
+		// console.log(validator)
+		if (validator) {
+			// console.log(validator(value))
+			if (validator(value)) {
+				this.setState({
+					errors: {
+						...this.state.errors,
+						[name]: validator(value)
+					}
+				})
+			}
+			else {
+				this.setState({
+					errors: {
+						...this.state.errors,
+						[name]: ''
+					}
+				})
+			}
+		}
+		/* () => { this.validateField(name, value) } */
+	}
+	validateField = (fieldName, value, validator) => {
+		// const { errors, /* validation */ } = this.state
+		// let validationErrors = errors
 		// let validation = validation
 
-		// OLD
-		let emailValid = this.state.emailValid
-		let passwordValid = this.state.passwordValid
-
-		switch (fieldName) {
-			case 'email':
-				emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
-				validationErrors.email = emailValid ? '' : ' is invalid'
-				break
-			case 'password':
-				passwordValid = value.length >= 8
-				validationErrors.password = passwordValid ? '' : ' is too short'
-				break
-			default:
-				break
-		}
+		// // OLD
+		// let emailValid = this.state.emailValid
+		// let passwordValid = this.state.passwordValid
 
 		this.setState({
-			formErrors: validationErrors,
-			emailValid: emailValid,
-			passwordValid: passwordValid
-		}, this.validateForm)
+			errors: {
+				...this.state.errors,
+				[fieldName]: validator(value)
+			}
+		})
+		// switch (fieldName) {
+		// 	case 'email':
+		// 		emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
+		// 		validationErrors.email = emailValid ? '' : ' is invalid'
+		// 		break
+		// 	case 'password':
+		// 		passwordValid = value.length >= 8
+		// 		validationErrors.password = passwordValid ? '' : ' is too short'
+		// 		break
+		// 	default:
+		// 		break
+		// }
+
+		// this.setState({
+		// 	formErrors: validationErrors,
+		// 	emailValid: emailValid,
+		// 	passwordValid: passwordValid
+		// }, this.validateForm)
 	}
 
 	validate = (name) => {
@@ -206,21 +249,21 @@ class Form extends Component {
 		return (
 			React.Children.toArray(children).map((child, index) => {
 				const { name } = child.props
-				if (child.type.name !== undefined) { 
+				if (child.type.name !== undefined) {
 					// console.log(child.props)
 					return React.cloneElement(child, {
 						key: index,
 						createInputRef: this.createInputRef,
-						handleChange: this.handleChange,
+						handleChange: this.handleChangeA(child),
 						handleFocus: this.handleFocus,
-						validate: child.props.validate ? child.props.validate(values[name]) : null /* child.props.validate */,
+						validate: child.props.validate ? child.props.validate : null /* child.props.validate */,
 						// color: (!validation[name] ? '#BE4F44' : undefined),
 						// focusColor: (!validation[name] ? '#BE4F44' : undefined),
 						color: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp
 						focusColor: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp
 						value: (values[name] !== undefined ? values[name] : ''),
-					})				
-				} 
+					})
+				}
 				else return React.cloneElement(child)
 			})
 		)
@@ -261,11 +304,11 @@ class Form extends Component {
 		// if (this.state.fieldProps['phone2'] !== undefined) {
 		// 	console.log(this.state.fieldProps['phone2'].readOnly)
 		// }
-		
+
 
 		return (
-			<div>			
-				<form /* {...this.props} */> 
+			<div>
+				<form /* {...this.props} */>
 					{this.RenderFormField()}
 					{this.RenderButtons()}
 					{this.props.debug ? <DisplayState {...this.state} /> : null}

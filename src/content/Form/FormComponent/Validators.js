@@ -10,24 +10,19 @@ export const mustBeNumber = (value) => {
 	return (isNaN(value) ? 'Must be a number' : undefined)
 }
 
+export const isEmail = (value) => (value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? undefined : 'Invalid e-mail')
 
 export const mustBeNumber2 = (value) => (isNaN(value) ? 'Must be a number' : undefined)
 
 export const minValue = (min) => (value) =>
-	isNaN(value) || value >= (min ? undefined : `Should be greater than ${min}`)
+	isNaN(value) || value >= min ? undefined : `Should be greater than ${min}`
 
 
 export const minChars = (min) => (value) => {
-	console.log(min, value)
-	return value.length >= (min ? undefined : `Should be longer than ${min} characters`)
+	return value.length >= min ? undefined : `Should be longer than ${min} characters`
 }
 
-
-
 export const composeValidators = (...validators) => (value) =>
-	validators.reduce((validator) => validator(value), undefined)
-
-export const composeValidators2 = (...validators) => (value) =>
 	validators.reduce((error, validator) => error || validator(value), undefined)
 
 
@@ -60,6 +55,12 @@ export const validateField = (fieldName, value) => {
 	}, this.validateForm)
 }
 
-export const isEmail = (value) => {
-	return null
-}
+
+// // Date / Birthday
+// var input = '29-02-1847'
+
+// var pattern = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/
+
+// // alert(pattern.test(input))
+
+// // alert('Hello')
