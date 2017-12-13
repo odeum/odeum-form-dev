@@ -12,11 +12,6 @@ export const Input = styled.input`
     box-sizing: border-box;
 	outline: none;
 
-    /* &:hover {
-        box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);
-		cursor: ${(props) => props.isDisabled ? 'not-allowed' : 'pointer'};
-    } */
-
     &:hover {		
         border-color: ${transparentize(0.7, '#3B97D3')};		 
 		box-shadow: ${`0 0 0 3px ${transparentize(0.7, '#3B97D3')}`};
@@ -26,36 +21,6 @@ export const Input = styled.input`
     &:focus {
 		box-shadow: ${(props) => props.focusColor ? `0 0 0 3px ` + props.focusColor : `0 0 0 3px #13A085`};
     }
-`
-
-export const Account = Input.extend`
-	height: 9%; 
-	width: 100%;
-	margin-top: 40px;
-	color: ${(props) => props.color ? props.color : '#13A085'};
-`
-
-export const Username = Input.extend`
-	height: 10%; 
-	width: 100%;
-	margin-top: 15px; 
-	color: ${(props) => props.color ? props.color : '#13A085'};
-`
-
-export const Email = Input.extend`
-	height: 10%; 
-	width: 100%;
-	/* margin-top: 15px;  */
-	margin-bottom: 15px;
-	color: ${(props) => props.color ? props.color : '#13A085'};
-`
-
-export const Password = Input.extend`
-	height: 10%; 
-	width: 100%;
-	/* margin-top: 15px;  */
-	margin-bottom: 15px;
-	color: ${(props) => props.color ? props.color : '#13A085'};
 `
 
 export const StyledInput = Input.extend`

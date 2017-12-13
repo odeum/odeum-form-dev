@@ -229,7 +229,7 @@ class FormNew extends Component {
 
 				</ButtonPanel>
 				<div>
-					<FormErrors formErrors={this.state.formErrors} />
+					<FormErrors errors={this.state.formErrors} />
 					{`${this.errorClass(email)}`}{' '}
 					{`${this.errorClass(password)}`}
 				</div>

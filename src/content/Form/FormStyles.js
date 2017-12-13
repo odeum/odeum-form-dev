@@ -12,11 +12,6 @@ export const Input = styled.input`
     box-sizing: border-box;
 	outline: none;
 
-    /* &:hover {
-        box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);
-		cursor: ${(props) => props.isDisabled ? 'not-allowed' : 'pointer'};
-    } */
-
     &:hover {		
         border-color: ${transparentize(0.7, '#3B97D3')};		 
 		box-shadow: ${`0 0 0 3px ${transparentize(0.7, '#3B97D3')}`};

@@ -129,16 +129,14 @@ class Form extends Component {
 	}
 
 	handleChange = (child) => (e) => {
-		// e.preventDefault()
 		const name = child.props.name
 		const value = e.target.value
 		// const name = e.target.name // we should be able to use this
 		// const value = e.target.value // we should be able to use this
 		const validator = child.props.validate
-		this.setState({ values: { ...this.state.values, [name]: value } })
+		this.setState({ values: { ...this.state.values, [name]: value } }, this.validateForm(child))
 
 		if (validator) {
-			// console.log(validator(value))
 			if (validator(value)) {
 				this.setState({
 					errors: {
@@ -149,7 +147,7 @@ class Form extends Component {
 						...this.state.validation,
 						[name]: false
 					}
-				}, this.handleError)
+				}, this.validateForm(child))
 			}
 			else {
 				this.setState({
@@ -168,9 +166,36 @@ class Form extends Component {
 
 	validateForm = (child) => {
 		// Need to map model to check if each field validation === true
-		// this.setState({ isFormValid: this.state.emailValid && this.state.passwordValid })
-		console.log('Validating field ... ', child.props.name)
+		// this.setState({ isFormValid: this.state.validation[name] && this.state.validation[name++] })
 
+		const { validation } = this.state
+
+		// for (const name in validation) {
+		// 	console.log(`obj.${name} = ${validation[name]}`)
+		// }
+
+
+		// let allValid = Object.keys(validation).every((value) => { 
+		// 	return validation[value] === true 
+		// })
+		
+		// if (allValid) {
+		// 	this.setState({ isFormValid: true, errors: '' })
+		// }
+		
+		function allTrue(validation) {
+			for (let value in validation)
+				if (!validation[value] === true) return false
+
+			return true
+		}
+
+		if (allTrue(validation)) {
+			this.setState({ isFormValid: true, errors: '' })
+		}
+
+		console.log('Validating field ... ', child.props.name)
+		this.handleError()
 	}
 
 	handleSubmit = (e) => {

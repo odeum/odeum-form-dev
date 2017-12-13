@@ -75,7 +75,7 @@ export const hasNumber = (value) =>
 
 	// Field must be a valid phone number	
 export const isPhoneNumber = (value) => 
-	(value.match(/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im) ? undefined : 'Invalid phone number')
+	(value.match(/^[+]?[(]?[0-9]{2,3}[)]?[-\s.]?[0-9]{2,3}[-\s.]?[0-9\s.]{4,6}$/im) ? undefined : 'Invalid phone number')
 
 /*
 Valid phone number formats:
@@ -87,6 +87,7 @@ Valid phone number formats:
 1234567890
 +31636363634
 075-63546725
++4522680880
 
 To be added:
 22680880
