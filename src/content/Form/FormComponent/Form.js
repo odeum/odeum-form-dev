@@ -41,16 +41,6 @@ class Form extends Component {
 			fieldProps: fieldProps,
 		})
 
-		// console.log(model.length)
-
-		// this.setState({
-		// 	validation: {
-		// 		...this.state.validation,
-		// 		[name]: false
-		// 	}
-		// })
-
-
 		if (focusfield) {
 			this.focusInput(focusfield)
 		}
@@ -100,8 +90,7 @@ class Form extends Component {
 				this.handleResetInput()
 				break
 			case 13: // ENTER				
-				if (this.state.isFormValid) {
-					console.log('ENTER on valid')
+				if (this.state.isFormValid) {					
 					this.props.onSubmit(this.state.values)
 					this.handleResetInput()
 				}
@@ -130,10 +119,8 @@ class Form extends Component {
 	}
 
 	handleChange = (child) => (e) => {
-		// const name = child.props.name
-		// const value = e.target.value
-		const name = e.target.name // we should be able to use this
-		const value = e.target.value // we should be able to use this
+		const name = e.target.name
+		const value = e.target.value
 		const validator = child.props.validate
 		this.setState({ values: { ...this.state.values, [name]: value } }, () => this.validateForm(child))
 
@@ -166,15 +153,7 @@ class Form extends Component {
 	}
 
 	validateForm = (child) => {
-		// Need to map model to check if each field validation === true
-		// this.setState({ isFormValid: this.state.validation[name] && this.state.validation[name++] })
-
 		const { validation } = this.state
-
-		// for (const name in validation) {
-		// 	console.log(`obj.${name} = ${validation[name]}`)
-		// }
-
 
 		// let allValid = Object.keys(validation).every((value) => { 
 		// 	return validation[value] === true 
@@ -198,7 +177,6 @@ class Form extends Component {
 			this.setState({ isFormValid: true, errors: '' })
 		}
 
-		// console.log('Validating field ... ', child.props.name)
 		this.handleError()
 	}
 
@@ -242,8 +220,6 @@ class Form extends Component {
 						validate: child.props.validate ? child.props.validate : null,
 						color: (!validation[name] ? '#BE4F44' : undefined),
 						focusColor: (!validation[name] ? '#BE4F44' : undefined),
-						// color: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp
-						// focusColor: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp
 						value: (values[name] !== undefined ? values[name] : ''),
 					})
 				}
@@ -284,9 +260,6 @@ class Form extends Component {
 
 	// FORM RENDER
 	render() {
-		// if (this.state.fieldProps['phone2'] !== undefined) {
-		// 	console.log(this.state.fieldProps['phone2'].readOnly)
-		// }
 		return (
 			<div>
 				<form /* {...this.props} */>
