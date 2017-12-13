@@ -124,6 +124,10 @@ class Form extends Component {
 		this.focusInput(focusfield)
 	}
 
+	handleError = () => {
+		this.props.onError(this.state.errors)
+	}
+
 	handleChange = (child) => (e) => {
 		// e.preventDefault()
 		const name = child.props.name
@@ -145,7 +149,7 @@ class Form extends Component {
 						...this.state.validation,
 						[name]: false
 					}
-				})
+				}, this.handleError)
 			}
 			else {
 				this.setState({
