@@ -13,7 +13,7 @@ class Form extends Component {
 
 		this.state = {
 			values: '',
-			validation: false,
+			validation: '',
 			errors: '',
 
 			isFormValid: false,
@@ -35,13 +35,13 @@ class Form extends Component {
 
 		this.setState({
 			values: model,
-			validation: false,
+			validation: model,
 			errors: model,
 			inputCount: inputCount,
 			fieldProps: fieldProps,
 		})
 
-		console.log(model.length)
+		// console.log(model.length)
 
 		// this.setState({
 		// 	validation: {
@@ -134,7 +134,7 @@ class Form extends Component {
 		// const name = e.target.name // we should be able to use this
 		// const value = e.target.value // we should be able to use this
 		const validator = child.props.validate
-		this.setState({ values: { ...this.state.values, [name]: value } }, this.validateForm(child))
+		this.setState({ values: { ...this.state.values, [name]: value } }, () => this.validateForm(child))
 
 		if (validator) {
 			if (validator(value)) {
@@ -147,7 +147,7 @@ class Form extends Component {
 						...this.state.validation,
 						[name]: false
 					}
-				}, this.validateForm(child))
+				}, () => this.validateForm(child))
 			}
 			else {
 				this.setState({
@@ -159,7 +159,7 @@ class Form extends Component {
 						...this.state.validation,
 						[name]: true
 					}
-				}, this.validateForm(child))
+				}, () => this.validateForm(child))
 			}
 		}
 	}
@@ -178,23 +178,26 @@ class Form extends Component {
 		// let allValid = Object.keys(validation).every((value) => { 
 		// 	return validation[value] === true 
 		// })
-		
+
 		// if (allValid) {
 		// 	this.setState({ isFormValid: true, errors: '' })
 		// }
-		
-		function allTrue(validation) {
-			for (let value in validation)
-				if (!validation[value] === true) return false
 
-			return true
+		function allTrue(validation) {
+			var allTrue = true
+			for (let value in validation) {
+				if (!validation[value] === true) {
+					allTrue = false
+				}
+			}
+			return allTrue
 		}
 
 		if (allTrue(validation)) {
 			this.setState({ isFormValid: true, errors: '' })
 		}
 
-		console.log('Validating field ... ', child.props.name)
+		// console.log('Validating field ... ', child.props.name)
 		this.handleError()
 	}
 

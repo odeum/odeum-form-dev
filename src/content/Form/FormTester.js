@@ -6,19 +6,20 @@ import { Email, Password, Phone } from './FormComponent/Fields' // odeum-form
 // import RenderButtons from './FormComponent/RenderButtons'
 import FormErrors from './FormErrors'
 
-import { 
-	composeValidators, 
-	isEmail, 
-	minChars, 
-	isPhoneNumber, 
-	hasLower, 
-	hasUpper, 
-	hasSymbol, 
-	hasNumber, 
-	mustBeLetters, 
-	/* maxChars, */ 
-	/* formattedDate, */ 
-	/* mustBeNumber, */ } from './FormComponent/Validators' // odeum-form-validators
+import {
+	composeValidators,
+	isEmail,
+	minChars,
+	/* isPhoneNumber,  */
+	hasLower,
+	hasUpper,
+	hasSymbol,
+	hasNumber,
+	mustBeLetters,
+	/* maxChars, */
+	/* formattedDate, */
+	/* mustBeNumber, */
+} from './FormComponent/Validators' // odeum-form-validators
 
 
 // App or other higher level component composing the form and issues the form state and utility methods for submit ...
@@ -29,13 +30,13 @@ class FormTester extends Component {
 
 		this.model = {
 			values: {
-				firstname: '',
-				lastname: '',
+				/* 				firstname: '',
+								lastname: '', */
 				email: '',
 				password: '',
 				phone: '',
-				phone2: '',
-				phone3: '',
+				/* 				phone2: '',
+								phone3: '', */
 			}
 		}
 
@@ -80,10 +81,10 @@ class FormTester extends Component {
 							name={'phone'}
 							placeholder={'Enter your phone number ... '}
 							validate={composeValidators(mustBeLetters, minChars(8))}
-							// validate={isPhoneNumber} 
-							// validate={formattedDate}
-							// validate={maxChars(10)}
-							// validate={mustBeNumber}
+						// validate={isPhoneNumber} 
+						// validate={formattedDate}
+						// validate={maxChars(10)}
+						// validate={mustBeNumber}
 						/>
 						<Phone
 							name={'phone2'}
