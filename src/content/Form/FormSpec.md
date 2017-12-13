@@ -160,10 +160,3 @@ this.model = {
 ## Keydown
 http://unixpapa.com/js/testkey.html
 
-## TODO:
-
-- Validation
-- Value update based upon other input value (through state change)
-- Buttons + style
-- Select Field
-- CoppyToClipboard (Form prop)
