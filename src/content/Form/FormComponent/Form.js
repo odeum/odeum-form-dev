@@ -103,6 +103,7 @@ class Form extends Component {
 				if (this.state.isFormValid) {
 					console.log('ENTER on valid')
 					this.props.onSubmit(this.state.values)
+					this.handleResetInput()
 				}
 				else this.nextInput()
 				break
@@ -120,7 +121,7 @@ class Form extends Component {
 	handleResetInput = () => {
 		const { model, focusfield } = this.props
 		// if arg(fields) { this.setState({ fields, ... }) }
-		this.setState({ values: model, validation: model, errors: model })
+		this.setState({ values: model, validation: model, errors: model, isFormValid: false })
 		this.focusInput(focusfield)
 	}
 
@@ -129,10 +130,10 @@ class Form extends Component {
 	}
 
 	handleChange = (child) => (e) => {
-		const name = child.props.name
-		const value = e.target.value
-		// const name = e.target.name // we should be able to use this
-		// const value = e.target.value // we should be able to use this
+		// const name = child.props.name
+		// const value = e.target.value
+		const name = e.target.name // we should be able to use this
+		const value = e.target.value // we should be able to use this
 		const validator = child.props.validate
 		this.setState({ values: { ...this.state.values, [name]: value } }, () => this.validateForm(child))
 
@@ -202,7 +203,7 @@ class Form extends Component {
 	}
 
 	handleSubmit = (e) => {
-		e.preventDefault()
+		// e.preventDefault()
 		this.props.onSubmit(this.state.values)
 	}
 
