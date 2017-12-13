@@ -1,8 +1,5 @@
 # ODEUM Form TODO
 
-- Validation (add following)
-	- isCountry
-
 - Fix innerRef or resolve with querySelectorAll + Fix focusField(name)
 - Fix nextInput (readOnly/disabled and other cases to skip field on ENTER)
 - Fix handleResetInput to work with arg for which field / all
@@ -11,3 +8,5 @@
 - Buttons + style
 - CopyToClipboard (Form prop)
 
+- Validation (add following)
+	- isCountry
