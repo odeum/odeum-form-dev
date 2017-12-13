@@ -183,6 +183,7 @@ class Form extends Component {
 	handleSubmit = (e) => {
 		// e.preventDefault()
 		this.props.onSubmit(this.state.values)
+		this.handleResetInput()
 	}
 
 	handleToggleValidate = () => {
@@ -247,13 +248,13 @@ class Form extends Component {
 					onClick={this.handleResetInput}
 					color={'#BE4F44'}
 				/>
-				<Button
+				{/* <Button
 					label={!isFormValid ? 'Validate' : 'Invalidate'}
 					icon={!isFormValid ? 'check_circle' : 'cancel'}
 					type={'reset'}
 					onClick={this.handleToggleValidate}
 					color={!isFormValid ? '#13A085' : '#BE4F44'}
-				/>
+				/> */}
 			</ButtonPanel>
 		)
 	}

@@ -1,5 +1,6 @@
 # ODEUM Form TODO
 
+- Fix validation on readOnly fields
 - Fix innerRef or resolve with querySelectorAll + Fix focusField(name)
 - Fix nextInput (readOnly/disabled and other cases to skip field on ENTER)
 - Fix handleResetInput to work with arg for which field / all
