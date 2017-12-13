@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ButtonPanel, Button } from 'odeum-ui'
 import { DisplayState } from './DisplayStateProps'
+import clearConsole from './consoleAPI'
 
 class Form extends Component {
 
@@ -12,46 +13,85 @@ class Form extends Component {
 
 		this.state = {
 			values: '',
-			validation: '',
+			validation: false,
 			errors: '',
-
-			// formErrors: { email: '', password: '' },
-			// emailValid: false,
-			// passwordValid: false,
 
 			isFormValid: false,
 			inFocus: '',
-			refCount: ''
+			inputCount: '',
+			fieldProps: {},
+
 		}
 	}
 
 	componentDidMount() {
-		const { model } = this.props
-		const { focusfield } = this.props
-		
-		this.setState({ values: model, validation: model, errors: model })
-		
+
+		const { model, focusfield } = this.props
+
+		this.inputsArray = Array.prototype.slice.call(document.querySelectorAll('input'))
+		let inputCount = this.inputsArray.length
+
+		let fieldProps = this.mapFieldPropsToState()
+
+		this.setState({
+			values: model,
+			validation: false,
+			errors: model,
+			inputCount: inputCount,
+			fieldProps: fieldProps,
+		})
+
+		console.log(model.length)
+
+		// this.setState({
+		// 	validation: {
+		// 		...this.state.validation,
+		// 		[name]: false
+		// 	}
+		// })
+
+
 		if (focusfield) {
 			this.focusInput(focusfield)
 		}
 
-		this.inputsArray = Array.prototype.slice.call(document.querySelectorAll("input"))
-
 		document.addEventListener('keydown', this.onKeydown)
 	}
-	
+
 	componentWillUnmount() {
 		document.removeEventListener('keydown', this.onKeydown)
 		this.inputs = {} // Reset input refs
 		this.inputsArray = [] // Reset input refs array
 	}
 
+	mapFieldPropsToState = () => {
+		const { children } = this.props
+		let propsObject = {}
 
-	nextField = () => {
-		const index = (this.inputsArray.indexOf(document.activeElement) + 1) % this.inputsArray.length 
+		let values = Object.values(React.Children.toArray(children))
+
+		React.Children.toArray(children).map((child, index) => {
+			const { name } = child.props
+
+			if (child.type.name !== undefined) { }
+
+			if (name !== undefined) {
+				propsObject[name] = values[index].props
+			}
+
+			return propsObject
+		})
+		return propsObject
+	}
+
+	nextInput = () => {
+		const index = (this.inputsArray.indexOf(document.activeElement) + 1) % this.inputsArray.length
+
 		const input = this.inputsArray[index]
-		input.focus()
-		input.select()
+		if (!input.readOnly) {
+			input.focus()
+			input.select()
+		}
 	}
 
 	onKeydown = ({ keyCode }) => {
@@ -62,9 +102,15 @@ class Form extends Component {
 			case 13: // ENTER				
 				if (this.state.isFormValid) {
 					console.log('ENTER on valid')
-					this.props.onSubmit(this.state)
+					this.props.onSubmit(this.state.values)
 				}
-				else this.nextField()
+				else this.nextInput()
+				break
+			case 116: // F5
+				this.handleToggleValidate()
+				break
+			case 117: // F6
+				clearConsole()
 				break
 			default:
 				break
@@ -74,28 +120,63 @@ class Form extends Component {
 	handleResetInput = () => {
 		const { model, focusfield } = this.props
 		// if arg(fields) { this.setState({ fields, ... }) }
-		// this.setState({
-		// 	values: this.props.model,
-		// 	formErrors: { email: '', password: '' },
-		// 	emailValid: false,
-		// 	passwordValid: false,
-		// 	isFormValid: false,
-		// })
-		this.setState({ values: model, validation: model, errors: model })		
+		this.setState({ values: model, validation: model, errors: model })
 		this.focusInput(focusfield)
 	}
 
-	handleChange = (e) => {
-		const name = e.target.name
+	handleChange = (child) => (e) => {
+		// e.preventDefault()
+		const name = child.props.name
 		const value = e.target.value
+		// const name = e.target.name // we should be able to use this
+		// const value = e.target.value // we should be able to use this
+		const validator = child.props.validate
 		this.setState({ values: { ...this.state.values, [name]: value } })
-		// this.setState({ [name]: value },
-		// 	/* () => { this.validateField(name, value) } */)
+
+		if (validator) {
+			// console.log(validator(value))
+			if (validator(value)) {
+				this.setState({
+					errors: {
+						...this.state.errors,
+						[name]: validator(value)
+					},
+					validation: {
+						...this.state.validation,
+						[name]: false
+					}
+				})
+			}
+			else {
+				this.setState({
+					errors: {
+						...this.state.errors,
+						[name]: ''
+					},
+					validation: {
+						...this.state.validation,
+						[name]: true
+					}
+				}, this.validateForm(child))
+			}
+		}
+	}
+
+	validateForm = (child) => {
+		// Need to map model to check if each field validation === true
+		// this.setState({ isFormValid: this.state.emailValid && this.state.passwordValid })
+		console.log('Validating field ... ', child.props.name)
+
 	}
 
 	handleSubmit = (e) => {
 		e.preventDefault()
 		this.props.onSubmit(this.state.values)
+	}
+
+	handleToggleValidate = () => {
+		this.setState({ isFormValid: !this.state.isFormValid })
+		this.focusInput('email')
 	}
 
 	createInputRef = (name) => (input) => {
@@ -107,10 +188,10 @@ class Form extends Component {
 	}
 
 	handleFocus = () => {
-		let refCount = Object.keys(this.inputs).length
+		// let inputCount = this.inputsArray.length
 		let currentFocus = document.activeElement.name
 		document.activeElement.select()
-		this.setState({ inFocus: currentFocus, refCount: refCount })
+		this.setState({ inFocus: currentFocus })
 	}
 
 	RenderFormField = () => {
@@ -118,20 +199,22 @@ class Form extends Component {
 		const { values, validation } = this.state
 		return (
 			React.Children.toArray(children).map((child, index) => {
-				// let currentChild = child.type.name.toLowerCase()
-				let name = child.props.name				
-				if (child.type.name !== undefined) { 
+				const { name } = child.props
+				if (child.type.name !== undefined) {
 					return React.cloneElement(child, {
 						key: index,
 						createInputRef: this.createInputRef,
-						handleChange: this.handleChange,
+						handleChange: this.handleChange(child),
 						handleFocus: this.handleFocus,
+						validate: child.props.validate ? child.props.validate : null,
 						color: (!validation[name] ? '#BE4F44' : undefined),
 						focusColor: (!validation[name] ? '#BE4F44' : undefined),
+						// color: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp
+						// focusColor: (!this.state.isFormValid ? '#BE4F44' : undefined), // temp
 						value: (values[name] !== undefined ? values[name] : ''),
-					})				
-				} 
-				else return null
+					})
+				}
+				else return React.cloneElement(child)
 			})
 		)
 	}
@@ -155,18 +238,28 @@ class Form extends Component {
 					onClick={this.handleResetInput}
 					color={'#BE4F44'}
 				/>
+				<Button
+					label={!isFormValid ? 'Validate' : 'Invalidate'}
+					icon={!isFormValid ? 'check_circle' : 'cancel'}
+					type={'reset'}
+					onClick={this.handleToggleValidate}
+					color={!isFormValid ? '#13A085' : '#BE4F44'}
+				/>
 			</ButtonPanel>
 		)
 	}
 
 	// FORM RENDER
-	render() {		
+	render() {
+		// if (this.state.fieldProps['phone2'] !== undefined) {
+		// 	console.log(this.state.fieldProps['phone2'].readOnly)
+		// }
 		return (
-			<div>			
-				<form {...this.props}>
+			<div>
+				<form /* {...this.props} */>
 					{this.RenderFormField()}
 					{this.RenderButtons()}
-					{this.props.debug === 'on' ? <DisplayState {...this.state} /> : null}
+					{this.props.debug ? <DisplayState {...this.state} /> : null}
 				</form>
 			</div>
 		)
@@ -174,5 +267,3 @@ class Form extends Component {
 }
 
 export default Form
-
-// this.inputObject = { email: input.sc - frDJqD.cFXjom, password: input.sc - frDJqD.cFXjom, phone: input.sc - frDJqD.cFXjom }

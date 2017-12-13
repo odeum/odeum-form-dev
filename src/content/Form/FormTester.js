@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // import { ButtonPanel, Button } from 'odeum-ui'
-import Form from './FormComponent/Form2' // odeum-form
+import Form from './FormComponent/Form' // odeum-form
 import { Email, Password, Phone } from './FormComponent/Fields' // odeum-form
 // import RenderButtons from './FormComponent/RenderButtons'
 import { composeValidators, isEmail, mustBeNumber, minChars, isPhoneNumber, hasLower, hasUpper, hasSymbol, hasNumber, /* maxChars, */ formattedDate } from './FormComponent/Validators' // odeum-form
@@ -55,9 +55,9 @@ class FormTester extends Component {
 					<Phone
 						name={'phone'}
 						placeholder={'Enter your phone number ... '}
-						validate={formattedDate}
+						// validate={formattedDate}
 						// validate={maxChars(10)}
-						// validate={isPhoneNumber} 
+						validate={isPhoneNumber} 
 						// validate={mustBeNumber}
 					/>
 					<Phone
