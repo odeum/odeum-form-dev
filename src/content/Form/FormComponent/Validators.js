@@ -20,30 +20,60 @@ export const mustBeNumber = value =>
 // Field must be a valid e-mail address
 export const isEmail = (value) => 
 	(value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? undefined : 'Invalid e-mail')
-
+	
 // Field must have a minimum value
 export const minValue = (min) => (value) =>
 	isNaN(value) || value >= min ? undefined : `Should be greater than ${min}`
-
+	
 // Field must be less than a maximum value
 export const maxValue = (max) => (value) =>
 	isNaN(value) || value <= max ? undefined : `Should be less than ${max + 1}`
-
+	
 // Field should be longer than a minimum number of characters
 export const minChars = (min) => (value) => 
 	value.length >= min ? undefined : `Should be minimum ${min} characters`
-
+	
 // Field should be less than a maximum number of characters
 export const maxChars = (max) => (value) => 
 	value.length <= max ? undefined : `Should be less than ${max + 1} characters`
-
-// Doesn't work
+	
+// TODO: Doesn't work - Field must be a formatted date (non localized)
 export const formattedDate = (value) =>
-	(value.match(/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/) ? undefined : 'Incorrect formatted date')
+	(value.match(/^(?: (?: 31(\/|-|\.)(?:0?[13578]|1[02]|(?:Jan|Mar|May|Jul|Aug|Oct|Dec)))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2]|(?:Jan|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec))\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)(?:0?2|(?:Feb))\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9]|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep))|(?:1[0-2]|(?:Oct|Nov|Dec)))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/) ? undefined : 'Incorrect formatted date')
+	
+// Field must include a lowercase alpha
+export const hasLower = (value) =>
+	(value.match(/[a-z]/) ? undefined : 'Missing lowercase character')
+	
+// Field must include an uppercase alpha
+export const hasUpper = (value) =>
+	(value.match(/[A-Z]/) ? undefined : 'Missing uppercase character')
 
+// Field must include a symbol
+export const hasSymbol = (value) =>
+	(value.match(/[-!$§#€%^&*()_+|~=`{}[\]:";'<>?,./]/) ? undefined : 'Missing symbol')
+
+// Field must include a number
+export const hasNumber = (value) =>
+	(value.match(/^(?=.*\d+).*$/) ? undefined : 'Missing number')
+
+// Field must be a valid phone number
+/*
+Valid formats:
+
+(123) 456-7890
+(123)456-7890
+123-456-7890
+123.456.7890
+1234567890
++31636363634
+075-63546725
+
+*/
+export const isPhoneNumber = (value) => 
+	(value.match(/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im) ? undefined : 'Invalid phone number')
 
 // Date / Birthday
 // var input = '29-02-1847'
 
 // var pattern = /^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/
-

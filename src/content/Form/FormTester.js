@@ -3,14 +3,8 @@ import React, { Component } from 'react'
 import Form from './FormComponent/Form2' // odeum-form
 import { Email, Password, Phone } from './FormComponent/Fields' // odeum-form
 // import RenderButtons from './FormComponent/RenderButtons'
-// import { composeValidators, required, minChars, mustBeNumber } from './Validators'
-import { composeValidators, isEmail, mustBeNumber, minChars, /* maxChars, */ /* formattedDate */ } from './FormComponent/Validators' // odeum-form
+import { composeValidators, isEmail, mustBeNumber, minChars, isPhoneNumber, hasLower, hasUpper, hasSymbol, hasNumber, /* maxChars, */ formattedDate } from './FormComponent/Validators' // odeum-form
 
-// const isEmail = (value) => {
-// 	console.log('Passed value: ', value)
-// 	// minChars(8)
-// 	if (value) return `We have a value: ${value}`
-// }
 
 // App or other higher level component composing the form and issues the form state and utility methods for submit ...
 class FormTester extends Component {
@@ -56,19 +50,19 @@ class FormTester extends Component {
 					<Password
 						name={'password'}
 						placeholder={'Enter your password ... '}
-						validate={minChars(8)}
+						validate={composeValidators(minChars(8), hasLower, hasUpper, hasSymbol, hasNumber)}
 					/>
 					<Phone
 						name={'phone'}
 						placeholder={'Enter your phone number ... '}
-						// validate={formattedDate}
+						validate={formattedDate}
 						// validate={maxChars(10)}
-						validate={composeValidators(mustBeNumber, minChars(8))} 
+						// validate={isPhoneNumber} 
+						// validate={mustBeNumber}
 					/>
 					<Phone
 						name={'phone2'}
 						placeholder={'Enter your phone number 2 ... '}
-						// validate={isEmail}
 						readOnly
 					/>
 					<div name={'div'}>Hello World, I am an unwanted DOM child that eventually will be a styling part.</div>

@@ -30,8 +30,8 @@ export class Email extends Component {
 					innerRef={this.props.createInputRef ? this.props.createInputRef(fieldId) : null}
 					onChange={this.props.handleChange}
 					// validate={this.props.validate}
-					color={!this.props.isValid ? '#BE4F44' : undefined}
-					focusColor={!this.props.isValid ? '#BE4F44' : undefined}
+					// color={!this.props.isValid ? '#BE4F44' : undefined}
+					// focusColor={!this.props.isValid ? '#BE4F44' : undefined}
 					onFocus={this.props.handleFocus}
 					autoComplete={this.props.autoComplete}
 					onBlur={this.props.handleBlur}
@@ -58,8 +58,8 @@ export const Password = (props) => {
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
 			// validate={props.validate}
-			color={!props.isValid ? '#BE4F44' : undefined}
-			focusColor={!props.isValid ? '#BE4F44' : undefined}
+			// color={!props.isValid ? '#BE4F44' : undefined}
+			// focusColor={!props.isValid ? '#BE4F44' : undefined}
 			onFocus={props.handleFocus}
 			autoComplete={props.autoComplete}
 			onBlur={props.handleBlur}
@@ -83,8 +83,8 @@ export const Phone = (props) => {
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
 			// validate={props.validate}
-			color={!props.isValid ? '#BE4F44' : undefined}
-			focusColor={!props.isValid ? '#BE4F44' : undefined}
+			// color={!props.isValid ? '#BE4F44' : undefined}
+			// focusColor={!props.isValid ? '#BE4F44' : undefined}
 			onFocus={props.handleFocus}
 			autoComplete={props.autoComplete}
 			onBlur={props.handleBlur}

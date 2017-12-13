@@ -13,7 +13,7 @@ class Form extends Component {
 
 		this.state = {
 			values: '',
-			validation: '',
+			validation: false,
 			errors: '',
 
 			isFormValid: false,
@@ -40,6 +40,16 @@ class Form extends Component {
 			inputCount: inputCount,
 			fieldProps: fieldProps,
 		})
+
+		console.log(model.length)
+
+		// this.setState({
+		// 	validation: {
+		// 		...this.state.validation,
+		// 		[name]: false
+		// 	}
+		// })
+
 
 		if (focusfield) {
 			this.focusInput(focusfield)
@@ -82,12 +92,6 @@ class Form extends Component {
 			input.focus()
 			input.select()
 		}
-		
-
-		console.log(document.activeElement.name)
-		if (!this.state.fieldProps[document.activeElement.name].readOnly) {
-			console.log('Not read only')
-		} else console.log('Read only')
 	}
 
 	onKeydown = ({ keyCode }) => {
@@ -116,33 +120,9 @@ class Form extends Component {
 	handleResetInput = () => {
 		const { model, focusfield } = this.props
 		// if arg(fields) { this.setState({ fields, ... }) }
-		// this.setState({
-		// 	values: this.props.model,
-		// 	formErrors: { email: '', password: '' },
-		// 	emailValid: false,
-		// 	passwordValid: false,
-		// 	isFormValid: false,
-		// })
 		this.setState({ values: model, validation: model, errors: model })
 		this.focusInput(focusfield)
 	}
-
-	// handleChange = (e) => {
-	// 	const name = e.target.name
-	// 	const value = e.target.value
-	// 	const validator = e.target.validate
-	// 	console.log(e.target)
-	// 	this.setState({ values: { ...this.state.values, [name]: value }, /* Insert validate calback here */ })
-	// 	if (validator) {
-	// 		this.setState({
-	// 			errors: {
-	// 				...this.state.errors,
-	// 				[name]: validator(value)
-	// 			}
-	// 		})
-	// 	}
-	// 	/* () => { this.validateField(name, value) } */
-	// }
 
 	handleChange = (child) => (e) => {
 		// e.preventDefault()
@@ -177,15 +157,16 @@ class Form extends Component {
 						...this.state.validation,
 						[name]: true
 					}
-				}, this.validateForm)
+				}, this.validateForm(child))
 			}
 		}
 	}
 
-	validateForm = () => {
+	validateForm = (child) => {
 		// Need to map model to check if each field validation === true
 		// this.setState({ isFormValid: this.state.emailValid && this.state.passwordValid })
-		console.log('Validating form ... ')
+		console.log('Validating field ... ', child.props.name)
+
 	}
 
 	handleSubmit = (e) => {
@@ -220,7 +201,6 @@ class Form extends Component {
 			React.Children.toArray(children).map((child, index) => {
 				const { name } = child.props
 				if (child.type.name !== undefined) {
-					// console.log(child.props)
 					return React.cloneElement(child, {
 						key: index,
 						createInputRef: this.createInputRef,
