@@ -3,7 +3,18 @@ import React, { Component } from 'react'
 import Form from './FormComponent/Form' // odeum-form
 import { Email, Password, Phone } from './FormComponent/Fields' // odeum-form
 // import RenderButtons from './FormComponent/RenderButtons'
-import { composeValidators, isEmail, mustBeNumber, minChars, isPhoneNumber, hasLower, hasUpper, hasSymbol, hasNumber, /* maxChars, */ formattedDate } from './FormComponent/Validators' // odeum-form
+import { 
+	composeValidators, 
+	isEmail, 
+	minChars, 
+	isPhoneNumber, 
+	hasLower, 
+	hasUpper, 
+	hasSymbol, 
+	hasNumber, 
+	/* maxChars, */ 
+	/* formattedDate, */ 
+	/* mustBeNumber, */ } from './FormComponent/Validators' // odeum-form-validators
 
 
 // App or other higher level component composing the form and issues the form state and utility methods for submit ...
@@ -24,6 +35,10 @@ class FormTester extends Component {
 		}
 	}
 
+	handleError = (errors) => {
+		console.log('The form has errors: ', errors)
+	}
+
 	handleSubmit = (data) => {
 		console.log('Submitting data ...', data)
 	}
@@ -36,16 +51,16 @@ class FormTester extends Component {
 
 				<Form
 					focusfield={'email'}
-					onSubmit={this.handleSubmit}
 					model={this.model.values}
+					onSubmit={this.handleSubmit}
+					onError={this.handleError}
 					styles={''}
 					debug
 				>
 					<Email
 						name={'email'}
 						placeholder={'Enter your mail address ... '}
-						// validate={this.validateField('email')} 	
-						validate={composeValidators(minChars(8), isEmail)}
+						validate={isEmail}
 					/>
 					<Password
 						name={'password'}
@@ -55,9 +70,9 @@ class FormTester extends Component {
 					<Phone
 						name={'phone'}
 						placeholder={'Enter your phone number ... '}
+						validate={isPhoneNumber} 
 						// validate={formattedDate}
 						// validate={maxChars(10)}
-						validate={isPhoneNumber} 
 						// validate={mustBeNumber}
 					/>
 					<Phone
