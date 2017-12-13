@@ -1,8 +1,6 @@
 # ODEUM Form TODO
 
 - Validation (add following)
-	- isName (must be alpha)
-	- mustBeAlpha
 	- isCountry
 
 - Fix innerRef or resolve with querySelectorAll + Fix focusField(name)

@@ -23,6 +23,11 @@ export const mustBeNumber = value =>
 	(isNaN(value) ? "Must be a number" : undefined)
 
 
+	// Field must only contain letters
+export const mustBeLetters = (value) =>
+	(value.match(/^[a-z]+$/i) ? undefined : 'Must only contain letters')
+
+
 	// Field must be a valid e-mail address
 export const isEmail = (value) => 
 	(value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) ? undefined : 'Invalid e-mail')
@@ -100,8 +105,7 @@ To be added:
 
 Add validators for:
 
-isName (must be alpha)
-mustBeAlpha
+isName (must be letters)
 isCountry
 
 */

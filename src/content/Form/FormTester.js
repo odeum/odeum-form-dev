@@ -15,6 +15,7 @@ import {
 	hasUpper, 
 	hasSymbol, 
 	hasNumber, 
+	mustBeLetters, 
 	/* maxChars, */ 
 	/* formattedDate, */ 
 	/* mustBeNumber, */ } from './FormComponent/Validators' // odeum-form-validators
@@ -78,7 +79,8 @@ class FormTester extends Component {
 						<Phone
 							name={'phone'}
 							placeholder={'Enter your phone number ... '}
-							validate={isPhoneNumber} 
+							validate={composeValidators(mustBeLetters, minChars(8))}
+							// validate={isPhoneNumber} 
 							// validate={formattedDate}
 							// validate={maxChars(10)}
 							// validate={mustBeNumber}
