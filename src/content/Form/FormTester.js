@@ -10,15 +10,15 @@ import {
 	composeValidators,
 	isEmail,
 	minChars,
-	/* isPhoneNumber,  */
+	isPhoneNumber, 
 	hasLower,
 	hasUpper,
 	hasSymbol,
 	hasNumber,
-	mustBeLetters,
-	/* maxChars, */
-	/* formattedDate, */
-	/* mustBeNumber, */
+	// mustBeLetters,
+	// maxChars,
+	// formattedDate, 
+	// mustBeNumber,
 } from './FormComponent/Validators' // odeum-form-validators
 
 
@@ -30,13 +30,12 @@ class FormTester extends Component {
 
 		this.model = {
 			values: {
-				/* 				firstname: '',
-								lastname: '', */
+				// firstname: '',
+				// lastname: '',
 				email: '',
 				password: '',
 				phone: '',
-				/* 				phone2: '',
-								phone3: '', */
+				// phone2: '',
 			}
 		}
 
@@ -80,11 +79,11 @@ class FormTester extends Component {
 						<Phone
 							name={'phone'}
 							placeholder={'Enter your phone number ... '}
-							validate={composeValidators(mustBeLetters, minChars(8))}
-						// validate={isPhoneNumber} 
-						// validate={formattedDate}
-						// validate={maxChars(10)}
-						// validate={mustBeNumber}
+							validate={isPhoneNumber} 
+							// validate={composeValidators(mustBeLetters, minChars(8))}
+							// validate={formattedDate}
+							// validate={maxChars(10)}
+							// validate={mustBeNumber}
 						/>
 						<Phone
 							name={'phone2'}
