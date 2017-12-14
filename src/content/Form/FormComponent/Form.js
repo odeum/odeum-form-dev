@@ -15,7 +15,7 @@ class Form extends Component {
 			values: '',
 			validation: '',
 			errors: '',
-
+			inputFocus: 0,
 			isFormValid: false,
 			inFocus: '',
 			inputCount: '',
@@ -52,10 +52,20 @@ class Form extends Component {
 
 
 		if (focusfield) {
+			//TODO: Find the position of the focusField with 'Object.keys(this.inputs).find(focusfield)' and set inputFocus correctly
+			//Case: 
+			/* 
+				1. User sets focusField 3rd field
+				2. User presses Enter
+				Result: Focus jumps on first field
+				Expected Result: Focus jumps on next field
+			*/
 			this.focusInput(focusfield)
 		}
+		else { this.nextInput() }
 
 		document.addEventListener('keydown', this.onKeydown)
+		// console.log(this.inputs)
 	}
 
 	componentWillUnmount() {
@@ -84,15 +94,6 @@ class Form extends Component {
 		return propsObject
 	}
 
-	nextInput = () => {
-		const index = (this.inputsArray.indexOf(document.activeElement) + 1) % this.inputsArray.length
-
-		const input = this.inputsArray[index]
-		if (!input.readOnly) {
-			input.focus()
-			input.select()
-		}
-	}
 
 	onKeydown = ({ keyCode }) => {
 		switch (keyCode) {
@@ -117,11 +118,64 @@ class Form extends Component {
 		}
 	}
 
+	//#region Input Handling
+
+	nextInput = () => {
+		//TODO: 
+		/* 
+			move setState's to individual functions to factilitate focusField
+		*/
+		// this.inputs[Object.keys(this.inputs)[this.state.inputFocus]].focus()
+		/* 
+			this.inputs -> all the inputs
+			Object.keys() -> transform Object keys into an array from 
+							{ 
+								key1:{
+									etc...
+								},
+								key2:{
+									etc....
+								}
+							}
+							to ['key1','key2',......]
+			Object.keys(this.inputs)[this.state.inputFocus] -> 
+				example:
+					Object.keys(this.inputs) = ['email','password','phone','phone2'] (let's call it array)
+						so this means that if this.state.inputFocus = 0
+							=> array[0] = 'email'
+			=> this.inputs['email'].focus()
+
+		*/
+		if (!this.inputs[Object.keys(this.inputs)[this.state.inputFocus]].readOnly) {
+			this.focusInput(Object.keys(this.inputs)[this.state.inputFocus])
+			this.setState({ inputFocus: (this.state.inputFocus + 1) % Object.keys(this.inputs).length })
+		}
+		else {
+			this.setState({ inputFocus: (this.state.inputFocus + 1) % Object.keys(this.inputs).length })
+			// this.inputs[Object.keys(this.inputs)[this.state.inputFocus]].focus()
+			// this.setState({ inputFocus: (this.state.inputFocus + 1) % Object.keys(this.inputs).length })
+			this.nextInput()
+		}
+		// console.log(this.state.inputFocus)
+
+
+		// const index = (this.inputsArray.indexOf(document.activeElement) + 1) % this.inputsArray.length
+
+		// const input = this.inputsArray[index]
+		// if (!input.readOnly) {
+		// 	input.focus()
+		// 	input.select()
+		// }
+	}
+
 	handleResetInput = () => {
 		const { model, focusfield } = this.props
 		// if arg(fields) { this.setState({ fields, ... }) }
 		this.setState({ values: model, validation: model, errors: model })
-		this.focusInput(focusfield)
+		if (focusfield)
+			this.focusInput(focusfield)
+		else
+			this.focusInput(Object.keys(this.inputs)[0])
 	}
 
 	handleError = () => {
@@ -164,6 +218,28 @@ class Form extends Component {
 		}
 	}
 
+	createInputRef = name => (input) => {
+		// console.log(input.name, name)
+		// input.focus()
+		if (input !== null)
+			return this.inputs[input.name] = input
+	}
+
+	focusInput = (name) => {
+		this.inputs[name].focus()
+	}
+
+	handleFocus = () => {
+		// let inputCount = this.inputsArray.length
+		let currentFocus = document.activeElement.name
+		document.activeElement.select()
+		this.setState({ inFocus: currentFocus })
+	}
+
+	//#endregion
+
+	//#region Form Validation
+
 	validateForm = (child) => {
 		// Need to map model to check if each field validation === true
 		// this.setState({ isFormValid: this.state.validation[name] && this.state.validation[name++] })
@@ -201,6 +277,10 @@ class Form extends Component {
 		this.handleError()
 	}
 
+	//#endregion
+
+	//#region Form Handling
+
 	handleSubmit = (e) => {
 		e.preventDefault()
 		this.props.onSubmit(this.state.values)
@@ -211,20 +291,9 @@ class Form extends Component {
 		this.focusInput('email')
 	}
 
-	createInputRef = (name) => (input) => {
-		return this.inputs[name] = input
-	}
+	//#endregion
 
-	focusInput = (name) => {
-		this.inputs[name].focus()
-	}
-
-	handleFocus = () => {
-		// let inputCount = this.inputsArray.length
-		let currentFocus = document.activeElement.name
-		document.activeElement.select()
-		this.setState({ inFocus: currentFocus })
-	}
+	//#region Rendering
 
 	RenderFormField = () => {
 		const { children } = this.props
@@ -296,6 +365,8 @@ class Form extends Component {
 			</div>
 		)
 	}
+
+	//#endregion
 }
 
 export default Form
