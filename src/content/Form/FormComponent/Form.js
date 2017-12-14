@@ -8,51 +8,60 @@ class Form extends Component {
 	constructor(props) {
 		super(props)
 
+
 		this.inputs = {}
 		this.inputsArray = []
 
+		this.inputsArray = Array.prototype.slice.call(document.querySelectorAll('input'))
+		let inputCount = this.inputsArray.length
+
+		const { model } = props
 		this.state = {
-			values: '',
-			validation: '',
-			errors: '',
+			values: model,
+			validation: model,
+			errors: model,
+			inputCount: inputCount,
+			fieldProps: this.mapFieldPropsToState(),
 			inputFocus: 0,
 			isFormValid: false,
-			inFocus: '',
-			inputCount: '',
-			fieldProps: {},
-
+			inFocus: ''
 		}
 	}
 
 	componentDidMount() {
 
-		const { model, focusfield } = this.props
+		const { focusfield } = this.props
 
-		this.inputsArray = Array.prototype.slice.call(document.querySelectorAll('input'))
-		let inputCount = this.inputsArray.length
+		// this.inputsArray = Array.prototype.slice.call(document.querySelectorAll('input'))
+		// let inputCount = this.inputsArray.length
 
-		let fieldProps = this.mapFieldPropsToState()
+		// let fieldProps = this.mapFieldPropsToState()
 
-		this.setState({
-			values: model,
-			validation: model,
-			errors: model,
-			inputCount: inputCount,
-			fieldProps: fieldProps,
-		})
+		// this.setState({
+		// 	values: model,
+		// 	validation: model,
+		// 	errors: model,
+		// 	inputCount: inputCount,
+		// 	fieldProps: fieldProps,
+		// })
+		if (focusfield)
+			this.nextInput(focusfield)
+		else
+			this.nextInput()
+		// if (focusfield) {
 
-		if (focusfield) {
-			//TODO: Find the position of the focusField with 'Object.keys(this.inputs).find(focusfield)' and set inputFocus correctly
-			//Case: 
-			/* 
-				1. User sets focusField 3rd field
-				2. User presses Enter
-				Result: Focus jumps on first field
-				Expected Result: Focus jumps on next field
-			*/
-			this.focusInput(focusfield)
-		}
-		else { this.nextInput() }
+		// 	var index = Object.keys(this.inputs).findIndex((input) => input === focusfield)
+		// 	console.log(index)
+		// 	if (index !== -1) {
+		// 		this.focusInput(focusfield)
+		// 		//this.setState({ inputFocus: index })
+		// 	}
+		// 	else {
+		// 		console.error('focusfield ' + focusfield + ' has a wrong value')
+		// 		//this.nextInput()
+		// 	}
+		// }
+		// else { this.nextInput() }
 
 		document.addEventListener('keydown', this.onKeydown)
 		// console.log(this.inputs)
@@ -91,7 +100,7 @@ class Form extends Component {
 				this.handleResetInput()
 				break
 			case 13: // ENTER				
-				if (this.state.isFormValid) {					
+				if (this.state.isFormValid) {
 					this.props.onSubmit(this.state.values)
 					this.handleResetInput()
 				}
@@ -110,11 +119,8 @@ class Form extends Component {
 
 	//#region Input Handling
 
-	nextInput = () => {
+	nextInput = (field) => {
 		//TODO: 
-		/* 
-			move setState's to individual functions to factilitate focusField
-		*/
 		// this.inputs[Object.keys(this.inputs)[this.state.inputFocus]].focus()
 		/* 
 			this.inputs -> all the inputs
@@ -136,15 +142,25 @@ class Form extends Component {
 			=> this.inputs['email'].focus()
 
 		*/
-		if (!this.inputs[Object.keys(this.inputs)[this.state.inputFocus]].readOnly) {
-			this.focusInput(Object.keys(this.inputs)[this.state.inputFocus])
-			this.setState({ inputFocus: (this.state.inputFocus + 1) % Object.keys(this.inputs).length })
+		if (!field) {
+			if (!this.inputs[Object.keys(this.inputs)[this.state.inputFocus]].readOnly) {
+				this.focusInput(Object.keys(this.inputs)[this.state.inputFocus])
+				this.setState({ inputFocus: (this.state.inputFocus + 1) % Object.keys(this.inputs).length })
+			}
+			else {
+				this.setState({ inputFocus: (this.state.inputFocus + 1) % Object.keys(this.inputs).length })
+				this.nextInput()
+			}
 		}
 		else {
-			this.setState({ inputFocus: (this.state.inputFocus + 1) % Object.keys(this.inputs).length })
-			// this.inputs[Object.keys(this.inputs)[this.state.inputFocus]].focus()
-			// this.setState({ inputFocus: (this.state.inputFocus + 1) % Object.keys(this.inputs).length })
-			this.nextInput()
+			if (!this.inputs[field].readOnly) {
+				this.focusInput(field)
+				this.setState({ inputFocus: (Object.keys(this.inputs).findIndex((input) => input === field) + 1) % Object.keys(this.inputs).length })
+			}
+			else {
+				this.setState({ inputFocus: (Object.keys(this.inputs).findIndex((input) => input === field) + 1) % Object.keys(this.inputs).length })
+				this.nextInput()
+			}
 		}
 		// console.log(this.state.inputFocus)
 
@@ -163,9 +179,9 @@ class Form extends Component {
 		// if arg(fields) { this.setState({ fields, ... }) }
 		this.setState({ values: model, validation: model, errors: model, isFormValid: false })
 		if (focusfield)
-			this.focusInput(focusfield)
+			this.nextInput(focusfield)
 		else
-			this.focusInput(Object.keys(this.inputs)[0])
+			this.nextInput(Object.keys(this.inputs)[0])
 	}
 
 	handleError = () => {
@@ -214,6 +230,7 @@ class Form extends Component {
 	}
 
 	focusInput = (name) => {
+		// console.debug(name)
 		this.inputs[name].focus()
 	}
 
@@ -288,8 +305,8 @@ class Form extends Component {
 						handleChange: this.handleChange(child),
 						handleFocus: this.handleFocus,
 						validate: child.props.validate ? child.props.validate : null,
-						color: (!validation[name] ? '#BE4F44' : undefined),
-						focusColor: (!validation[name] ? '#BE4F44' : undefined),
+						color: (!child.props.readOnly ? !validation[name] ? '#BE4F44' : undefined : undefined),
+						focusColor: (!child.props.readOnly ? !validation[name] ? '#BE4F44' : undefined : undefined),
 						value: (values[name] !== undefined ? values[name] : ''),
 					})
 				}
