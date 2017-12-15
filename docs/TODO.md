@@ -4,16 +4,39 @@
 - [x] Fix innerRef creation by taking input.name(which should be in all cases unique) rather than the Component name
 - [x] Select Field (selectField(name))  now named nextInput(arg)
 	- [x] this.nextInput(field) -> sets focus on field
-	- [ ] this.nextInput() -> sets focus on the next field relative to the last focused focused field -- partial done - in relation to handleFocus function
-- [x] Fix nextInput (readOnly/disabled and other cases to skip field on ENTER)
+	- [ ] this.nextInput() -> sets focus on the next field relative to the last focused field -- partial done - in relation to handleFocus function
+- [x] Fix nextInput (readOnly skip field on ENTER)
 - [ ] Fix handleResetInput to work with arg for passed field or all (default)
 		<!-- Need more details on this 
-		Press ESC and reset only the current field?-->
+		Press ESC and reset only the current field?
+		Only reset the value in args or all, created alternative handleResetField(name) -->
+```js
+	handleResetInput = (name) => {
+		// e.preventDefault()
+		const { model, focusfield } = this.props
+		console.log(name)
+
+		if (name) {
+			this.setState({ values: { ...this.state.values, [name]: '' } })
+		}
+		else {
+			this.setState({ values: model, validation: model, errors: model, isFormValid: false })
+			
+			if (focusfield)
+				this.nextInput(focusfield)
+			else
+				this.nextInput(Object.keys(this.inputs)[0])
+		}
+	}
+```
 - [ ] Value update based upon other input value (through state change)
 		<!-- Need more details on this -->
+
+- [x] allowKeys={ {'esc': true, 'enter': true} } Form prop for allowing ESC + ENTER in onKeydown
 - [ ] Buttons + style
 - [ ] CopyToClipboard (Form prop)
-		<!-- why would an User need to copy to clipboard the form values? -->
+		<!-- why would a user need to copy to clipboard the form values? 
+		To remember something you enter into a form and save it elsewhere-->
 - [ ] Validation (add following)
 	- [ ] isCountry
 
@@ -22,7 +45,8 @@
 - [x] Find the position of the focusField and set inputFocus correctly. ( [Case 1](#Case-1) )
 
 - [x] ? Fix validation on readOnly fields
-		<!-- why do we need validation on an input that basically can't be edited ? -->
+		<!-- why do we need validation on an input that basically can't be edited ? 
+		If dev/user passes validation to a readonly field -->
 - [x] Move stuff from CDM to Constructor 
 	- Reduced rerenders from 6-12 to 3 
 		- the last 3 I think they are related to OA and Form nextInput()

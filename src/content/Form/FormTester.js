@@ -4,7 +4,7 @@ import Form from './FormComponent/Form' // odeum-form
 // import Field from './FormComponent/Field'
 import { Email, Password, Phone } from './FormComponent/Fields' // odeum-form
 // import RenderButtons from './FormComponent/RenderButtons'
-import FormErrors from './FormErrors'
+import { FormErrors, FieldError } from './FormErrors'
 
 import {
 	composeValidators,
@@ -53,6 +53,7 @@ class FormTester extends Component {
 	}
 
 	render() {
+		const { errors } = this.state
 		return (
 			<div>
 				<h1>Form component test</h1>
@@ -65,12 +66,14 @@ class FormTester extends Component {
 						onError={this.handleError}
 						styles={''}
 						debug={true}
+						allowKeys={{ 'esc': true, 'enter': true }}
 					>
 						<Email
 							name={'email'}
 							placeholder={'Enter your mail address ... '}
 							validate={isEmail}
 						/>
+						<FieldError error={errors['email']} name={'email'}/>						
 						<Password
 							name={'password'}
 							placeholder={'Enter your password ... '}
@@ -100,6 +103,7 @@ class FormTester extends Component {
 					</Form>
 				</div>
 				<FormErrors errors={this.state.errors} />
+				{errors['email']}
 			</div>
 		)
 	}

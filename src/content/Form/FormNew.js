@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { ButtonPanel, Button } from 'odeum-ui'
 
 import { Email, Password } from './FormStyles'
-import FormErrors from './FormErrors'
+import { FormErrors } from './FormErrors'
 
 class FormNew extends Component {
 
