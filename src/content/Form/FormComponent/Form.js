@@ -296,6 +296,7 @@ class Form extends Component {
 			
 				if (child.type.name !== undefined) {
 					if (child.type.name === 'Select') {
+						// CASE: SELECT
 						return React.cloneElement(child, {
 							key: index,
 							createInputRef: this.createInputRef,
@@ -309,6 +310,7 @@ class Form extends Component {
 						})
 					} 
 					else {
+						// CASE: INPUTS
 						return React.cloneElement(child, {
 							key: index,
 							createInputRef: this.createInputRef,
