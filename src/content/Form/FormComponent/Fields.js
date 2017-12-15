@@ -99,8 +99,25 @@ export const Phone = (props) => {
 }
 
 export const Select = (props) => {
+	const fieldId = 'select'
 	return (
-		<StyledSelect>
+		<StyledSelect
+			type={'select'}
+			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
+			onChange={props.handleChange}
+			// validate={props.validate}
+			// color={!props.isValid ? '#BE4F44' : undefined}
+			// focusColor={!props.isValid ? '#BE4F44' : undefined}
+			onFocus={props.handleFocus}
+			autoComplete={props.autoComplete}
+			onBlur={props.handleBlur}
+			onMouseEnter={props.handleMouseEnter}
+			onMouseLeave={props.handleMouseLeave}
+			required={props.required}
+			disabled={props.disabled}
+			readOnly={props.readOnly}
+			{...props}
+		>
 			{props.children}
 		</StyledSelect>
 	)

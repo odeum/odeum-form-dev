@@ -266,6 +266,9 @@ class Form extends Component {
 		return (
 			React.Children.toArray(children).map((child, index) => {
 				const { name } = child.props
+
+				console.log(child.type.name)
+
 				if (child.type.name !== undefined) {
 					return React.cloneElement(child, {
 						key: index,
@@ -278,6 +281,47 @@ class Form extends Component {
 						value: child.props.value ? child.props.value : (values[name] !== undefined ? values[name] : ''),
 						// props: { ...child.props },
 					})
+				}
+				else return React.cloneElement(child)
+			})
+		)
+	}
+
+	RenderForm = () => {
+		const { children } = this.props
+		const { values, validation } = this.state
+		return (
+			React.Children.toArray(children).map((child, index) => {
+				const { name } = child.props
+			
+				if (child.type.name !== undefined) {
+					if (child.type.name === 'Select') {
+						return React.cloneElement(child, {
+							key: index,
+							createInputRef: this.createInputRef,
+							handleChange: this.handleChange(child),
+							// handleFocus: this.handleFocus,
+							// validate: child.props.validate ? child.props.validate : null,
+							color: (!child.props.readOnly ? !validation[name] ? '#BE4F44' : undefined : undefined),
+							focusColor: (!child.props.readOnly ? !validation[name] ? '#BE4F44' : undefined : undefined),
+							value: child.props.value ? child.props.value : (values[name] !== undefined ? values[name] : ''),
+							// props: { ...child.props },
+						})
+					} 
+					else {
+						return React.cloneElement(child, {
+							key: index,
+							createInputRef: this.createInputRef,
+							handleChange: this.handleChange(child),
+							handleFocus: this.handleFocus,
+							validate: child.props.validate ? child.props.validate : null,
+							color: (!child.props.readOnly ? !validation[name] ? '#BE4F44' : undefined : undefined),
+							focusColor: (!child.props.readOnly ? !validation[name] ? '#BE4F44' : undefined : undefined),
+							value: child.props.value ? child.props.value : (values[name] !== undefined ? values[name] : ''),
+							// props: { ...child.props },
+						})
+					}
+
 				}
 				else return React.cloneElement(child)
 			})
@@ -319,7 +363,8 @@ class Form extends Component {
 		return (
 			<div>
 				<form>
-					{this.RenderFormFields()}
+					{/* {this.RenderFormFields()} */}
+					{this.RenderForm()}
 					{this.RenderButtons()}
 					{this.props.debug ? <DisplayState {...this.state} /> : null}
 				</form>

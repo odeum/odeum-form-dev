@@ -34,7 +34,7 @@ class FormTester extends Component {
 				// lastname: '',
 				email: '',
 				password: '',
-				country: '',
+				country: 'denmark',
 				phone: '',
 				// phone2: '',
 			}
@@ -101,16 +101,19 @@ class FormTester extends Component {
 							placeholder={'Enter your phone number 3 ... '}
 							validate={isPhoneNumber} 
 						/> */}
-						<Select name={'country'}>
-							<option style={{ height: '50px' }} value='denmark'>Denmark</option>
-							<option value='germany'>Germany</option>
-							<option value='sweden'>Sweden</option>
-							<option value='norway'>Norway</option>
+						<Select 
+							name={'country'} 
+							// value={this.model.values.country}
+						>
+							<option value={'denmark'}>Denmark</option>
+							<option value={'germany'}>Germany</option>
+							<option value={'norway'}>Norway</option>
+							<option value={'sweden'}>Sweden</option>
 						</Select>
 						<Phone
 							name={'phone2'}
 							placeholder={'Enter your phone number 2 ... '}
-							value={this.state.values['email']}
+							value={this.state.values['country']}
 							readOnly
 						/>
 						<div name={'div'}>Unwanted DOM child that eventually will be a styling part.</div>
