@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 // import { ButtonPanel, Button } from 'odeum-ui'
 import Form from './FormComponent/Form' // odeum-form
 // import Field from './FormComponent/Field'
-import { Email, Password, Phone } from './FormComponent/Fields' // odeum-form
+import { Email, Password, Phone, Select } from './FormComponent/Fields' // odeum-form
 // import RenderButtons from './FormComponent/RenderButtons'
 import { FormErrors, FieldError } from './FormErrors'
 
@@ -34,14 +34,20 @@ class FormTester extends Component {
 				// lastname: '',
 				email: '',
 				password: '',
+				country: '',
 				phone: '',
 				// phone2: '',
 			}
 		}
 
 		this.state = {
+			values: '',
 			errors: ''
 		}
+	}
+
+	handleChange = (values) => {
+		this.setState({ values: values })
 	}
 
 	handleError = (errors) => {
@@ -64,6 +70,7 @@ class FormTester extends Component {
 						model={this.model.values}
 						onSubmit={this.handleSubmit}
 						onError={this.handleError}
+						onChange={this.handleChange}
 						styles={''}
 						debug={true}
 						allowKeys={{ 'esc': true, 'enter': true }}
@@ -88,17 +95,24 @@ class FormTester extends Component {
 							// validate={maxChars(10)}
 							// validate={mustBeNumber}
 						/>
-						<Phone
-							name={'phone2'}
-							placeholder={'Enter your phone number 2 ... '}
-							readOnly
-						/>
 						{/* <Field
 							type={'tel'}
 							name={'phone3'}
 							placeholder={'Enter your phone number 3 ... '}
 							validate={isPhoneNumber} 
 						/> */}
+						<Select name={'country'}>
+							<option style={{ height: '50px' }} value='denmark'>Denmark</option>
+							<option value='germany'>Germany</option>
+							<option value='sweden'>Sweden</option>
+							<option value='norway'>Norway</option>
+						</Select>
+						<Phone
+							name={'phone2'}
+							placeholder={'Enter your phone number 2 ... '}
+							value={this.state.values['email']}
+							readOnly
+						/>
 						<div name={'div'}>Unwanted DOM child that eventually will be a styling part.</div>
 					</Form>
 				</div>

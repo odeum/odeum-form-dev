@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // import Field from './Field'
-import { StyledInput } from './FormStyles'
+import { StyledInput, StyledSelect } from './FormStyles'
 
 /* 
 Common Field Components wrapping all the generic props and methods from the Generic Field Component.
@@ -95,5 +95,13 @@ export const Phone = (props) => {
 			readOnly={props.readOnly}
 			{...props}
 		/>
+	)
+}
+
+export const Select = (props) => {
+	return (
+		<StyledSelect>
+			{props.children}
+		</StyledSelect>
 	)
 }

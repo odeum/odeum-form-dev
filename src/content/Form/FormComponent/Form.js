@@ -112,6 +112,13 @@ class Form extends Component {
 		}
 	}
 
+	play = () => {
+		if (this.state.values['phone'] === '22680881') {
+			console.log('Hello Mikkel ... ')
+			this.handleReset('phone')
+		}
+	}
+
 	handleResetInput = () => {
 		const { model, focusfield } = this.props
 
@@ -124,7 +131,22 @@ class Form extends Component {
 	}
 
 	handleResetField = (name) => (e) => {
-		e.preventDefault()
+		console.log(name)
+		// e.preventDefault()
+		if (name) {
+			this.setState({ 
+				values: { ...this.state.values, [name]: '' }, 
+				validation: { ...this.state.validation, [name]: false },
+				isFormValid: false 
+			}, () => this.validateForm())
+			
+			this.nextInput(name)
+		}
+	}
+
+	handleReset = (name) => {
+		console.log(name)
+		// e.preventDefault()
 		if (name) {
 			this.setState({ 
 				values: { ...this.state.values, [name]: '' }, 
@@ -208,6 +230,8 @@ class Form extends Component {
 		}
 
 		this.handleError()
+		this.play()
+		this.handleValues()
 	}
 
 	//#endregion
@@ -215,7 +239,15 @@ class Form extends Component {
 	//#region Form Handling
 
 	handleError = () => {
-		this.props.onError(this.state.errors)
+		if (this.props.onError) {
+			this.props.onError(this.state.errors)
+		}
+	}
+
+	handleValues = () => {
+		if (this.props.onChange) {
+			this.props.onChange(this.state.values)
+		}
 	}
 
 	handleSubmit = (e) => {
@@ -243,7 +275,8 @@ class Form extends Component {
 						validate: child.props.validate ? child.props.validate : null,
 						color: (!child.props.readOnly ? !validation[name] ? '#BE4F44' : undefined : undefined),
 						focusColor: (!child.props.readOnly ? !validation[name] ? '#BE4F44' : undefined : undefined),
-						value: (values[name] !== undefined ? values[name] : ''),
+						value: child.props.value ? child.props.value : (values[name] !== undefined ? values[name] : ''),
+						// props: { ...child.props },
 					})
 				}
 				else return React.cloneElement(child)

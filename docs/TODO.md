@@ -9,28 +9,25 @@
 - [ ] Fix handleResetInput to work with arg for passed field or all (default)
 		<!-- Need more details on this 
 		Press ESC and reset only the current field?
-		Only reset the value in args or all, created alternative handleResetField(name) -->
+		Only reset the value in args (name) or default reset all, created alternative handleResetField(name) -->
 ```js
-	handleResetInput = (name) => {
-		// e.preventDefault()
-		const { model, focusfield } = this.props
-		console.log(name)
-
+	handleResetField = (name) => (e) => {
+		e.preventDefault()
 		if (name) {
-			this.setState({ values: { ...this.state.values, [name]: '' } })
-		}
-		else {
-			this.setState({ values: model, validation: model, errors: model, isFormValid: false })
+			this.setState({ 
+				values: { ...this.state.values, [name]: '' }, 
+				validation: { ...this.state.validation, [name]: false },
+				isFormValid: false 
+			}, () => this.validateForm())
 			
-			if (focusfield)
-				this.nextInput(focusfield)
-			else
-				this.nextInput(Object.keys(this.inputs)[0])
+			this.nextInput(name)
 		}
 	}
 ```
 - [ ] Value update based upon other input value (through state change)
-		<!-- Need more details on this -->
+		<!-- Need more details on this 
+		The value of one field is based upon the value of a prior, ex. 
+		Select Field = Country = Denmark then Phone Prefix = +45 -->
 
 - [x] allowKeys={ {'esc': true, 'enter': true} } Form prop for allowing ESC + ENTER in onKeydown
 - [ ] Buttons + style
