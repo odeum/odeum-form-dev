@@ -302,7 +302,7 @@ class Form extends Component {
 							createInputRef: this.createInputRef,
 							handleChange: this.handleChange(child),
 							// handleFocus: this.handleFocus,
-							// validate: child.props.validate ? child.props.validate : null,
+							validate: child.props.validate ? child.props.validate : true,
 							color: (!child.props.readOnly ? !validation[name] ? '#BE4F44' : undefined : undefined),
 							focusColor: (!child.props.readOnly ? !validation[name] ? '#BE4F44' : undefined : undefined),
 							value: child.props.value ? child.props.value : (values[name] !== undefined ? values[name] : ''),

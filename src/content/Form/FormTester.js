@@ -34,7 +34,7 @@ class FormTester extends Component {
 				// lastname: '',
 				email: '',
 				password: '',
-				country: 'denmark',
+				country: '',
 				phone: '',
 				// phone2: '',
 			}
