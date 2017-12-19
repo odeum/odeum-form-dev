@@ -15,7 +15,8 @@ import {
 	hasUpper,
 	hasSymbol,
 	hasNumber,
-	auto, 
+	// required, 
+	// auto, 
 	// mustBeLetters,
 	// maxChars,
 	// formattedDate, 
@@ -87,6 +88,7 @@ class FormTester extends Component {
 							placeholder={'Enter your password ... '}
 							validate={composeValidators(minChars(8), hasLower, hasUpper, hasSymbol, hasNumber)}
 						/>
+						
 						<Phone
 							name={'phone'}
 							placeholder={'Enter your phone number ... '}
@@ -96,29 +98,32 @@ class FormTester extends Component {
 							// validate={maxChars(10)}
 							// validate={mustBeNumber}
 						/>
-						{/* <Field
-							type={'tel'}
-							name={'phone3'}
-							placeholder={'Enter your phone number 3 ... '}
-							validate={isPhoneNumber} 
-						/> */}
+						
 						<Select 
-							name={'country'} 
-							validate={auto}
+							name={'country'}
 						>
-							<option value={undefined}>Select your country</option>
+							<option value={''}>Select your country</option>
 							<option value={'denmark'}>Denmark</option>
 							<option value={'germany'}>Germany</option>
 							<option value={'norway'}>Norway</option>
 							<option value={'sweden'}>Sweden</option>
 						</Select>
+
 						<Phone
 							name={'phone2'}
 							placeholder={'Enter your phone number 2 ... '}
 							value={this.state.values['country']}
 							readOnly
 						/>
-						<div name={'div'}>Unwanted DOM child that eventually will be a styling part.</div>
+
+						{/* <Field
+							type={'tel'}
+							name={'phone3'}
+							placeholder={'Enter your phone number 3 ... '}
+							validate={isPhoneNumber} 
+						/> */}
+
+						<div >Unwanted DOM child that eventually will be a styling part.</div>
 					</Form>
 				</div>
 				<FormErrors errors={this.state.errors} />
