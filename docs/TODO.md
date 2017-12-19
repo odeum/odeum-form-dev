@@ -7,40 +7,18 @@
 	- [x] this.nextInput(field) -> sets focus on field
 	- [x] this.nextInput() -> sets focus on the next field relative to the last focused field
 - [x] Fix nextInput (readOnly skip field on ENTER)
-- [ ] Renamed to handleReset() -  Fix handleResetInput to work with arg for passed field or all (default)
-	- can be called from a button with ```js onClick = this.handleReset()``` which will reset all field
-	- OR
-	- can be called from a button with ```js onClick = this.handleReset(field)``` which will reset specific field
-	- Doesn't work with no args so i presume that almost everywhere it is invoked it doesn't work
-		<!-- Need more details on this 
-		Press ESC and reset only the current field?
-		Only reset the value in args (name) or default reset all, created alternative handleResetField(name) -->
-```js
-	handleResetField = (name) => (e) => {
-		e.preventDefault()
-		if (name) {
-			this.setState({ 
-				values: { ...this.state.values, [name]: '' }, 
-				validation: { ...this.state.validation, [name]: false },
-				isFormValid: false 
-			}, () => this.validateForm())
-			
-			this.nextInput(name)
-		}
-	}
-```
-- [ ] Value update based upon other input value (through state change)
-		<!-- Need more details on this 
-		The value of one field is based upon the value of a prior, ex. 
-		Select Field = Country = Denmark then Phone Prefix = +45 -->
+- [ ] Fix nextInput (doesn't update inputFocus counter when using TAB - that's why handleFocus might be useful again thus it catches that event)
+- [x] handleReset() supplied with handleResetOnEvent()
+- [ ] Value update based upon other input value (through state change) - partially tested
+
 
 - [x] allowKeys={ {'esc': true, 'enter': true} } Form prop for allowing ESC + ENTER in onKeydown
 - [ ] Buttons + style
 - [ ] CopyToClipboard (Form prop)
 		<!-- why would a user need to copy to clipboard the form values? 
 		To remember something you enter into a form and save it elsewhere-->
-- [ ] Validation (add following)
-	- [ ] isCountry
+- [x] Validation (add following)
+	- [x] Select has now build in validation (required)
 
 - [x] If there is no focusField prop, jump to first one.
 - [x] Modify handleFocus to set inputFocus for the same reason as focusField. ( [Case 1](#case-1) )
