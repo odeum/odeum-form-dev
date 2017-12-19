@@ -12,7 +12,7 @@ import {
 // Framework helper imports
 import { FooterLabel, handleLink } from './framework/FooterLabel'
 // import theme from './framework/theme'
-import { Page/* , Login , LoginTester */ } from './framework/TestComponents'
+import { Page, /* Login ,  LoginTester*/ } from './framework/TestComponents'
 
 // Content imports
 import Homepage from './content/Homepage/Homepage'
@@ -39,17 +39,17 @@ class App extends Component {
 	}
 
 	render() {
+		const protect = !this.state.isLoggedIn
 		return (
 			<AppContainer>
 				<Header/>
 				<MenuPanel>
 
-					<Menu route={'/'} protected>
+					<Page route={'/'}>
 						<Homepage/>
-					</Menu>
+					</Page>
 
-					<Page route={'/login'}>
-						{/* <LoginTester /> */}
+					<Page label={'Login'} icon={'lock_outline'} route={'/login'}>
 						<LoginPage onLogin={this.handleLogin} loggedIn={this.state.isLoggedIn}/>
 					</Page>
 
@@ -61,6 +61,12 @@ class App extends Component {
 							<FormTester/>
 						</Tab>
 					</Menu>
+
+					{this.state.isLoggedIn ? 
+						<Page label={'Protected'} route={'/protected'} protect={protect}>
+							<Homepage />
+						</Page>
+						: null}
 
 				</MenuPanel>
 				<Footer label={FooterLabel} labelLink={handleLink()} helpID={'Logged in: ' + this.state.isLoggedIn}/>
