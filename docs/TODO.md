@@ -7,10 +7,11 @@
 	- [x] this.nextInput(field) -> sets focus on field
 	- [x] this.nextInput() -> sets focus on the next field relative to the last focused field
 - [x] Fix nextInput (readOnly skip field on ENTER)
-- [x] Renamed to handleReset() -  Fix handleResetInput to work with arg for passed field or all (default)
+- [ ] Renamed to handleReset() -  Fix handleResetInput to work with arg for passed field or all (default)
 	- can be called from a button with ```js onClick = this.handleReset()``` which will reset all field
 	- OR
 	- can be called from a button with ```js onClick = this.handleReset(field)``` which will reset specific field
+	- Doesn't work with no args so i presume that almost everywhere it is invoked it doesn't work
 		<!-- Need more details on this 
 		Press ESC and reset only the current field?
 		Only reset the value in args (name) or default reset all, created alternative handleResetField(name) -->
