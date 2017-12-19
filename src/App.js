@@ -44,7 +44,7 @@ class App extends Component {
 				<Header/>
 				<MenuPanel>
 
-					<Menu route={'/'}>
+					<Menu route={'/'} protected>
 						<Homepage/>
 					</Menu>
 

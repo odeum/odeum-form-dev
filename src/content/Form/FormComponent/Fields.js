@@ -32,14 +32,14 @@ export class Email extends Component {
 					// validate={this.props.validate}
 					// color={!this.props.isValid ? '#BE4F44' : undefined}
 					// focusColor={!this.props.isValid ? '#BE4F44' : undefined}
-					onFocus={this.props.handleFocus}
+					// onFocus={this.props.handleFocus}
 					autoComplete={this.props.autoComplete}
 					onBlur={this.props.handleBlur}
 					onMouseEnter={this.props.handleMouseEnter}
 					onMouseLeave={this.props.handleMouseLeave}
 					required={this.props.required}
 					disabled={this.props.disabled} 
-					readOnly={this.props.readOnly}
+					// readOnly={this.props.readOnly}
 					{...this.props}
 				/>
 			</div>
@@ -60,14 +60,14 @@ export const Password = (props) => {
 			// validate={props.validate}
 			// color={!props.isValid ? '#BE4F44' : undefined}
 			// focusColor={!props.isValid ? '#BE4F44' : undefined}
-			onFocus={props.handleFocus}
+			// onFocus={props.handleFocus}
 			autoComplete={props.autoComplete}
 			onBlur={props.handleBlur}
 			onMouseEnter={props.handleMouseEnter}
 			onMouseLeave={props.handleMouseLeave}
 			required={props.required}
 			disabled={props.disabled}
-			readOnly={props.readOnly}
+			// readOnly={props.readOnly}
 			{...props}
 		/>
 	)
@@ -85,14 +85,14 @@ export const Phone = (props) => {
 			// validate={props.validate}
 			// color={!props.isValid ? '#BE4F44' : undefined}
 			// focusColor={!props.isValid ? '#BE4F44' : undefined}
-			onFocus={props.handleFocus}
+			// onFocus={props.handleFocus}
 			autoComplete={props.autoComplete}
 			onBlur={props.handleBlur}
 			onMouseEnter={props.handleMouseEnter}
 			onMouseLeave={props.handleMouseLeave}
 			required={props.required}
 			disabled={props.disabled}
-			readOnly={props.readOnly}
+			// readOnly={props.readOnly}
 			{...props}
 		/>
 	)

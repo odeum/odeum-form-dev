@@ -19,8 +19,7 @@ class Form extends Component {
 		  	validation: model,
 		  	errors: model,
 		  	inputFocus: 0,
-			isFormValid: false
-		 
+			isFormValid: false		 
 	  }
 	}
 
@@ -61,6 +60,7 @@ class Form extends Component {
 		switch (keyCode) {
 			case 27: // ESCAPE2
 				if (this.props.allowKeys['esc']) {
+					// console.log('ESC')
 					this.handleReset()
 				}
 				break
@@ -119,31 +119,35 @@ class Form extends Component {
 	//#region ResetForm
 
 	handleReset = (name) => (e) => {
-		if (name) {
-			this.setState({ 
-				values: { ...this.state.values, [name]: '' },
-				validation: { ...this.state.validation, [name]: '' },
-				errors: { ...this.state.errors, [name]: '' },
-				inputFocus: 0,
-				isFormValid: false
-			})
-			this.nextInput(name)
-		}
-		else {
-			const { model, focusfield } = this.props
-			
-			this.setState({
-				values: model,
-				validation: model,
-				errors: model,
-				inputFocus: 0,
-				isFormValid: false
-			})
-			if (focusfield)
-				this.nextInput(focusfield)
-			else
-				this.nextInput(Object.keys(this.inputs)[0])
-		}
+		if (e) {
+			if (name) {
+				console.log('Event with arg')
+				this.setState({ 
+					values: { ...this.state.values, [name]: '' },
+					validation: { ...this.state.validation, [name]: '' },
+					errors: { ...this.state.errors, [name]: '' },
+					inputFocus: 0,
+					isFormValid: false
+				})
+				this.nextInput(name)
+			}
+			else {
+				const { model, focusfield } = this.props
+				console.log('Event')
+				this.setState({
+					values: model,
+					validation: model,
+					errors: model,
+					inputFocus: 0,
+					isFormValid: false
+				})
+	
+				if (focusfield)
+					this.nextInput(focusfield)
+				else
+					this.nextInput(Object.keys(this.inputs)[0])
+			}						
+		} else console.log('No event detected')
 	}
 
 	//#endregion
@@ -205,7 +209,6 @@ class Form extends Component {
 			this.setState({ isFormValid: true, errors: '' })
 		}
 		this.handleError()
-		// this.play()
 		this.handleValues()
 	}
 
@@ -246,7 +249,7 @@ class Form extends Component {
 						key: index,
 						createInputRef: this.createInputRef,
 						handleChange: this.handleChange(child),
-						 handleFocus: this.handleFocus,
+						handleFocus: this.handleFocus,
 						validate: child.props.validate ? child.props.validate : null,
 						color: (!child.props.readOnly ? !validation[name] ? '#BE4F44' : undefined : undefined),
 						focusColor: (!child.props.readOnly ? !validation[name] ? '#BE4F44' : undefined : undefined),
