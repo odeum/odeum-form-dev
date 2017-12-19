@@ -1,4 +1,8 @@
-/* 
+import React, { Component } from 'react'
+import { ButtonPanel, Button } from 'odeum-ui'
+import { DisplayState } from './DisplayStateProps'
+import clearConsole from './consoleAPI'
+ 
 class Form extends Component {
 
 	constructor(props) {
@@ -88,8 +92,7 @@ class Form extends Component {
 	}
 
 	play = () => {
-		if (this.state.values['phone'] === '22680881') {
-			console.log('Hello Mikkel ... ')
+		if (this.state.values['phone'] === '22680881') {			
 			this.handleReset('phone')
 		}
 	}
@@ -353,4 +356,3 @@ class Form extends Component {
 }
 
 export default Form
- */
