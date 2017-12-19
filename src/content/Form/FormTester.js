@@ -15,6 +15,7 @@ import {
 	hasUpper,
 	hasSymbol,
 	hasNumber,
+	auto, 
 	// mustBeLetters,
 	// maxChars,
 	// formattedDate, 
@@ -103,8 +104,9 @@ class FormTester extends Component {
 						/> */}
 						<Select 
 							name={'country'} 
-							// value={this.model.values.country}
+							validate={auto}
 						>
+							<option value={undefined}>Select your country</option>
 							<option value={'denmark'}>Denmark</option>
 							<option value={'germany'}>Germany</option>
 							<option value={'norway'}>Norway</option>
