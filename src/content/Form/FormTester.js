@@ -66,7 +66,8 @@ class FormTester extends Component {
 			<div>
 				<h1>Form component test</h1>
 				<p>Please fill out the following form fields:</p>
-				<div style={{ width: '100%' }}>
+
+				<div >
 					<Form
 						focusfield={'email'}
 						model={this.model.values}
@@ -82,7 +83,9 @@ class FormTester extends Component {
 							placeholder={'Enter your mail address ... '}
 							validate={isEmail}
 						/>
-						<FieldError error={errors['email']} name={'email'}/>						
+
+						<FieldError error={errors['email']} name={'email'}/>	
+
 						<Password
 							name={'password'}
 							placeholder={'Enter your password ... '}
@@ -92,11 +95,7 @@ class FormTester extends Component {
 						<Phone
 							name={'phone'}
 							placeholder={'Enter your phone number ... '}
-							validate={isPhoneNumber} 
-							// validate={composeValidators(mustBeLetters, minChars(8))}
-							// validate={formattedDate}
-							// validate={maxChars(10)}
-							// validate={mustBeNumber}
+							validate={isPhoneNumber}
 						/>
 						
 						<Select 
@@ -123,11 +122,13 @@ class FormTester extends Component {
 							validate={isPhoneNumber} 
 						/> */}
 
-						<div >Unwanted DOM child that eventually will be a styling part.</div>
+						<div>Unwanted DOM child that eventually will be a styling part.</div>
 					</Form>
 				</div>
+
 				<FormErrors errors={this.state.errors} />
 				{errors['email']}
+
 			</div>
 		)
 	}

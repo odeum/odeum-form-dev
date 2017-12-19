@@ -11,7 +11,6 @@ import {
 
 // Framework helper imports
 import { FooterLabel, handleLink } from './framework/FooterLabel'
-// import theme from './framework/theme'
 import { Page, /* Login ,  LoginTester*/ } from './framework/TestComponents'
 
 // Content imports
@@ -19,7 +18,7 @@ import Homepage from './content/Homepage/Homepage'
 import FormPage from './content/Form/FormPage'
 import LoginPage from './content/Login/LoginPage'
 
-// Component tester
+// Form Component Tester
 import FormTester from './content/Form/FormTester'
 
 
