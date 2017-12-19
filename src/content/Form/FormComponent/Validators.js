@@ -12,9 +12,9 @@ Developers can create own custom validators and just use composeValidators() for
 export const composeValidators = (...validators) => (value) =>
 	validators.reduce((error, validator) => error || validator(value), undefined)
 
-// Field is required
+// Field is auto validated
 export const auto = (value) => 
-	(value ? undefined : undefined)
+	(value !== '' ? undefined : 'Missing value')
 
 // Field is required
 export const required = (value) => 
