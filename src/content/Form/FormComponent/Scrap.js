@@ -14,11 +14,11 @@ getValueFromChild = (child) => {
 }
 
 
-	// handleChange = (e) => {
-	// 	const name = e.target.name
-	// 	const value = e.target.value
-	// 	this.setState({ values: { ...this.state.values, [name]: value } })
-	// }
+// handleChange = (e) => {
+// 	const name = e.target.name
+// 	const value = e.target.value
+// 	this.setState({ values: { ...this.state.values, [name]: value } })
+// }
 
 
 {/* <ButtonPanel justify={'left'} >

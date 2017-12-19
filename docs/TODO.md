@@ -4,9 +4,12 @@
 - [x] Fix innerRef creation by taking input.name(which should be in all cases unique) rather than the Component name
 - [x] Select Field (selectField(name))  now named nextInput(arg)
 	- [x] this.nextInput(field) -> sets focus on field
-	- [ ] this.nextInput() -> sets focus on the next field relative to the last focused field -- partial done - in relation to handleFocus function
+	- [x] this.nextInput() -> sets focus on the next field relative to the last focused field
 - [x] Fix nextInput (readOnly skip field on ENTER)
-- [ ] Fix handleResetInput to work with arg for passed field or all (default)
+- [x] Renamed to handleReset() -  Fix handleResetInput to work with arg for passed field or all (default)
+	- can be called from a button with ```js onClick = this.handleReset()``` which will reset all field
+	- OR
+	- can be called from a button with ```js onClick = this.handleReset(field)``` which will reset specific field
 		<!-- Need more details on this 
 		Press ESC and reset only the current field?
 		Only reset the value in args (name) or default reset all, created alternative handleResetField(name) -->
@@ -38,10 +41,10 @@
 	- [ ] isCountry
 
 - [x] If there is no focusField prop, jump to first one.
-- [ ] Modify handleFocus to set inputFocus for the same reason as focusField. ( [Case 1](#Case-1) )
-- [x] Find the position of the focusField and set inputFocus correctly. ( [Case 1](#Case-1) )
+- [x] Modify handleFocus to set inputFocus for the same reason as focusField. ( [Case 1](#case-1) )
+- [x] Find the position of the focusField and set inputFocus correctly. ( [Case 1](#case-1) )
 
-- [x] ? Fix validation on readOnly fields
+- [ ] Fix validation on readOnly fields ( [Case 2](#case-2))
 		<!-- why do we need validation on an input that basically can't be edited ? 
 		If dev/user passes validation to a readonly field -->
 - [x] Move stuff from CDM to Constructor 
@@ -52,9 +55,10 @@
 			- Setting 2nd Tab Active in Tab List 
 			- Setting the 2nd Menu Item Active in Menu Panel
  
-
+- [ ] Reorganize regions with specific functions
 # Cases: 
 ## Case 1: 
+### Pressing 'ENTER' jump to next input 
 
 1. User sets _**focusField**_ 3rd field in a form
 2. User presses _**Enter**_
@@ -64,4 +68,14 @@
 
 
 
+## Case 2:
+### Input Field readOnly validation
+
+1. Dev passes a validation prop to readOnly field which makes any value invalid (or some valid some not )*
+	* Example: inputField that has the name with small caps taken from the server and placed inside a readOnly input with a validator that requires first letter UPPERCASE.
+2. User completes the form with all the details correctly except for the uneditable readOnly input.
+3. User submits Form.
+
+- **Result:** Form is invalid and impossible to submit due to an uneditable invalid input.
+- **Expected Result:** User is able to either edit the invalid input(which is technically impossible) or submit the form with the invalid readOnly (depending on the readOnly input _See example at step 1_) .
 
