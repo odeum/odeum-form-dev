@@ -53,11 +53,11 @@ class App extends Component {
 						<LoginPage onLogin={this.handleLogin} loggedIn={this.state.isLoggedIn}/>
 					</Page>
 
-					<Menu icon={'assignment'} label={'Form'} route={'/form'}>
-						<Tab icon={'assignment'} label={'Form List'} route={'/formlist'}>
+					<Menu label={'Form'} icon={'assignment'} route={'/form'}>
+						<Tab label={'Form List'} icon={'assignment'} route={'/formlist'}>
 							<FormPage/>
 						</Tab>
-						<Tab icon={'code'} label={'Component'} route={'/component'}>
+						<Tab label={'Component'} icon={'code'} route={'/component'}>
 							<FormTester/>
 						</Tab>
 					</Menu>
