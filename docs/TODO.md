@@ -1,5 +1,6 @@
 # ODEUM Form TODO
 
+- [ ] Allow submit buttons from outside Form component (buttons={renderButtons} prop) 
 - [ ] Md5 encrypt password 
 - [x] Fix innerRef <!--or resolve with querySelectorAll + Fix focusField(name) -->
 - [x] Fix innerRef creation by taking input.name (which should be in all cases unique) rather than the Component name.
@@ -14,7 +15,6 @@
 
 
 - [x] allowKeys={ {'esc': true, 'enter': true} } Form prop for allowing ESC + ENTER in onKeydown
-- [ ] Buttons + style
 - [ ] CopyToClipboard (Form prop)
 		<!-- why would a user need to copy to clipboard the form values? 
 		To remember something you enter into a form and save it elsewhere-->

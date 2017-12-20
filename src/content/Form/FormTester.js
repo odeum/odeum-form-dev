@@ -79,6 +79,7 @@ class FormTester extends Component {
 						onError={this.handleError}
 						onChange={this.handleChange}
 						styles={''}
+						// buttons={RenderButtons}
 						debug={true}
 						allowKeys={{ 'esc': true, 'enter': true }}
 					>

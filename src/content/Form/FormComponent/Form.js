@@ -313,7 +313,7 @@ class Form extends Component {
 			<div>
 				<form>					
 					{this.RenderForm()}
-					{this.RenderButtons()}
+					{this.props.buttons ? this.props.buttons(this.state.isFormValid, this.handleResetOnEvent()) : this.RenderButtons()}
 				</form>
 				{this.props.debug ? <DisplayState {...this.state} /> : null}
 			</div>
