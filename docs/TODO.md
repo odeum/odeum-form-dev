@@ -1,5 +1,6 @@
 # ODEUM Form TODO
 
+- [ ] Md5 encrypt password 
 - [x] Fix innerRef <!--or resolve with querySelectorAll + Fix focusField(name) -->
 - [x] Fix innerRef creation by taking input.name (which should be in all cases unique) rather than the Component name.
 - [x] Fix innerRef for Select fields
