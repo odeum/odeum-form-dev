@@ -1,73 +1,47 @@
-import React, { Component } from 'react'
+import React from 'react'
 // import Field from './Field'
-import { StyledInput, StyledSelect } from './FormStyles'
+import { StyledInput, StyledSelect, StyledTextArea } from './FormStyles'
 
 /* 
 Common Field Components wrapping all the generic props and methods from the Generic Field Component.
-Email
-Password
-FirstName
-LastName
-Address
+<input>
 Zip
-Country
-Phone
 Company
 Birthday
+Country
 Gender
 Date
+Checkbox
+
+<select>
+Select
+
+<textarea>
+<option>
+<optgroup>
+<fieldset>
+<label>
 */
 
-export class Email extends Component {
-	render() {
-		const fieldId = 'email'
-		return (
-			<div>
-				<StyledInput
-					type={fieldId}
-					// name={fieldId}
-					// value={this.props.value}
-					innerRef={this.props.createInputRef ? this.props.createInputRef(fieldId) : null}
-					onChange={this.props.handleChange}
-					// validate={this.props.validate}
-					// color={!this.props.isValid ? '#BE4F44' : undefined}
-					// focusColor={!this.props.isValid ? '#BE4F44' : undefined}
-					// onFocus={this.props.handleFocus}
-					autoComplete={this.props.autoComplete}
-					onBlur={this.props.handleBlur}
-					onMouseEnter={this.props.handleMouseEnter}
-					onMouseLeave={this.props.handleMouseLeave}
-					required={this.props.required}
-					disabled={this.props.disabled} 
-					// readOnly={this.props.readOnly}
-					{...this.props}
-				/>
-			</div>
-		)
-	}
+export const Email = (props) => {
+	const fieldId = 'email'
+	return (
+		<StyledInput
+			type={fieldId}
+			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
+			onChange={props.handleChange}
+			{...props}
+		/>
+	)
 }
 
 export const Password = (props) => {
 	const fieldId = 'password'
-	// console.log(props.validate)
 	return (
 		<StyledInput
 			type={fieldId}
-			// name={fieldId}
-			// value={props.value}
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
-			// validate={props.validate}
-			// color={!props.isValid ? '#BE4F44' : undefined}
-			// focusColor={!props.isValid ? '#BE4F44' : undefined}
-			// onFocus={props.handleFocus}
-			autoComplete={props.autoComplete}
-			onBlur={props.handleBlur}
-			onMouseEnter={props.handleMouseEnter}
-			onMouseLeave={props.handleMouseLeave}
-			required={props.required}
-			disabled={props.disabled}
-			// readOnly={props.readOnly}
 			{...props}
 		/>
 	)
@@ -78,47 +52,145 @@ export const Phone = (props) => {
 	return (
 		<StyledInput
 			type={'tel'}
-			// name={fieldId}
-			// value={props.value}
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
-			// validate={props.validate}
-			// color={!props.isValid ? '#BE4F44' : undefined}
-			// focusColor={!props.isValid ? '#BE4F44' : undefined}
-			// onFocus={props.handleFocus}
-			autoComplete={props.autoComplete}
-			onBlur={props.handleBlur}
-			onMouseEnter={props.handleMouseEnter}
-			onMouseLeave={props.handleMouseLeave}
-			required={props.required}
-			disabled={props.disabled}
-			// readOnly={props.readOnly}
 			{...props}
 		/>
 	)
 }
 
+export const FirstName = (props) => {
+	const fieldId = 'text'
+	return (
+		<StyledInput
+			type={fieldId}
+			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
+			onChange={props.handleChange}
+			{...props}
+		/>
+	)
+}
+
+export const LastName = (props) => {
+	const fieldId = 'text'
+	return (
+		<StyledInput
+			type={fieldId}
+			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
+			onChange={props.handleChange}
+			{...props}
+		/>
+	)
+}
+
+export const Address = (props) => {
+	const fieldId = 'text'
+	return (
+		<StyledInput
+			type={fieldId}
+			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
+			onChange={props.handleChange}
+			{...props}
+		/>
+	)
+}
+
+export const Number = (props) => {
+	const fieldId = 'number'
+	return (
+		<StyledInput
+			type={fieldId}
+			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
+			onChange={props.handleChange}
+			{...props}
+		/>
+	)
+}
+
+
 export const Select = (props) => {
 	const fieldId = 'select'
 	return (
 		<StyledSelect
-			type={'select'}
+			type={fieldId}
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
-			// validate={props.validate}
-			// color={!props.isValid ? '#BE4F44' : undefined}
-			// focusColor={!props.isValid ? '#BE4F44' : undefined}
-			onFocus={props.handleFocus}
-			autoComplete={props.autoComplete}
-			onBlur={props.handleBlur}
-			onMouseEnter={props.handleMouseEnter}
-			onMouseLeave={props.handleMouseLeave}
-			required={props.required}
-			disabled={props.disabled}
-			readOnly={props.readOnly}
 			{...props}
 		>
 			{props.children}
 		</StyledSelect>
 	)
 }
+
+export const TextArea = (props) => {
+	const fieldId = 'textarea'
+	return (
+		<StyledTextArea
+			type={fieldId}
+			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
+			onChange={props.handleChange}
+			{...props}
+		>
+			{/* {props.children} */}
+		</StyledTextArea>
+	)
+}
+
+
+
+/*
+INPUT TYPES:
+button
+checkbox
+color
+date
+datetime-local
+email
+file
+hidden
+image
+month
+number
+password
+radio
+range
+reset
+search
+submit
+tel
+text
+time
+url
+week
+*/
+
+
+/* TEMPLATE:
+
+export const Password = (props) => {
+	const fieldId = 'password'
+	// console.log(props.validate)
+	return (
+		<StyledInput
+			type={fieldId}
+			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
+			onChange={props.handleChange}
+			// name={fieldId}
+			// value={props.value}
+			// validate={props.validate}
+			// color={!props.isValid ? '#BE4F44' : undefined}
+			// focusColor={!props.isValid ? '#BE4F44' : undefined}
+			// onFocus={props.handleFocus}
+			// autoComplete={props.autoComplete}
+			// onBlur={props.handleBlur}
+			// onMouseEnter={props.handleMouseEnter}
+			// onMouseLeave={props.handleMouseLeave}
+			// required={props.required}
+			// disabled={props.disabled}
+			// readOnly={props.readOnly}
+			{...props}
+		/>
+	)
+}
+
+*/
