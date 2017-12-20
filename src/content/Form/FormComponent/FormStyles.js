@@ -24,8 +24,8 @@ export const Input = styled.input`
 `
 
 export const StyledInput = Input.extend`
-	height: 10%; 
-	width: 100%;
+	height: ${(props) => props.height ? props.height : '10%'};
+	width: ${(props) => props.width ? props.width : '100%'};
 	margin-bottom: 15px;
 	color: ${(props) => props.color ? props.color : '#13A085'};
 `
@@ -53,8 +53,8 @@ export const Select = styled.select`
 `
 
 export const StyledSelect = Select.extend`
-	height: 40px; 
-	width: 100%;
+	height: ${(props) => props.height ? props.height : '40px'};
+	width: ${(props) => props.width ? props.width : '100%'};
 	margin-bottom: 15px;
 	color: ${(props) => props.color ? props.color : '#13A085'};
 `
@@ -82,8 +82,8 @@ export const TextArea = styled.textarea`
 `
 
 export const StyledTextArea = TextArea.extend`
-	height: 80px; 
-	width: 100%;
+	height: ${(props) => props.height ? props.height : '80px'};
+	width: ${(props) => props.width ? props.width : '100%'};
 	margin-bottom: 15px;
 	color: ${(props) => props.color ? props.color : '#13A085'};
 `
