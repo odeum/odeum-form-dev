@@ -24,7 +24,6 @@ class Form extends Component {
 	}
 
 	createInputRef = (name) => (input) => {
-		// console.log(name, input)
 		if (input !== null)
 			return this.inputs[input.name] = input
 	}
@@ -315,8 +314,8 @@ class Form extends Component {
 				<form>					
 					{this.RenderForm()}
 					{this.RenderButtons()}
-					{this.props.debug ? <DisplayState {...this.state} /> : null}
 				</form>
+				{this.props.debug ? <DisplayState {...this.state} /> : null}
 			</div>
 		)
 	}
