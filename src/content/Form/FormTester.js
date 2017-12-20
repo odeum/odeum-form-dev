@@ -80,6 +80,7 @@ class FormTester extends Component {
 						onChange={this.handleChange}
 						styles={''}
 						// buttons={RenderButtons}
+						// buttons={false}
 						debug={true}
 						allowKeys={{ 'esc': true, 'enter': true }}
 					>
