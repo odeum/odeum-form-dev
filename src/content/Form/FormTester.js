@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 // import { ButtonPanel, Button } from 'odeum-ui'
 import Form from './FormComponent/Form' // odeum-form
 // import Field from './FormComponent/Field'
-import { Email, Password, Phone, Select } from './FormComponent/Fields' // odeum-form
+import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea } from './FormComponent/Fields' // odeum-form
 // import RenderButtons from './FormComponent/RenderButtons'
 import { FormErrors, FieldError } from './FormErrors'
 
@@ -17,10 +17,12 @@ import {
 	hasNumber,
 	// required, 
 	// auto, 
-	// mustBeLetters,
-	// maxChars,
+	mustBeLetters,
+	maxChars,
 	// formattedDate, 
-	// mustBeNumber,
+	mustBeNumber,
+	mustBePositive, 
+	// mustBeNegative, 
 } from './FormComponent/Validators' // odeum-form-validators
 
 
@@ -32,12 +34,14 @@ class FormTester extends Component {
 
 		this.model = {
 			values: {
-				// firstname: '',
-				// lastname: '',
+				firstname: '',
+				lastname: '',
 				email: '',
 				password: '',
 				country: '',
 				phone: '',
+				age: '',
+				description: ''
 				// phone2: '',
 			}
 		}
@@ -67,9 +71,9 @@ class FormTester extends Component {
 				<h1>Form component test</h1>
 				<p>Please fill out the following form fields:</p>
 
-				<div >
+				<div style={{ width: '50%' }}>
 					<Form
-						focusfield={'email'}
+						focusfield={'firstname'}
 						model={this.model.values}
 						onSubmit={this.handleSubmit}
 						onError={this.handleError}
@@ -78,6 +82,21 @@ class FormTester extends Component {
 						debug={true}
 						allowKeys={{ 'esc': true, 'enter': true }}
 					>
+
+						<FirstName
+							name={'firstname'}
+							placeholder={'Enter your firstname'}
+							validate={mustBeLetters}
+							width={'300px'}
+						/>
+
+						<LastName
+							name={'lastname'}
+							placeholder={'Enter your lastname'}
+							validate={mustBeLetters}
+							width={'300px'}
+						/>
+
 						<Email
 							name={'email'}
 							placeholder={'Enter your mail address ... '}
@@ -94,18 +113,19 @@ class FormTester extends Component {
 						
 						<Phone
 							name={'phone'}
-							placeholder={'Enter your phone number ... '}
+							placeholder={'Enter your phone number'}
 							validate={isPhoneNumber}
+							width={'220px'}
 						/>
 						
 						<Select 
 							name={'country'}
 						>
 							<option value={''}>Select your country</option>
-							<option value={'denmark'}>Denmark</option>
-							<option value={'germany'}>Germany</option>
-							<option value={'norway'}>Norway</option>
-							<option value={'sweden'}>Sweden</option>
+							<option value={'Denmark'}>Denmark</option>
+							<option value={'Germany'}>Germany</option>
+							<option value={'Norway'}>Norway</option>
+							<option value={'Sweden'}>Sweden</option>
 						</Select>
 
 						<Phone
@@ -113,14 +133,22 @@ class FormTester extends Component {
 							placeholder={'Enter your phone number 2 ... '}
 							value={this.state.values['country']}
 							readOnly
+							disabled
 						/>
 
-						{/* <Field
-							type={'tel'}
-							name={'phone3'}
-							placeholder={'Enter your phone number 3 ... '}
-							validate={isPhoneNumber} 
-						/> */}
+						<Number
+							name={'age'}
+							placeholder={'Enter your age'}
+							validate={composeValidators(maxChars(3), mustBeNumber, mustBePositive)}
+						/>
+
+						<TextArea 
+							name={'description'}
+							placeholder={'Please enter a short description of your JavaScript superpowers ... (minimum 20, maximum 250 characters)'}
+							validate={composeValidators(minChars(20), maxChars(250))}							
+							maxLength={'250'}
+							rows={'5'}
+						/>
 
 						<div>Unwanted DOM child that eventually will be a styling part.</div>
 					</Form>
