@@ -25,6 +25,14 @@ export const required = (value) =>
 export const mustBeNumber = (value) => 
 	(isNaN(value) ? "Must be a number" : undefined)
 
+// Field must be a positive number
+export const mustBePositive = (value) => 
+	(value <= 0 ? "Must be a positive number" : undefined)
+
+// Field must be a negative number
+export const mustBeNegative = (value) => 
+	(value >= 0 ? "Must be a negative number" : undefined)
+
 
 // Field must only contain letters
 export const mustBeLetters = (value) =>
