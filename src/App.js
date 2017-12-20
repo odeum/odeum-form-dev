@@ -63,7 +63,7 @@ class App extends Component {
 
 					{this.state.isLoggedIn ? 
 						<Page label={'Protected'} route={'/protected'} protect={protect}>
-							<Homepage />
+							<FormTester />
 						</Page>
 						: null}
 
