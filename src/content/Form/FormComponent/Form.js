@@ -140,8 +140,9 @@ class Form extends Component {
 	handleChange = (child) => (e) => {
 		const name = e.target.name
 		const value = e.target.value
-		const validator = child.type.name === 'Select' ? required : child.props.validate
-		// const validator = child.props.validate
+		const validator = child.props.validate ? 
+			child.props.validate : child.type.name === 'Select' ? 
+				required : null
 
 		this.setState({ values: { ...this.state.values, [name]: value } }, this.validateForm)
 		

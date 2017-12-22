@@ -23,6 +23,7 @@ import {
 	// formattedDate, 
 	mustBeNumber,
 	mustBePositive, 
+	mustBeEqualTo, 
 	// mustBeNegative, 
 } from './FormComponent/Validators' // odeum-form-validators
 
@@ -103,7 +104,7 @@ class FormTester extends Component {
 						<FirstName
 							name={'firstname'}
 							placeholder={'Enter your firstname'}
-							validate={mustBeLetters} 
+							validate={composeValidators(mustBeLetters, mustBeEqualTo('Christian'))} 
 						/>
 
 						<LastName
@@ -134,6 +135,7 @@ class FormTester extends Component {
 						
 						<Select 
 							name={'country'}
+							validate={mustBeEqualTo('Denmark')}
 						>
 							<option value={''}>Select your country</option>
 							<option value={'Denmark'}>Denmark</option>

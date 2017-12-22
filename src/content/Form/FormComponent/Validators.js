@@ -20,6 +20,9 @@ export const auto = (value) =>
 export const required = (value) => 
 	(value ? undefined : 'Required')
 
+// Field must be equal to 
+export const mustBeEqualTo = (arg) => (value) => 
+	(value === arg ? undefined : `Value must be ${arg}`)
 
 // Field must be a number
 export const mustBeNumber = (value) => 
