@@ -68,8 +68,8 @@ class Form extends Component {
 			case 13: // ENTER
 				if (this.props.allowKeys['enter']) {
 					if (this.state.isFormValid) {
-						this.props.onSubmit(this.state.values)
 						this.exportValues()
+						this.props.onSubmit()
 						this.handleReset()
 					}
 					else this.nextInput()
@@ -257,7 +257,8 @@ class Form extends Component {
 	}
 
 	handleSubmit = (e) => {
-		this.props.onSubmit(this.state.values)
+		this.exportValues()
+		this.props.onSubmit()
 		this.handleReset()
 	}
 	//#endregion 
