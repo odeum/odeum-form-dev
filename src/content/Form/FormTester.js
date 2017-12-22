@@ -50,7 +50,8 @@ class FormTester extends Component {
 		this.state = {
 			values: '',
 			errors: '',
-			isFormValid: false
+			isFormValid: false,
+			reset: false,
 		}
 	}
 
@@ -65,20 +66,22 @@ class FormTester extends Component {
 		this.setState({ errors: errors })
 	}
 
-	handleSubmit = (data) => {
-		console.log('Submitting data ...', data)
+	clearForm = () => {
+		this.setState({ reset: false })
 	}
 
-	handleSubmitExternal = () => {
+	handleSubmit = () => {
 		console.log('Submitting data ...', this.state.values)
+		// this.setState({ values: '', errors: '', isFormValid: false })
+		this.handleReset()
 	}
 
-	handleResetExternal = () => {
-		this.forceUpdate()
+	handleReset = () => {
+		this.setState({ reset: true, isFormValid: false, values: '', errors: '' }, this.clearForm)
 	}
 
 	render() {
-		const { errors, values } = this.state
+		const { errors, values, reset } = this.state
 		return (
 			<div>
 				<h1>Form component test</h1>
@@ -89,11 +92,12 @@ class FormTester extends Component {
 						focusfield={'firstname'}
 						model={this.model.values}
 						onSubmit={this.handleSubmit}
+						onReset={reset}
 						onError={this.handleError}
 						onChange={this.handleChange}
-						buttons={{ submit: 'Save', reset: 'Reset'  }}
+						// buttons={{ submit: 'Save', reset: 'Reset'  }}
 						allowKeys={{ 'esc': true, 'enter': true }}
-						debug={true}
+						// debug={true}
 					>
 
 						<FirstName
@@ -164,16 +168,16 @@ class FormTester extends Component {
 							<Button
 								label={'Submit'}
 								icon={'check'}
-								onClick={this.handleSubmitExternal}
+								onClick={this.handleSubmit}
 								disabled={!this.state.isFormValid}
 								isDisabled={!this.state.isFormValid}
 								color={this.state.isFormValid ? '#13A085' : ''}
 							/>
 							<Button
-								label={'Reset outside'}
+								label={'Reset'}
 								icon={'close'}
 								type={'reset'}
-								onClick={this.handleResetExternal}
+								onClick={this.handleReset}
 								color={'#BE4F44'}
 							/>
 						</ButtonPanel>
@@ -182,7 +186,6 @@ class FormTester extends Component {
 				<DisplayState {...this.state} />
 				<FormErrors errors={errors} />
 				{errors['email']}
-
 			</div>
 		)
 	}

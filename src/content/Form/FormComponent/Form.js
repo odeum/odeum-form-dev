@@ -49,6 +49,10 @@ class Form extends Component {
 	  this.inputs = {}
 	}
 	
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.onReset) this.handleReset()
+	}
+
 	//#endregion
 
 	//#region onKeyPress Handling
@@ -65,6 +69,7 @@ class Form extends Component {
 				if (this.props.allowKeys['enter']) {
 					if (this.state.isFormValid) {
 						this.props.onSubmit(this.state.values)
+						this.exportValues()
 						this.handleReset()
 					}
 					else this.nextInput()
@@ -180,10 +185,11 @@ class Form extends Component {
 		const validator = child.type.name === 'Select' ? required : child.props.validate
 		// const validator = child.props.validate
 
-		this.setState({ values: { ...this.state.values, [name]: value } }, () => this.validateForm())
+		this.setState({ values: { ...this.state.values, [name]: value } }, this.validateForm)
 		
 		if (validator) {
 			if (validator(value)) {
+				// NOT VALID
 				this.setState({
 					errors: {
 						...this.state.errors,
@@ -193,10 +199,11 @@ class Form extends Component {
 						...this.state.validation,
 						[name]: false
 					}
-				}, () => this.validateForm())
+				}, this.validateForm)
 			}
 			else {
 				this.setState({
+					// VALID
 					errors: {
 						...this.state.errors,
 						[name]: ''
@@ -205,7 +212,7 @@ class Form extends Component {
 						...this.state.validation,
 						[name]: true
 					}
-				}, () => this.validateForm())
+				}, this.validateForm)
 			}
 		}
 		
@@ -219,21 +226,24 @@ class Form extends Component {
 	validateForm = () => {
 		const { validation } = this.state
 
-		this.setState({ isFormValid: false })
+		this.setState({ isFormValid: false }, this.exportValues)
 
 		let allValid = Object.keys(validation).every((value) => validation[value] === true)
 
 		if (allValid) {
-			this.setState({ isFormValid: true, errors: '' })
+			this.setState({ isFormValid: true, errors: '' }, this.exportValues)
 		}
-
-		this.handleValues()
-		this.handleError()
 	}
 
 	//#endregion
 
 	//#region Outside Form Handling
+
+	exportValues = () => {
+		this.handleValues()
+		this.handleError()
+	}
+
 	handleError = () => {
 		if (this.props.onError) {
 			this.props.onError(this.state.errors)
