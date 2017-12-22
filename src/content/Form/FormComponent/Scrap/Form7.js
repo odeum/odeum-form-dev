@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { ButtonPanel, Button } from 'odeum-ui'
 import { DisplayState } from './DisplayStateProps'
 import clearConsole from './consoleAPI'
 import { required } from '../FormComponent/Validators'
@@ -49,9 +50,7 @@ class Form extends Component {
 	}
 	
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.reset) {
-			this.handleReset()
-		} 
+		if (nextProps.onReset) this.handleReset()
 	}
 
 	//#endregion
@@ -61,15 +60,17 @@ class Form extends Component {
 	onKeydown = ({ keyCode }) => {
 		switch (keyCode) {
 			case 27: // ESC
-				if (this.props.allowKeys['esc']) {					
-					this.props.onReset()
+				if (this.props.allowKeys['esc']) {
+					// console.log('ESC')
+					this.handleReset()
 				}
 				break
 			case 13: // ENTER
 				if (this.props.allowKeys['enter']) {
 					if (this.state.isFormValid) {
+						this.exportValues()
 						this.props.onSubmit()
-						this.props.onReset()						
+						this.handleReset()
 					}
 					else this.nextInput()
 				}			
@@ -118,19 +119,60 @@ class Form extends Component {
 	
 	//#region ResetForm
 
-	handleReset = () => {
-		const { model, focusfield } = this.props
-		this.setState({
-			values: model,
-			validation: '',
-			errors: '',
-			inputFocus: 0,
-			isFormValid: false
-		})
+	handleResetOnEvent = (name) => (e) => {
+		if (name) {
+			this.setState({ 
+				values: { ...this.state.values, [name]: '' },
+				validation: { ...this.state.validation, [name]: '' },
+				errors: { ...this.state.errors, [name]: '' },
+				inputFocus: 0,
+				isFormValid: false
+			})
+			this.nextInput(name)
+		}
+		else {
+			const { model, focusfield } = this.props
+			this.setState({
+				values: model,
+				validation: model,
+				errors: model,
+				inputFocus: 0,
+				isFormValid: false
+			})
 
-		if (focusfield) this.nextInput(focusfield)
-		else this.nextInput(Object.keys(this.inputs)[0])
-		this.props.onReset()
+			if (focusfield)
+				this.nextInput(focusfield)
+			else
+				this.nextInput(Object.keys(this.inputs)[0])
+		}	 
+	}
+
+	handleReset = (name) => {
+		if (name) {
+			this.setState({ 
+				values: { ...this.state.values, [name]: '' },
+				validation: { ...this.state.validation, [name]: '' },
+				errors: { ...this.state.errors, [name]: '' },
+				inputFocus: 0,
+				isFormValid: false
+			})
+			this.nextInput(name)
+		}
+		else {
+			const { model, focusfield } = this.props
+			this.setState({
+				values: model,
+				validation: model,
+				errors: model,
+				inputFocus: 0,
+				isFormValid: false
+			})
+
+			if (focusfield)
+				this.nextInput(focusfield)
+			else
+				this.nextInput(Object.keys(this.inputs)[0])
+		}	 
 	}
 
 	//#endregion
@@ -172,8 +214,10 @@ class Form extends Component {
 					}
 				}, this.validateForm)
 			}
-		}		
+		}
+		
 	}
+
 
 	//#endregion
   
@@ -193,11 +237,17 @@ class Form extends Component {
 
 	//#endregion
 
-	//#region Form Handling from outside
+	//#region Outside Form Handling
 
 	exportValues = () => {
 		this.handleValues()
 		this.handleError()
+	}
+
+	handleError = () => {
+		if (this.props.onError) {
+			this.props.onError(this.state.errors)
+		}
 	}
 
 	handleValues = () => {
@@ -205,13 +255,12 @@ class Form extends Component {
 			this.props.onChange(this.state)
 		}
 	}
-	
-	handleError = () => {
-		if (this.props.onError) {
-			this.props.onError(this.state.errors)
-		}
-	}
 
+	handleSubmit = (e) => {
+		this.exportValues()
+		this.props.onSubmit()
+		this.handleReset()
+	}
 	//#endregion 
 	
 	//#region Rendering
@@ -240,13 +289,37 @@ class Form extends Component {
 		)
 	}
 
+	RenderButtons = () => {
+		const { isFormValid } = this.state
+		return (
+			<ButtonPanel justify={'left'} >
+				<Button
+					label={this.props.buttons['submit']}
+					icon={'check'}
+					onClick={this.handleSubmit}
+					disabled={!isFormValid}
+					isDisabled={!isFormValid}
+					color={isFormValid ? '#13A085' : ''}
+				/>
+				<Button
+					label={this.props.buttons['reset']}
+					icon={'close'}
+					type={'reset'}
+					onClick={this.handleResetOnEvent()}
+					color={'#BE4F44'}
+				/>
+			</ButtonPanel>
+		)
+	}
+
 	// FORM RENDER
 	render() {
-		const { debug } = this.props
+		const { buttons, debug } = this.props
 		return (
 			<div>
 				<form>					
 					{this.RenderForm()}
+					{buttons ? this.RenderButtons() : null}
 				</form>
 				{debug ? <DisplayState {...this.state} /> : null}
 			</div>

@@ -92,10 +92,10 @@ class FormTester extends Component {
 						focusfield={'firstname'}
 						model={this.model.values}
 						onSubmit={this.handleSubmit}
-						onReset={this.handleReset}
-						reset={reset}
+						onReset={reset}
 						onError={this.handleError}
 						onChange={this.handleChange}
+						buttons={{ submit: 'Save', reset: 'Reset'  }}
 						allowKeys={{ 'esc': true, 'enter': true }}
 						// debug={true}
 					>
