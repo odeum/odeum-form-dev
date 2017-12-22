@@ -20,6 +20,7 @@ import LoginPage from './content/Login/LoginPage'
 
 // Form Component Tester
 import FormTester from './content/Form/FormTester'
+import FormDemo from './content/Form2/FormDemo'
 
 
 class App extends Component {
@@ -56,8 +57,11 @@ class App extends Component {
 						<Tab label={'Form List'} icon={'assignment'} route={'/formlist'}>
 							<FormPage/>
 						</Tab>
-						<Tab label={'Component'} icon={'code'} route={'/component'}>
+						<Tab label={'Form1'} icon={'code'} route={'/form1'}>
 							<FormTester/>
+						</Tab>
+						<Tab label={'Form2'} icon={'code'} route={'/form2'}>
+							<FormDemo/>
 						</Tab>
 					</Menu>
 

@@ -1,6 +1,6 @@
 # ODEUM Form TODO
 
-- [ ] Allow submit buttons from outside Form component (buttons={renderButtons} prop) 
+- [ ] Allow submit buttons from outside Form component (buttons={} prop) 
 - [ ] Md5 encrypt password 
 - [x] Fix innerRef <!--or resolve with querySelectorAll + Fix focusField(name) -->
 - [x] Fix innerRef creation by taking input.name (which should be in all cases unique) rather than the Component name.

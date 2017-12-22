@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { ButtonPanel, Button } from 'odeum-ui'
-import { DisplayState } from './FormComponent/DisplayStateProps'
-import Form from './FormComponent/Form' // odeum-form
+import { DisplayState } from './DisplayStateProps'
+import Form from './Form2' // odeum-form
 // import Field from './FormComponent/Field'
-import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea } from './FormComponent/Fields' // odeum-form
+import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea } from './Fields' // odeum-form
 // import RenderButtons from './FormComponent/RenderButtons'
 import { FormErrors, FieldError } from './FormErrors'
 
@@ -11,7 +11,7 @@ import {
 	composeValidators,
 	isEmail,
 	minChars,
-	isPhoneNumber, 
+	isPhoneNumber,
 	hasLower,
 	hasUpper,
 	hasSymbol,
@@ -22,13 +22,13 @@ import {
 	maxChars,
 	// formattedDate, 
 	mustBeNumber,
-	mustBePositive, 
+	mustBePositive,
 	// mustBeNegative, 
-} from './FormComponent/Validators' // odeum-form-validators
+} from './Validators' // odeum-form-validators
 
 
 // App or other higher level component composing the form and issues the form state and utility methods for submit ...
-class FormTester extends Component {
+class FormDemo extends Component {
 
 	constructor(props) {
 		super(props)
@@ -55,7 +55,7 @@ class FormTester extends Component {
 	}
 
 	handleChange = (state) => {
-		this.setState({ 
+		this.setState({
 			values: state.values,
 			isFormValid: state.isFormValid
 		})
@@ -65,16 +65,12 @@ class FormTester extends Component {
 		this.setState({ errors: errors })
 	}
 
-	handleSubmit = (data) => {
-		console.log('Submitting data ...', data)
-	}
-
-	handleSubmitExternal = () => {
+	handleSubmit = () => {
 		console.log('Submitting data ...', this.state.values)
 	}
 
-	handleResetExternal = () => {
-		this.forceUpdate()
+	handleReset = () => {
+		this.setState({ values: '', errors: '', isFormValid: false })
 	}
 
 	render() {
@@ -89,17 +85,16 @@ class FormTester extends Component {
 						focusfield={'firstname'}
 						model={this.model.values}
 						onSubmit={this.handleSubmit}
+						onReset={this.handleReset}
 						onError={this.handleError}
 						onChange={this.handleChange}
-						buttons={{ submit: 'Save', reset: 'Reset'  }}
 						allowKeys={{ 'esc': true, 'enter': true }}
-						debug={true}
 					>
 
 						<FirstName
 							name={'firstname'}
 							placeholder={'Enter your firstname'}
-							validate={mustBeLetters} 
+							validate={mustBeLetters}
 						/>
 
 						<LastName
@@ -114,21 +109,21 @@ class FormTester extends Component {
 							validate={isEmail}
 						/>
 
-						<FieldError error={errors['email']} name={'email'}/>	
+						<FieldError error={errors['email']} name={'email'} />
 
 						<Password
 							name={'password'}
 							placeholder={'Enter your password ... '}
 							validate={composeValidators(minChars(8), hasLower, hasUpper, hasSymbol, hasNumber)}
 						/>
-						
+
 						<Phone
 							name={'phone'}
 							placeholder={'Enter your phone number'}
 							validate={isPhoneNumber}
 						/>
-						
-						<Select 
+
+						<Select
 							name={'country'}
 						>
 							<option value={''}>Select your country</option>
@@ -152,7 +147,7 @@ class FormTester extends Component {
 							validate={composeValidators(maxChars(3), mustBeNumber, mustBePositive)}
 						/>
 
-						<TextArea 
+						<TextArea
 							name={'description'}
 							placeholder={'Please enter a short description of your JavaScript superpowers ... (minimum 20, maximum 100 characters)'}
 							validate={composeValidators(minChars(20), maxChars(100))}
@@ -164,16 +159,16 @@ class FormTester extends Component {
 							<Button
 								label={'Submit'}
 								icon={'check'}
-								onClick={this.handleSubmitExternal}
+								onClick={this.handleSubmit}
 								disabled={!this.state.isFormValid}
 								isDisabled={!this.state.isFormValid}
 								color={this.state.isFormValid ? '#13A085' : ''}
 							/>
 							<Button
-								label={'Reset outside'}
+								label={'Reset'}
 								icon={'close'}
 								type={'reset'}
-								onClick={this.handleResetExternal}
+								onClick={this.handleReset}
 								color={'#BE4F44'}
 							/>
 						</ButtonPanel>
@@ -188,5 +183,5 @@ class FormTester extends Component {
 	}
 }
 
-export default FormTester
+export default FormDemo
 
