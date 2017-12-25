@@ -1,7 +1,8 @@
 # ODEUM Form TODO
 
-- [ ] Allow submit buttons from outside Form component (buttons={} prop) 
 - [ ] Md5 encrypt password 
+- [ ] Checkbox
+- [ ] Radio 
 - [x] Fix innerRef <!--or resolve with querySelectorAll + Fix focusField(name) -->
 - [x] Fix innerRef creation by taking input.name (which should be in all cases unique) rather than the Component name.
 - [x] Fix innerRef for Select fields
@@ -10,8 +11,7 @@
 	- [x] this.nextInput() -> sets focus on the next field relative to the last focused field
 - [x] Fix nextInput (readOnly skip field on ENTER)
 - [ ] Fix nextInput (doesn't update inputFocus counter when using TAB - that's why handleFocus might be useful again thus it catches that event)
-- [x] handleReset() supplied with handleResetOnEvent()
-- [ ] Value update based upon other input value (through state change) - partially tested
+- [x] Value update based upon other input value (through state change) - partially tested
 
 
 - [x] allowKeys={ {'esc': true, 'enter': true} } Form prop for allowing ESC + ENTER in onKeydown

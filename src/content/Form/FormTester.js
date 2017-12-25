@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ButtonPanel, Button } from 'odeum-ui'
-import { DisplayState } from './FormComponent/DisplayStateProps'
+// import { DisplayState } from './FormComponent/DisplayStateProps'
 import Form from './FormComponent/Form' // odeum-form
 // import Field from './FormComponent/Field'
 import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea } from './FormComponent/Fields' // odeum-form
@@ -98,7 +98,7 @@ class FormTester extends Component {
 						onError={this.handleError}
 						onChange={this.handleChange}
 						allowKeys={{ 'esc': true, 'enter': true }}
-						// debug={true}
+						debug={true}
 					>
 
 						<FirstName
@@ -185,7 +185,7 @@ class FormTester extends Component {
 						</ButtonPanel>
 					</Form>
 				</div>
-				<DisplayState {...this.state} />
+				{/* <DisplayState {...this.state} /> */}
 				<FormErrors errors={errors} />
 				{errors['email']}
 			</div>

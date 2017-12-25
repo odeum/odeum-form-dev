@@ -20,6 +20,7 @@ import LoginPage from './content/Login/LoginPage'
 
 // Form Component Tester
 import FormTester from './content/Form/FormTester'
+import AutoFormTester from './content/Form/AutoForm/AutoFormTester'
 
 class App extends Component {
 
@@ -57,6 +58,9 @@ class App extends Component {
 						</Tab>
 						<Tab label={'Form'} icon={'code'} route={'/form1'}>
 							<FormTester/>
+						</Tab>
+						<Tab label={'AutoForm'} icon={'code'} route={'/autoform'}>
+							<AutoFormTester/>
 						</Tab>
 					</Menu>
 

@@ -107,7 +107,6 @@ export const Number = (props) => {
 	)
 }
 
-
 export const Select = (props) => {
 	const fieldId = 'select'
 	return (
