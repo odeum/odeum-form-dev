@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { fieldtypes } from './fieldtypes'
 import { DisplayState } from '../FormComponent/DisplayStateProps'
 import clearConsole from '../FormComponent/consoleAPI'
-import { required } from '../FormComponent/Validators'
+// import { required } from '../FormComponent/Validators'
 
 // import { required } from '../FormComponent/Validators'
 
@@ -22,10 +22,94 @@ class AutoForm extends Component {
 			isFormValid: false,
 			isSubmitting: false
 		}
-		clearConsole()
-		this.handleReset()
+		clearConsole()	
+	}
+	
+	componentDidMount = () => {
+		const { focusfield, allowKeys } = this.props
+
+		if (focusfield) {
+			this.nextInput(focusfield)
+		}
+		else {
+			this.nextInput()
+		}
+		if (allowKeys) {
+			document.addEventListener('keydown', this.onKeydown)
+		}
 	}
 
+	componentWillUnmount = () => {
+		document.removeEventListener('keydown', this.onKeydown)
+		this.inputs = {}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.reset) {
+			this.handleReset()
+		}
+	}
+
+	onKeydown = ({ keyCode }) => {
+		switch (keyCode) {
+			case 27: // ESC
+				if (this.props.allowKeys['esc']) {
+					this.props.onReset()
+				}
+				break
+			case 13: // ENTER
+				if (this.props.allowKeys['enter']) {
+					if (this.state.isFormValid) {
+						this.props.onSubmit()
+						this.props.onReset()
+					}
+					else this.nextInput()
+				}
+				break
+			case 117: // F6
+				clearConsole()
+				break
+			default:
+				break
+		}
+	}
+
+	nextInput = (field) => {
+		if (!field) {
+			var NextInput = this.inputs[Object.keys(this.inputs)[this.state.inputFocus]]
+
+			if (NextInput.readOnly) {
+				this.setState({ inputFocus: (this.state.inputFocus + 1) % Object.keys(this.inputs).length }, () => this.nextInput())
+			}
+			else {
+				this.focusInput(NextInput.name)
+				this.setState({ inputFocus: (this.state.inputFocus + 1) % Object.keys(this.inputs).length })
+			}
+		}
+		else {
+			if (this.inputs[field].readOnly) {
+				this.setState({ inputFocus: (Object.keys(this.inputs).findIndex((input) => input === field) + 1) % Object.keys(this.inputs).length }, () => this.nextInput())
+			}
+			else {
+				this.focusInput(field)
+				this.setState({ inputFocus: (Object.keys(this.inputs).findIndex((input) => input === field) + 1) % Object.keys(this.inputs).length })
+			}
+		}
+	}
+
+	focusInput = (name) => {
+		this.inputs[name].focus()
+	}
+
+	handleFocus = (e) => {
+		this.setState({ inputFocus: (Object.keys(this.inputs).findIndex(input => input === e.target.name) + 1) % Object.keys(this.inputs).length })
+	}
+
+	createInputRef = (name) => (input) => {
+		if (input !== null)
+			return this.inputs[input.name] = input
+	}
+	
 	createFieldComponent = (field) => {
 		const { model } = this.props
 		const { values, validation } = this.state
@@ -40,7 +124,7 @@ class AutoForm extends Component {
 					<FieldComponent
 						name={field}
 						placeholder={`Enter ${field}`}
-						// innerRef={this.props.createInputRef ? this.props.createInputRef(field) : null}
+						createInputRef={this.createInputRef}
 						onChange={this.handleChange}
 						color={!validation[field] ? '#BE4F44' : undefined}
 						focusColor={(!validation[field] ? '#BE4F44' : undefined)}
@@ -54,7 +138,7 @@ class AutoForm extends Component {
 					<FieldComponent
 						name={field}
 						placeholder={`Enter ${field}`}
-						// innerRef={this.props.createInputRef ? this.props.createInputRef(field) : null}
+						createInputRef={this.createInputRef}
 						onChange={this.handleChange}
 						color={!validation[field] ? '#BE4F44' : undefined}
 						focusColor={(!validation[field] ? '#BE4F44' : undefined)}
@@ -66,7 +150,8 @@ class AutoForm extends Component {
 	}	
 	
 	handleReset = () => {
-		const { model, /* focusfield */ } = this.props
+		const { model, focusfield } = this.props
+		console.log('Reset ... ')
 
 		this.setState({
 			values: model,
@@ -77,25 +162,18 @@ class AutoForm extends Component {
 			isSubmitting: false
 		})
 
-		// if (focusfield) this.nextInput(focusfield)
-		// else this.nextInput(Object.keys(this.inputs)[0])
+		if (focusfield) this.nextInput(focusfield)
+		else this.nextInput(Object.keys(this.inputs)[0])
 		// this.props.onReset()
 	}
 
 	handleChange = (e) => {
 		const field = e.target.name
 		const value = e.target.value
-		const { model, validators } = this.props
-		const validator = validators[field] ? validators[field] : model[field] === 'country' ? required : null
-		
-		// console.log(validator)
-		
-		// const validator = child.props.validate ?
-		// 	child.props.validate : child.type.name === 'Select' ?
-		// 		required : null
+		const { /* model,  */validators } = this.props
+		const validator = validators[field] ? validators[field] : /* model[field] === 'country' ? required :  */null
 		
 		this.setState({ values: { ...this.state.values, [field]: value } }, this.validateForm)
-		
 		
 		if (validator) {
 			if (validator(value)) {
@@ -140,13 +218,12 @@ class AutoForm extends Component {
 	}
 
 	render() {
-		const { model, debug } = this.props
+		const { model, debug } = this.props		
 		const formFields = Object.keys(model).map((field) => 
 			<div key={field}>{this.createFieldComponent(field)}</div>)
 
 		return (		
-			<form>
-				{/* {Object.keys(model['country'].options[1])}  */}
+			<form>			
 				{formFields}
 				{debug ? <DisplayState {...this.state} /> : null}
 			</form>						
@@ -155,6 +232,3 @@ class AutoForm extends Component {
 }
 
 export default AutoForm
-
-
-// Object.keys(validation).every((value) => validation[value] === true)

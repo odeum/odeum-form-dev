@@ -68,6 +68,13 @@ class AutoFormTester extends Component {
 					model={this.model} 
 					validators={this.validators}
 					// onChange={this.handleChange}
+					focusfield={'firstname'}
+					// onSubmit={this.handleSubmit}
+					// onReset={this.handleReset}
+					// reset={reset}
+					// onError={this.handleError}
+					// onChange={this.handleChange}
+					// allowKeys={{ 'esc': true, 'enter': true }}
 					debug
 				/>
 			</div>
