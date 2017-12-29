@@ -10,7 +10,6 @@ Company
 Birthday
 Country
 Gender
-Date
 Checkbox
 
 <select>
@@ -135,6 +134,29 @@ export const TextArea = (props) => {
 	)
 }
 
+export const Date = (props) => {
+	const fieldId = 'date'
+	return (
+		<StyledInput
+			type={fieldId}
+			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
+			onChange={props.handleChange}
+			{...props}
+		/>
+	)
+}
+
+export const Checkbox = (props) => {
+	const fieldId = 'checkbox'
+	return (
+		<StyledInput
+			type={fieldId}
+			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
+			onChange={props.handleChange}
+			{...props}
+		/>
+	)
+}
 
 
 /*

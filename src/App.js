@@ -12,6 +12,7 @@ import {
 // Framework helper imports
 import { FooterLabel, handleLink } from './framework/FooterLabel'
 import { Page, /* Login ,  LoginTester*/ } from './framework/TestComponents'
+import { setGlobal } from './content/utils/globals'
 
 // Content imports
 import Homepage from './content/Homepage/Homepage'
@@ -32,6 +33,12 @@ class App extends Component {
 			isLoggedIn: false
 		}
 	}
+	
+	componentWillMount() {
+		setGlobal('myGlobal', '--> This string is a global variable')
+		setGlobal('myGlobal2', '--> This string is also a global variable')
+	}
+	
 
 	handleLogin = (loginState) => {
 		this.setState({ isLoggedIn: loginState })

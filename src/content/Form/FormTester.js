@@ -3,9 +3,10 @@ import { ButtonPanel, Button } from 'odeum-ui'
 // import { DisplayState } from './FormComponent/DisplayStateProps'
 import Form from './FormComponent/Form' // odeum-form
 // import Field from './FormComponent/Field'
-import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea } from './FormComponent/Fields' // odeum-form
+import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea, Date, Checkbox } from './FormComponent/Fields' // odeum-form
 // import RenderButtons from './FormComponent/RenderButtons'
 import { FormErrors, FieldError } from './FormErrors'
+import { getGlobal } from '../utils/globals'
 
 import {
 	composeValidators,
@@ -16,7 +17,7 @@ import {
 	hasUpper,
 	hasSymbol,
 	hasNumber,
-	// required, 
+	required, 
 	// auto, 
 	mustBeLetters,
 	maxChars,
@@ -43,7 +44,9 @@ class FormTester extends Component {
 				country: '',
 				phone: '',
 				age: '',
-				description: ''
+				description: '',
+				date: '',
+				bikeowner: '',
 				// phone2: '',
 			}
 		}
@@ -160,12 +163,27 @@ class FormTester extends Component {
 
 						<TextArea 
 							name={'description'}
-							placeholder={'Please enter a short description of your JavaScript superpowers ... (minimum 20, maximum 100 characters)'}
+							placeholder={`Please enter a short description of your JavaScript superpowers ... (minimum 20, maximum 100 characters) ${getGlobal('myGlobal')}`}
 							validate={composeValidators(minChars(20), maxChars(100))}
 							maxLength={'100'}
 						/>
 
-						<div>Unwanted DOM child that eventually will be a styling part.</div>
+						<Date 
+							name={'date'} 
+							width={'175px'}
+							validate={required}
+						/> 
+					
+						<Checkbox 
+							name={'bikeowner'}
+							placeholder={'I own a bike!'}
+						/>
+
+						<label htmlFor='bikeowner'>Bikeowner</label>
+						<input type="checkbox" id={'bikeowner'} name={''} />
+
+						<div>Unwanted DOM child that eventually will be a styling part. {getGlobal('myGlobal2')}</div>
+
 						<ButtonPanel justify={'left'} >
 							<Button
 								label={'Submit'}
@@ -194,4 +212,5 @@ class FormTester extends Component {
 }
 
 export default FormTester
+
 
