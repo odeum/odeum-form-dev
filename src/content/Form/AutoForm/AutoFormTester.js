@@ -22,6 +22,7 @@ import {
 	// mustBeNegative, 
 } from '../FormComponent/Validators' // odeum-form-validators
 
+// model, options and validators can all be imported from external module(s)
 class AutoFormTester extends Component {
 	constructor(props) {
 		super(props)
@@ -32,12 +33,13 @@ class AutoFormTester extends Component {
 			email: '',
 			password: '',
 			phone: '',
-			country: {
-				options: countries
-			},
-			
+			country: '',
 			// age: '',
 			// description: ''
+		}
+
+		this.options = {
+			country: countries
 		}
 
 		this.validators = {
@@ -46,7 +48,7 @@ class AutoFormTester extends Component {
 			email: isEmail,
 			password: composeValidators(minChars(8), hasLower, hasUpper, hasSymbol, hasNumber),
 			phone: isPhoneNumber,
-			country: required,			
+			country: composeValidators(required, mustBeEqualTo('Denmark')),			
 		}
 
 		this.state = {
@@ -66,6 +68,7 @@ class AutoFormTester extends Component {
 
 				<AutoForm 
 					model={this.model} 
+					options={this.options}
 					validators={this.validators}
 					// onChange={this.handleChange}
 					focusfield={'firstname'}

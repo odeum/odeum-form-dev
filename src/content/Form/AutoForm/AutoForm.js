@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { fieldtypes } from './fieldtypes'
 import { DisplayState } from '../FormComponent/DisplayStateProps'
 import clearConsole from '../FormComponent/consoleAPI'
@@ -22,7 +23,7 @@ class AutoForm extends Component {
 			isFormValid: false,
 			isSubmitting: false
 		}
-		clearConsole()	
+		// clearConsole()	
 	}
 	
 	componentDidMount = () => {
@@ -111,15 +112,15 @@ class AutoForm extends Component {
 	}
 	
 	createFieldComponent = (field) => {
-		const { model } = this.props
+		const { options } = this.props
 		const { values, validation } = this.state
 		const FieldComponent = fieldtypes[field].component
-		
 		switch (field) {
 			case 'country':
-				const options = model[field].options.map((key, i) => 
+				// if (Array.isArray(options[field]) & !null) console.log(options[field])
+				const countryOptions = (Array.isArray(options[field]) & !null) ? options[field].map((key, i) => 
 					<option key={i} value={key.value}>{key.label}</option>
-				)
+				) : <option value={null}>No countries available ...</option>
 				return (
 					<FieldComponent
 						name={field}
@@ -130,7 +131,7 @@ class AutoForm extends Component {
 						focusColor={(!validation[field] ? '#BE4F44' : undefined)}
 						value={values[field]}
 						{...this.props}>
-						{options}
+						{countryOptions}
 					</FieldComponent>
 				)
 			default:
@@ -229,6 +230,11 @@ class AutoForm extends Component {
 			</form>						
 		)
 	}
+}
+
+AutoForm.propTypes = {
+	model: PropTypes.object.isRequired,
+	options: PropTypes.object.isRequired
 }
 
 export default AutoForm
