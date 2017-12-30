@@ -3,7 +3,7 @@ import { ButtonPanel, Button } from 'odeum-ui'
 // import { DisplayState } from './FormComponent/DisplayStateProps'
 import Form from './FormComponent/Form' // odeum-form
 // import Field from './FormComponent/Field'
-import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea, Date, Checkbox } from './FormComponent/Fields' // odeum-form
+import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea, Date, Checkbox, Switch } from './FormComponent/Fields' // odeum-form
 // import RenderButtons from './FormComponent/RenderButtons'
 import { FormErrors, FieldError } from './FormErrors'
 import { getGlobal } from '../utils/globals'
@@ -47,6 +47,7 @@ class FormTester extends Component {
 				description: '',
 				date: '',
 				bikeowner: '',
+				switch: '',
 				// phone2: '',
 			}
 		}
@@ -145,6 +146,7 @@ class FormTester extends Component {
 							<option value={'Germany'}>Germany</option>
 							<option value={'Norway'}>Norway</option>
 							<option value={'Sweden'}>Sweden</option>
+							<option value={getGlobal('myGlobal')}>Easter Egg</option>
 						</Select>
 
 						<Phone
@@ -165,7 +167,7 @@ class FormTester extends Component {
 							name={'description'}
 							placeholder={`Please enter a short description of your JavaScript superpowers ... (minimum 20, maximum 100 characters) ${getGlobal('myGlobal')}`}
 							validate={composeValidators(minChars(20), maxChars(100))}
-							maxLength={'100'}
+							maxLength={'100'}						
 						/>
 
 						<Date 
@@ -174,13 +176,17 @@ class FormTester extends Component {
 							validate={required}
 						/> 
 					
-						<Checkbox 
+						{/* <Checkbox 
 							name={'bikeowner'}
 							placeholder={'I own a bike!'}
 						/>
 
 						<label htmlFor='bikeowner'>Bikeowner</label>
-						<input type="checkbox" id={'bikeowner'} name={''} />
+						<input type="checkbox" id={'bikeowner'} name={''} /> */}
+
+						<Switch 
+							name={'switch'}
+						/>
 
 						<div>Unwanted DOM child that eventually will be a styling part. {getGlobal('myGlobal2')}</div>
 

@@ -68,7 +68,7 @@ export const TextArea = styled.textarea`
     border: none;
 	border-radius: 4px;
     box-sizing: border-box;
-	outline: none;
+	outline: none;	
 
     &:hover {		
         border-color: ${transparentize(0.7, '#3B97D3')};		 
@@ -84,6 +84,7 @@ export const TextArea = styled.textarea`
 export const StyledTextArea = TextArea.extend`
 	height: ${(props) => props.height ? props.height : '80px'};
 	width: ${(props) => props.width ? props.width : '100%'};
+	resize: ${(props) => props.resize ? null : 'none'};
 	margin-bottom: 15px;
 	color: ${(props) => props.color ? props.color : '#13A085'};
 `

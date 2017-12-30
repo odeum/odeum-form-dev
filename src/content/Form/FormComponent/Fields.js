@@ -1,6 +1,8 @@
 import React from 'react'
 // import Field from './Field'
 import { StyledInput, StyledSelect, StyledTextArea } from './FormStyles'
+import { ToggleSwitch } from 'odeum-ui'
+
 
 /* 
 Common Field Components wrapping all the generic props and methods from the Generic Field Component.
@@ -146,6 +148,7 @@ export const Date = (props) => {
 	)
 }
 
+// TODO: Checkbox do not work
 export const Checkbox = (props) => {
 	const fieldId = 'checkbox'
 	return (
@@ -157,6 +160,21 @@ export const Checkbox = (props) => {
 		/>
 	)
 }
+
+export const Switch = (props) => {
+	const fieldId = 'checkbox'
+	return (
+		<ToggleSwitch			
+			type={"square"} 
+			size={"small"} 
+			defaultChecked={false}
+			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
+			onChange={props.handleChange}
+			{...props}
+		/>
+	)
+}
+
 
 
 /*

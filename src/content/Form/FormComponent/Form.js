@@ -138,6 +138,19 @@ class Form extends Component {
 	//#region Value Change
 	
 	handleChange = (child) => (e) => {
+		// console.log(child.type)
+		
+		switch (child.type.name) {
+			case 'Select': console.log('Select')
+				break
+			case 'Checkbox': console.log('Checkbox')
+				break
+			case 'Switch': console.log('Switch')
+				break
+			default: console.log('Input')
+				break
+		}
+
 		const name = e.target.name
 		const value = e.target.value
 		const validator = child.props.validate ? 

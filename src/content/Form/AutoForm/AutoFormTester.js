@@ -62,7 +62,7 @@ class AutoFormTester extends Component {
 
 	render() {
 		return (
-			<div>
+			<div style={{ width: '50%' }}>
 				<h1>AutoForm component test</h1>
 				<p>Please fill out the following form fields:</p>
 
