@@ -12,11 +12,12 @@ class Form extends Component {
 		this.inputs = {}
 
 		const { model } = this.props
+		const validationModel = this.initializeValidation()
 
 	  	this.state = {
 		  	values: model,
-		  	validation: model,
-		  	errors: model,
+			validation: validationModel, 
+			errors: validationModel,
 		  	inputFocus: 0,
 			isFormValid: false		 
 	  }
@@ -26,6 +27,20 @@ class Form extends Component {
 		if (input !== null)
 			return this.inputs[input.name] = input
 	}
+
+	initializeValidation = () => {
+		const { children } = this.props
+		let validationObject = {}
+
+		React.Children.forEach(children, (child) => {
+			if (child.props.validate) {
+				validationObject = { ...validationObject, [child.props.name]: '' }
+				// console.log(validationObject)
+			}
+		})
+		return validationObject
+	}
+
 	//#endregion
 
 	//#region LifeCycle
@@ -138,27 +153,38 @@ class Form extends Component {
 	//#region Value Change
 	
 	handleChange = (child) => (e) => {
-		// console.log(child.type)
-		
+
 		switch (child.type.name) {
-			case 'Select': console.log('Select')
+			case 'Switch': 
+			case 'Checkbox': 
+				const checkboxName = child.props.name
+				const checkboxValue = this.state.values[checkboxName]
+				this.setState({ 
+					values: { 
+						...this.state.values, 
+						[checkboxName]: !checkboxValue },
+				}, this.validateForm)
+				
 				break
-			case 'Checkbox': console.log('Checkbox')
-				break
-			case 'Switch': console.log('Switch')
-				break
-			default: console.log('Input')
+				
+			default: 
+				const inputName = e.target.name
+				const inputValue = e.target.value
+				const inputValidator = child.props.validate ?
+					child.props.validate : child.type.name === 'Select' ?
+						required : null
+
+				this.setState({ values: { ...this.state.values, [inputName]: inputValue } }, this.validateForm)
+				this.validateField(inputValidator, inputValue, inputName)
 				break
 		}
+	}
 
-		const name = e.target.name
-		const value = e.target.value
-		const validator = child.props.validate ? 
-			child.props.validate : child.type.name === 'Select' ? 
-				required : null
+	//#endregion
+  
+	//#region Form/Field Validation
 
-		this.setState({ values: { ...this.state.values, [name]: value } }, this.validateForm)
-		
+	validateField = (validator, value, name) => {
 		if (validator) {
 			if (validator(value)) {
 				// NOT VALID
@@ -186,12 +212,8 @@ class Form extends Component {
 					}
 				}, this.validateForm)
 			}
-		}		
+		}	
 	}
-
-	//#endregion
-  
-	//#region Form Validation
 
 	validateForm = () => {
 		const { validation } = this.state

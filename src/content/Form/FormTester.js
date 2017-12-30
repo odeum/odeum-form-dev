@@ -3,7 +3,7 @@ import { ButtonPanel, Button } from 'odeum-ui'
 // import { DisplayState } from './FormComponent/DisplayStateProps'
 import Form from './FormComponent/Form' // odeum-form
 // import Field from './FormComponent/Field'
-import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea, Date, Checkbox, Switch } from './FormComponent/Fields' // odeum-form
+import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea, Date, /* Checkbox, */ Switch } from './FormComponent/Fields' // odeum-form
 // import RenderButtons from './FormComponent/RenderButtons'
 import { FormErrors, FieldError } from './FormErrors'
 import { getGlobal } from '../utils/globals'
@@ -46,8 +46,8 @@ class FormTester extends Component {
 				age: '',
 				description: '',
 				date: '',
-				bikeowner: '',
-				switch: '',
+				// bikeowner: '',
+				news: false,
 				// phone2: '',
 			}
 		}
@@ -102,7 +102,7 @@ class FormTester extends Component {
 						onError={this.handleError}
 						onChange={this.handleChange}
 						allowKeys={{ 'esc': true, 'enter': true }}
-						debug={true}
+						debug
 					>
 
 						<FirstName
@@ -178,14 +178,15 @@ class FormTester extends Component {
 					
 						{/* <Checkbox 
 							name={'bikeowner'}
-							placeholder={'I own a bike!'}
-						/>
+							checked={values['bikeowner']}
+						/> */}
 
-						<label htmlFor='bikeowner'>Bikeowner</label>
+						{/* <label htmlFor='bikeowner'>Bikeowner</label>
 						<input type="checkbox" id={'bikeowner'} name={''} /> */}
 
 						<Switch 
-							name={'switch'}
+							name={'news'}
+							checked={values['news']}
 						/>
 
 						<div>Unwanted DOM child that eventually will be a styling part. {getGlobal('myGlobal2')}</div>
