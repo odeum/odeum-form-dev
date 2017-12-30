@@ -167,7 +167,8 @@ export const Switch = (props) => {
 		<ToggleSwitch			
 			type={"square"} 
 			size={"small"} 
-			defaultChecked={false}
+			// defaultChecked={false}
+			checked={false}
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
 			{...props}
