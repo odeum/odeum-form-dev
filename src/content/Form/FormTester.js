@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ButtonPanel, Button } from 'odeum-ui'
-// import { DisplayState } from './FormComponent/DisplayStateProps'
+import { DisplayState } from './FormComponent/DisplayStateProps'
 import Form from './FormComponent/Form' // odeum-form
 // import Field from './FormComponent/Field'
 import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea, Date, /* Checkbox, */ Switch } from './FormComponent/Fields' // odeum-form
@@ -47,7 +47,7 @@ class FormTester extends Component {
 				description: '',
 				date: '',
 				// bikeowner: '',
-				news: false,
+				newsletter: false,
 				// phone2: '',
 			}
 		}
@@ -165,7 +165,7 @@ class FormTester extends Component {
 
 						<TextArea 
 							name={'description'}
-							placeholder={`Please enter a short description of your JavaScript superpowers ... (minimum 20, maximum 100 characters) ${getGlobal('myGlobal')}`}
+							placeholder={`Please enter a short description of your JavaScript superpowers ... (minimum 20, maximum 100 characters) ${getGlobal('myGlobal')} ${navigator.language}`}
 							validate={composeValidators(minChars(20), maxChars(100))}
 							maxLength={'100'}						
 						/>
@@ -185,8 +185,8 @@ class FormTester extends Component {
 						<input type="checkbox" id={'bikeowner'} name={''} /> */}
 
 						<Switch 
-							name={'news'}
-							checked={values['news']}
+							name={'newsletter'}
+							checked={values['newsletter']}
 						/>
 
 						<div>Unwanted DOM child that eventually will be a styling part. {getGlobal('myGlobal2')}</div>
@@ -210,7 +210,7 @@ class FormTester extends Component {
 						</ButtonPanel>
 					</Form>
 				</div>
-				{/* <DisplayState {...this.state} /> */}
+				<DisplayState {...this.state} />
 				<FormErrors errors={errors} />
 				{errors['email']}
 			</div>
