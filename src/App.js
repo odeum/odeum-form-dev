@@ -14,10 +14,11 @@ import { FooterLabel, handleLink } from './framework/FooterLabel'
 import { Page, /* Login ,  LoginTester*/ } from './framework/TestComponents'
 import { setGlobal } from './content/utils/globals'
 
-// Content imports
+// Content/demo imports
 import Homepage from './content/Homepage/Homepage'
 import FormPage from './content/Form/FormPage'
 import LoginPage from './content/Login/LoginPage'
+import { Clock } from './demos/Clock'
 
 // Form Component Tester
 import FormTester from './content/Form/FormTester'
@@ -44,11 +45,15 @@ class App extends Component {
 		this.setState({ isLoggedIn: loginState })
 	}
 
+	renderHeader = () => {
+		return <Clock />
+	}
+
 	render() {
 		const protect = !this.state.isLoggedIn
 		return (
 			<AppContainer>
-				<Header/>
+				<Header render={this.renderHeader}/>
 				<MenuPanel>
 
 					<Page route={'/'}>
@@ -63,7 +68,7 @@ class App extends Component {
 						<Tab label={'Form List'} icon={'assignment'} route={'/formlist'}>
 							<FormPage/>
 						</Tab>
-						<Tab label={'Form'} icon={'code'} route={'/form1'}>
+						<Tab label={'Form'} icon={'code'} route={'/form1'}>							
 							<FormTester/>
 						</Tab>
 						<Tab label={'AutoForm'} icon={'code'} route={'/autoform'}>

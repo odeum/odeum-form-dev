@@ -4,9 +4,10 @@ import { DisplayState } from './FormComponent/DisplayStateProps'
 import Form from './FormComponent/Form' // odeum-form
 // import Field from './FormComponent/Field'
 import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea, Date, /* Checkbox, */ Switch } from './FormComponent/Fields' // odeum-form
-// import RenderButtons from './FormComponent/RenderButtons'
 import { FormErrors, FieldError } from './FormErrors'
 import { getGlobal } from '../utils/globals'
+import clearConsole from './FormComponent/consoleAPI'
+
 
 import {
 	composeValidators,
@@ -56,14 +57,17 @@ class FormTester extends Component {
 			values: '',
 			errors: '',
 			isFormValid: false,
+			timestamp: '',
 			reset: false,
 		}
+		clearConsole()
 	}
 
-	handleChange = (state) => {
+	handleChange = (formState) => {
 		this.setState({ 
-			values: state.values,
-			isFormValid: state.isFormValid
+			values: formState.values,
+			timestamp: formState.timestamp,
+			isFormValid: formState.isFormValid
 		})
 	}
 
@@ -76,8 +80,8 @@ class FormTester extends Component {
 	}
 
 	handleSubmit = () => {
-		console.log('Submitting data ...', this.state.values)
-		// this.setState({ values: '', errors: '', isFormValid: false })
+		console.log('Submitting data: ', this.state.values)
+		console.log('Timestamp: ', this.state.timestamp.toLocaleDateString(), '', this.state.timestamp.toLocaleTimeString())
 		this.handleReset()
 	}
 
@@ -87,12 +91,13 @@ class FormTester extends Component {
 
 	render() {
 		const { errors, values, reset } = this.state
+		const debug = false // debug state in FormTester
 		return (
 			<div>
 				<h1>Form component test</h1>
 				<p>Please fill out the following form fields:</p>
 
-				<div style={{ width: '50%' }}>
+				<div style={{ width: '65%' }}>
 					<Form
 						focusfield={'firstname'}
 						model={this.model.values}
@@ -166,7 +171,7 @@ class FormTester extends Component {
 						<TextArea 
 							name={'description'}
 							placeholder={`Please enter a short description of your JavaScript superpowers ... (minimum 20, maximum 100 characters) ${getGlobal('myGlobal')} ${navigator.language}`}
-							validate={composeValidators(minChars(20), maxChars(100))}
+							validate={composeValidators(minChars(0), maxChars(100))}
 							maxLength={'100'}						
 						/>
 
@@ -210,7 +215,7 @@ class FormTester extends Component {
 						</ButtonPanel>
 					</Form>
 				</div>
-				<DisplayState {...this.state} />
+				{debug ? <DisplayState {...this.state} /> : null}
 				<FormErrors errors={errors} />
 				{errors['email']}
 			</div>

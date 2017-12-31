@@ -19,7 +19,8 @@ class Form extends Component {
 			validation: validationModel, 
 			errors: validationModel,
 		  	inputFocus: 0,
-			isFormValid: false		 
+			isFormValid: false,
+			timestamp: new Date()
 	  }
 	}
 
@@ -178,6 +179,7 @@ class Form extends Component {
 				this.validateField(inputValidator, inputValue, inputName)
 				break
 		}
+		this.setState({ timestamp: new Date() })
 	}
 
 	//#endregion

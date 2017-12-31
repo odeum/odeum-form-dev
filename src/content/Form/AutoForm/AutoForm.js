@@ -23,7 +23,6 @@ class AutoForm extends Component {
 			isFormValid: false,
 			isSubmitting: false
 		}
-		// clearConsole()	
 	}
 	
 	componentDidMount = () => {
