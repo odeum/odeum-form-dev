@@ -46,7 +46,12 @@ class App extends Component {
 	}
 
 	renderHeader = () => {
-		return <Clock />
+		return (
+			<div>
+				<Clock />
+				{FooterLabel()}
+			</div>
+		) 
 	}
 
 	render() {
