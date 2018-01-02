@@ -97,7 +97,7 @@ class FormTester extends Component {
 				<h1>Form component test</h1>
 				<p>Please fill out the following form fields:</p>
 
-				<div style={{ width: '65%' }}>
+				<div style={{ width: '50%' }}>
 					<Form
 						focusfield={'firstname'}
 						model={this.model.values}

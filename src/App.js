@@ -19,7 +19,7 @@ import Homepage from './content/Homepage/Homepage'
 import FormPage from './content/Form/FormPage'
 import LoginPage from './content/Login/LoginPage'
 import { Clock } from './demos/Clock'
-
+import IdleState from './framework/IdleState'
 // Form Component Tester
 import FormTester from './content/Form/FormTester'
 import AutoFormTester from './content/Form/AutoForm/AutoFormTester'
@@ -48,8 +48,9 @@ class App extends Component {
 	renderHeader = () => {
 		return (
 			<div>
-				<Clock />
-				{FooterLabel()}
+				<IdleState />
+				<Clock seconds />
+				{/* {FooterLabel()} */}
 			</div>
 		) 
 	}

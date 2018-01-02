@@ -6,7 +6,7 @@ export class Clock extends Component {
 		super(props)
 
 		this.state = { 
-			date: new Date() 
+			time: get24HourTime(this.props.seconds && 's')
 		}
 	}
 
@@ -24,12 +24,27 @@ export class Clock extends Component {
 
 	tick() {
 		this.setState({
-			date: new Date()
+			time: get24HourTime(this.props.seconds && 's')
 		})
 	}
 
 	render() {
-		return <span>Time: {this.state.date.toLocaleTimeString()}</span>
+		return <span>{this.state.time}</span>
 	}
 }
 
+function get24HourTime(arg) {
+	let now = new Date()
+	let h, m, s
+	h = now.getHours()
+	m = now.getMinutes()
+	s = now.getSeconds()
+	if (h < 10)
+		h = '0' + h
+	if (m < 10)
+		m = '0' + m
+	if (s < 10)
+		s = '0' + s
+	if (arg === 's') return `${h}:${m}:${s}`
+	return `${h}:${m}`
+}
