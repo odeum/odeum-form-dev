@@ -22,7 +22,9 @@ import { Clock } from './demos/Clock'
 import IdleState from './framework/IdleState'
 // Form Component Tester
 import FormTester from './content/Form/FormTester'
+import Form2 from './content/Form/Form2'
 import AutoFormTester from './content/Form/AutoForm/AutoFormTester'
+import SettingState from './demos/SettingState'
 
 class App extends Component {
 
@@ -79,6 +81,12 @@ class App extends Component {
 						</Tab>
 						<Tab label={'AutoForm'} icon={'code'} route={'/autoform'}>
 							<AutoFormTester/>
+						</Tab>
+						<Tab label={'State Management'} icon={'code'} route={'/statedemo'}>
+							<SettingState increment={2}/>							
+						</Tab>
+						<Tab label={'Form2'} icon={'code'} route={'/form2'}>							
+							<Form2/>
 						</Tab>
 					</Menu>
 

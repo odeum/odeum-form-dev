@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { ButtonPanel, Button } from 'odeum-ui'
-import { DisplayState } from './FormComponent/DisplayStateProps'
-import Form from './FormComponent/Form' // odeum-form
-// import Field from './FormComponent/Field'
-import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea, Date, Check, Switch } from './FormComponent/Fields' // odeum-form
+import { DisplayState } from './Form2/DisplayStateProps'
+import Form from './Form2/Form' // odeum-form
+import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea, Date, Check, Switch } from './Form2/Fields' // odeum-form
 import { FormErrors, FieldError } from './FormErrors'
 import { getGlobal } from '../utils/globals'
-import clearConsole from './FormComponent/consoleAPI'
+import clearConsole from './Form2/consoleAPI'
 
 
 import {

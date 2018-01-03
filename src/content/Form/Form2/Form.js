@@ -20,6 +20,7 @@ class Form extends Component {
 			errors: this.validationModel,
 		  	inputFocus: 0,
 			isFormValid: false,
+			isSubmitting: false,
 			timestamp: new Date()
 	  }
 	}
@@ -146,6 +147,7 @@ class Form extends Component {
 		if (focusfield) this.nextInput(focusfield)
 		else this.nextInput(Object.keys(this.inputs)[0])
 		this.props.onReset()
+		// this.handleChange()
 	}
 
 	//#endregion
@@ -254,7 +256,6 @@ class Form extends Component {
 	//#region Rendering
 
 	RenderForm = () => {
-		// console.log('Form rendered ...')
 		const { children } = this.props
 		const { values, validation } = this.state
 		return (
