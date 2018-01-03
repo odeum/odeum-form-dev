@@ -3,7 +3,7 @@ import { ButtonPanel, Button } from 'odeum-ui'
 import { DisplayState } from './FormComponent/DisplayStateProps'
 import Form from './FormComponent/Form' // odeum-form
 // import Field from './FormComponent/Field'
-import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea, Date, /* Checkbox, */ Switch } from './FormComponent/Fields' // odeum-form
+import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea, Date, Check, Switch } from './FormComponent/Fields' // odeum-form
 import { FormErrors, FieldError } from './FormErrors'
 import { getGlobal } from '../utils/globals'
 import clearConsole from './FormComponent/consoleAPI'
@@ -35,7 +35,7 @@ class FormTester extends Component {
 
 	constructor(props) {
 		super(props)
-
+		
 		this.model = {
 			values: {
 				firstname: '',
@@ -47,7 +47,7 @@ class FormTester extends Component {
 				age: '',
 				description: '',
 				date: '',
-				// bikeowner: '',
+				bikeowner: '',
 				newsletter: false,
 				// phone2: '',
 			}
@@ -171,27 +171,24 @@ class FormTester extends Component {
 						<TextArea 
 							name={'description'}
 							placeholder={`Please enter a short description of your JavaScript superpowers ... (minimum 20, maximum 100 characters) ${getGlobal('myGlobal')} ${navigator.language}`}
-							validate={composeValidators(minChars(0), maxChars(100))}
+							validate={composeValidators(minChars(5), maxChars(100))}
 							maxLength={'100'}						
 						/>
 
-						<Date 
-							name={'date'} 
+						<Date
+							name={'date'}
 							width={'175px'}
 							validate={required}
 						/> 
-					
-						{/* <Checkbox 
-							name={'bikeowner'}
-							checked={values['bikeowner']}
-						/> */}
-
-						{/* <label htmlFor='bikeowner'>Bikeowner</label>
-						<input type="checkbox" id={'bikeowner'} name={''} /> */}
 
 						<Switch 
 							name={'newsletter'}
 							checked={values['newsletter']}
+						/>
+
+						<Check
+							name={'bikeowner'}
+							checked={values['bikeowner']}
 						/>
 
 						<div>Unwanted DOM child that eventually will be a styling part. {getGlobal('myGlobal2')}</div>

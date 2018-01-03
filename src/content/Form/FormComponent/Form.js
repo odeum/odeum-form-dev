@@ -157,7 +157,7 @@ class Form extends Component {
 
 		switch (child.type.name) {
 			case 'Switch': 
-			case 'Checkbox': 
+			case 'Check': 
 				const checkboxName = child.props.name
 				const checkboxValue = this.state.values[checkboxName]
 				this.setState({ 
@@ -270,7 +270,8 @@ class Form extends Component {
 						validate: child.props.validate ? child.props.validate : null,
 						color: (!child.props.readOnly ? !validation[name] ? '#BE4F44' : undefined : undefined),
 						focusColor: (!child.props.readOnly ? !validation[name] ? '#BE4F44' : undefined : undefined),
-						value: child.props.value ? child.props.value : (values[name] !== undefined ? values[name] : '')
+						value: child.props.value ? child.props.value : (values[name] !== undefined ? values[name] : ''),
+						props: { ...child.props },
 					})
 				}
 				else return React.cloneElement(child)

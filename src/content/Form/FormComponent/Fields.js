@@ -1,7 +1,7 @@
 import React from 'react'
 // import Field from './Field'
 import { StyledInput, StyledSelect, StyledTextArea } from './FormStyles'
-import { ToggleSwitch } from 'odeum-ui'
+import { ToggleSwitch, Checkbox } from 'odeum-ui'
 
 
 /* 
@@ -149,10 +149,10 @@ export const Date = (props) => {
 }
 
 // TODO: Checkbox do not work
-export const Checkbox = (props) => {
+export const Check = (props) => {
 	const fieldId = 'checkbox'
 	return (
-		<StyledInput
+		<Checkbox
 			type={fieldId}
 			checked={false}			
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}

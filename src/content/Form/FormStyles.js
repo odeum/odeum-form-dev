@@ -15,7 +15,8 @@ export const Input = styled.input`
     &:hover {		
         border-color: ${transparentize(0.7, '#3B97D3')};		 
 		box-shadow: ${`0 0 0 3px ${transparentize(0.7, '#3B97D3')}`};
-		cursor: ${(props) => props.isDisabled ? 'not-allowed' : 'pointer'};
+		cursor: ${(props) => props.isDisabled ? 'not-allowed' : props.readOnly ? 'not-allowed' : 'pointer'};
+		background: #979898;
     }
 
     &:focus {
@@ -38,6 +39,7 @@ export const Select = styled.select`
         border-color: ${transparentize(0.7, '#3B97D3')};		 
 		box-shadow: ${`0 0 0 3px ${transparentize(0.7, '#3B97D3')}`};
 		cursor: ${(props) => props.isDisabled ? 'not-allowed' : 'pointer'};
+		background-color: #979898;
     }
 
     &:focus {
