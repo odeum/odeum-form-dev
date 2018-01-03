@@ -3,7 +3,7 @@ import { ButtonPanel, Button } from 'odeum-ui'
 import { DisplayState } from './FormComponent/DisplayStateProps'
 import Form from './FormComponent/Form' // odeum-form
 // import Field from './FormComponent/Field'
-import { FirstName, LastName, Number, Email, Password, Phone, Select, TextArea, Date, Check, Switch } from './FormComponent/Fields' // odeum-form
+import { Label, FirstName, LastName, Number, Email, Password, Phone, Select, TextArea, Date, Check, Switch } from './FormComponent/Fields' // odeum-form
 import { FormErrors, FieldError } from './FormErrors'
 import { getGlobal } from '../utils/globals'
 import clearConsole from './FormComponent/consoleAPI'
@@ -110,12 +110,12 @@ class FormTester extends Component {
 						debug
 					>
 
+						<Label>Firstname:</Label>
 						<FirstName
 							name={'firstname'}
 							placeholder={'Enter your firstname'}
 							validate={composeValidators(mustBeLetters, mustBeEqualTo('Christian'))} 
 						/>
-
 						<LastName
 							name={'lastname'}
 							placeholder={'Enter your lastname'}
@@ -175,6 +175,7 @@ class FormTester extends Component {
 							maxLength={'100'}						
 						/>
 
+						<Label info>Birthday:</Label>
 						<Date
 							name={'date'}
 							width={'175px'}

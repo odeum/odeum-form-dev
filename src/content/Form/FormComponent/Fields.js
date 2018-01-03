@@ -1,6 +1,6 @@
 import React from 'react'
 // import Field from './Field'
-import { StyledInput, StyledSelect, StyledTextArea } from './FormStyles'
+import { StyledLabel, StyledInput, StyledSelect, StyledTextArea } from './FormStyles'
 import { ToggleSwitch, Checkbox } from 'odeum-ui'
 
 
@@ -23,6 +23,15 @@ Select
 <fieldset>
 <label>
 */
+
+export const Label = (props) => {
+	const fieldId = 'email'
+	return (
+		<StyledLabel {...props}>
+			{props.children}
+		</StyledLabel>
+	)
+}
 
 export const Email = (props) => {
 	const fieldId = 'email'
@@ -154,6 +163,7 @@ export const Check = (props) => {
 	return (
 		<Checkbox
 			type={fieldId}
+			checked={props.checked}
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
 			{...props}
@@ -167,6 +177,7 @@ export const Switch = (props) => {
 		<ToggleSwitch			
 			type={"square"} 
 			size={"small"} 
+			checked={props.checked}
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
 			{...props}

@@ -2,6 +2,8 @@ import styled from 'styled-components'
 import { transparentize } from 'polished'
 
 export const Input = styled.input`    
+	/* display: flex; */
+	/* flex: 1; */
 	font-size: 16px;
 	font-weight: 200;
     padding: 1rem;
@@ -91,3 +93,25 @@ export const StyledTextArea = TextArea.extend`
 	margin-bottom: 15px;
 	color: ${p => p.color ? p.color : '#13A085'};
 `
+
+export const StyledLabel = styled.span`
+		color: #333;
+	    /* color: white; */
+		font-size: 16px;
+		font-weight: 400;
+	    padding: 1rem;
+		border-radius: 4px;		
+		background-color: ${p => p.success ? colors['success'] : p.info ? colors['info'] : p.warning ? colors['warning'] : p.danger ? colors['danger'] : p.other ? colors['other'] : ''}; 
+        width: 110px;
+        line-height: 32px;
+`
+
+export const colors = {
+	success: '#4CAF50', /* Green */
+	info: '#2196F3', /* Blue */
+	warning: '#ff9800', /* Orange */
+	danger: '#f44336', /* Red */ 
+	other: '#e7e7e7' /* Gray */
+}
+
+// background - color: ${ p => p.labelColors[p] };
