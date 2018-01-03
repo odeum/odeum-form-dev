@@ -10,14 +10,15 @@ class Form extends Component {
 	  super(props)
 
 		this.inputs = {}
+		this.validationModel = this.initializeValidation()
 
 		const { model } = this.props
-		const validationModel = this.initializeValidation()
+		// const validationModel = this.initializeValidation()
 
 	  	this.state = {
 		  	values: model,
-			validation: validationModel, 
-			errors: validationModel,
+			validation: this.validationModel, 
+			errors: this.validationModel,
 		  	inputFocus: 0,
 			isFormValid: false,
 			timestamp: new Date()
@@ -138,11 +139,11 @@ class Form extends Component {
 		const { model, focusfield } = this.props
 		this.setState({
 			values: model,
-			validation: '',
-			errors: '',
+			validation: this.validationModel,
+			errors: this.validationModel,
 			inputFocus: 0,
 			isFormValid: false
-		})
+		}, this.exportValues)
 
 		if (focusfield) this.nextInput(focusfield)
 		else this.nextInput(Object.keys(this.inputs)[0])

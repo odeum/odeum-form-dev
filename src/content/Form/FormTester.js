@@ -47,14 +47,14 @@ class FormTester extends Component {
 				age: '',
 				description: '',
 				date: '',
-				bikeowner: '',
+				bikeowner: true,
 				newsletter: false,
 				// phone2: '',
 			}
 		}
 
 		this.state = {
-			values: '',
+			values: this.model.values,
 			errors: '',
 			isFormValid: false,
 			timestamp: '',
@@ -86,7 +86,7 @@ class FormTester extends Component {
 	}
 
 	handleReset = () => {
-		this.setState({ reset: true, isFormValid: false, values: '', errors: '' }, this.clearForm)
+		this.setState({ reset: true, isFormValid: false, values: this.model.values, errors: '' }, this.clearForm)
 	}
 
 	render() {

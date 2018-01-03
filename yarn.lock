@@ -4451,9 +4451,9 @@ odeum-app@^0.2.52:
     redux "^3.7.2"
     styled-components "^2.4.0"
 
-odeum-ui@^0.1.28, odeum-ui@^0.1.41:
-  version "0.1.41"
-  resolved "https://registry.yarnpkg.com/odeum-ui/-/odeum-ui-0.1.41.tgz#358228a11ee3b521d44f8916fd726894bff54e4d"
+odeum-ui@^0.1.28, odeum-ui@^0.1.42:
+  version "0.1.42"
+  resolved "https://registry.yarnpkg.com/odeum-ui/-/odeum-ui-0.1.42.tgz#40544fab864877e25254478f7bb83971a56710eb"
   dependencies:
     polished "^1.8.0"
     react "^16.0.0"

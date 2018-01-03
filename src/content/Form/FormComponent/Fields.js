@@ -154,7 +154,6 @@ export const Check = (props) => {
 	return (
 		<Checkbox
 			type={fieldId}
-			checked={false}			
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
 			{...props}
@@ -168,7 +167,6 @@ export const Switch = (props) => {
 		<ToggleSwitch			
 			type={"square"} 
 			size={"small"} 
-			checked={false}
 			innerRef={props.createInputRef ? props.createInputRef(fieldId) : null}
 			onChange={props.handleChange}
 			{...props}
