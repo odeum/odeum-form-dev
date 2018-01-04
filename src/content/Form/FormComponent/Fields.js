@@ -25,7 +25,6 @@ Select
 */
 
 export const Label = (props) => {
-	const fieldId = 'email'
 	return (
 		<StyledLabel {...props}>
 			{props.children}
