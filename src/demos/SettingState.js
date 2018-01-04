@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import { DisplayState, DisplayProps } from '../content/Form/FormComponent/DisplayStateProps'
 
+const Frapper = (props) => {
+	return (
+		<React.Fragment>
+			{props.children}
+		</React.Fragment>
+	)
+}
 
 class SettingState extends Component {
 	constructor(props) {
@@ -41,14 +48,17 @@ class SettingState extends Component {
 
 	render() {
 		return (
-			<div>
-				<button onClick={this.setState1}>setState 10 - {this.state.counter}</button>
-				<button onClick={this.setState2}>setState 20 - {this.state.counter}</button>
-				<button onClick={this.setState3}>setState + 1 - {this.state.counter}</button>
-				<button onClick={this.setState4}>setState + props.increment - {this.state.counter}</button>
-				<DisplayState {...this.state} />
-				<DisplayProps {...this.props} />
-			</div>
+			<Frapper>
+				<div>
+					<button onClick={this.setState1}>setState 10 - {this.state.counter}</button>
+					<button onClick={this.setState2}>setState 20 - {this.state.counter}</button>
+					<button onClick={this.setState3}>setState + 1 - {this.state.counter}</button>
+					<button onClick={this.setState4}>setState + props.increment - {this.state.counter}</button>
+					<DisplayState {...this.state} />
+					<DisplayProps {...this.props} />
+				</div>
+				<div>Hello World</div>
+			</Frapper>
 		)
 	}
 }
