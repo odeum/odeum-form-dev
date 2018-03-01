@@ -1,0 +1,28 @@
+language: node_js
+node_js:
+    - stable
+
+notifications:
+    email: true
+    slack: webhouseteam:82qu1PX5R5wkYNCW5x6fVlhu
+
+script:
+  - yarn
+  - yarn build
+  - cp ./build/index.html ./build/200.html
+
+deploy:
+  # Prevent Travis CI from resetting working directory and deleting all changes made during the build
+  skip_cleanup: true
+
+  # Deploy develop branch to the staging environment -> dev.console.odeum.com
+  - provider: script
+    script: bash scripts/deploy.sh staging $TRAVIS_TAG1 $TRAVIS_TAG2
+    on:
+      branch: develop
+
+  # Deploy master branch to production -> prod.console.odeum.com / console.odeum.com
+  - provider: script
+    script: bash scripts/deploy.sh production $TRAVIS_TAG1 $TRAVIS_TAG2 
+    on:
+      branch: master
